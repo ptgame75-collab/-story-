@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>अधिराज Story - Premium</title>
+    <style>
+        /* CSS: प्रिमियम डिजाइन र एनिमेसन */
+        :root { --primary: #1a1a1a; --accent: #ff4757; --bg: #f1f2f6; --card: #ffffff; --text: #2f3542; }
+        body.night-mode { --bg: #121212; --card: #1e1e1e; --text: #f1f2f6; }
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+        /* Splash Screen */
+        #splash { position: fixed; width: 100%; height: 100vh; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s; }
+        .wavy { font-size: 2.5rem; font-weight: 900; color: #fff; display: flex; }
+        .wavy span { display: inline-block; animation: wave 1.2s infinite ease-in-out; }
+        @keyframes wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); color: var(--accent); } }
+
+        /* Layout */
+        .app-header { text-align: center; padding: 20px; background: var(--card); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .tabs { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
+        .tab-btn { padding: 10px 20px; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; background: #ddd; }
+        .tab-btn.active { background: var(--accent); color: white; }
+
+        /* Story Cards */
+        .story-card { background: var(--card); margin: 15px; padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid var(--accent); }
+        .story-card:hover { transform: translateY(-5px); }
+
+        /* Reading Mode & Pencil Tool */
+        #reading-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--card); z-index: 1000; display: none; opacity: 0; transition: 0.5s; }
+        #reading-page.active { display: block; opacity: 1; }
+        .controls { display: flex; justify-content: space-between; padding: 15px; background: var(--bg); }
+        .content-area { padding: 25px; line-height: 1.9; font-size: 18px; height: 80vh; overflow-y: auto; position: relative; }
+        canvas { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 5; }
+        canvas.active { pointer-events: auto; }
+
+        /* Admin Section (Hidden by Default) */
+        #admin-panel { display: none; padding: 20px; background: #eee; margin: 20px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="splash">
+        <div class="wavy"><span>अ</span><span>धि</span><span>रा</span><span>ज</span>&nbsp;<span>S</span><span>t</span><span>o</span><span>r</span><span>y</span></div>
+        <p style="color:#666;">loading.......</p>
+    </div>
+
+    <div id="user-app">
+        <div class="app-header">
+            <h1>अधिराज Story</h1>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showCat('nepali')">नेपाली</button>
+                <button class="tab-btn" onclick="showCat('hindi')">हिन्दी</button>
+                <button onclick="toggleAdmin()" style="background:none; border:none; color:#888;">⚙️</button>
+            </div>
+        </div>
+
+        <div id="nepali-list"></div>
+        <div id="hindi-list" style="display:none;"></div>
+    </div>
+
+    <div id="admin-panel">
+        <h3>कथा थप्नुहोस् (Owner Only)</h3>
+        <input type="text" id="title" placeholder="शीर्षक" style="width:100%; padding:10px; margin-bottom:10px;"><br>
+        <textarea id="story-body" placeholder="कथा यहाँ लेख्नुहोस्..." style="width:100%; height:150px; padding:10px;"></textarea><br>
+        <select id="lang"><option value="nepali">नेपाली</option><option value="hindi">हिन्दी</option></select>
+        <button onclick="addStory()" style="background:green; color:white; padding:10px 20px; border:none; cursor:pointer;">कथा थप्नुहोस्</button>
+    </div>
+
+    <div id="reading-page">
+        <div class="controls">
+            <div>
+                <button id="pen-btn" onclick="usePencil()" style="font-size:20px;">✏️</button>
+                <button onclick="clearDraw()" style="font-size:20px;">🔙</button>
+            </div>
+            <div>
+                <button onclick="zoom(2)">A+</button>
+                <button onclick="zoom(-2)">A-</button>
+                <button onclick="dark()">🌙</button>
+                <button onclick="closeS()" style="font-weight:bold;">✕</button>
+            </div>
+        </div>
+        <div style="position:relative;">
+            <canvas id="canvas"></canvas>
+            <div id="display" class="content-area"></div>
+        </div>
+    </div>
+
+    <script>
+        // १. Database (Local Storage for Safety)
+        let db = JSON.parse(localStorage.getItem('adhiraj_db')) || {
+            nepali: [{t: "वैवाहिक ‌वेश्या", c: "सिन्दुरको चिहाल...", full: "गाउँको चौतारीमा एउटा समूह गफिँदै थियो..."}],
+            hindi: [{t: "बियोग सिन्दुर", c: "माया र विश्वासको जित...", full: "बनारस के पास एक छोटा सा गाँव था..."}]
+        };
+
+        // २. Splash Screen Logic
+        window.onload = () => setTimeout(() => document.getElementById('splash').style.display='none', 3000);
+
+        // ३. Reader Functions
+        function render() {
+            const nDiv = document.getElementById('nepali-list');
+            const hDiv = document.getElementById('hindi-list');
+            nDiv.innerHTML = db.nepali.map((s, i) => `<div class="story-card" onclick="read('nepali', ${i})"><div><b>${s.t}</b><br><small>${s.c}</small></div><span>📖</span></div>`).join('');
+            hDiv.innerHTML = db.hindi.map((s, i) => `<div class="story-card" onclick="read('hindi', ${i})"><div><b>${s.t}</b><br><small>${s.c}</small></div><span>📖</span></div>`).join('');
+        }
+        render();
+
+        function showCat(l) {
+            document.getElementById('nepali-list').style.display = l==='nepali'?'block':'none';
+            document.getElementById('hindi-list').style.display = l==='hindi'?'block':'none';
+        }
+
+        function read(lang, i) {
+            const p = document.getElementById('reading-page');
+            document.getElementById('display').innerHTML = `<h2>${db[lang][i].t}</h2><p>${db[lang][i].full}</p>`;
+            p.style.display = 'block';
+            setTimeout(() => p.classList.add('active'), 50);
+        }
+
+        function closeS() { document.getElementById('reading-page').classList.remove('active'); setTimeout(() => document.getElementById('reading-page').style.display='none', 500); }
+
+        // ४. Admin Logic (Update App)
+        function toggleAdmin() {
+            const pin = prompt("Owner PIN हाल्नुहोस्:");
+            if(pin === "068") { document.getElementById('admin-panel').style.display = 'block'; }
+        }
+
+        function addStory() {
+            const t = document.getElementById('title').value;
+            const b = document.getElementById('story-body').value;
+            const l = document.getElementById('lang').value;
+            if(!t || !b) return alert("सबै खाली ठाउँ भर्नुहोस्!");
+            db[l].push({t: t, c: b.substring(0,30)+"...", full: b});
+            localStorage.setItem('adhiraj_db', JSON.stringify(db));
+            alert("कथा सफलतापुर्वक थपियो!");
+            render();
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        // ५. Pencil & Other Features
+        const cv = document.getElementById('canvas'); const cx = cv.getContext('2d'); let draw = false;
+        function usePencil() { 
+            const active = cv.classList.toggle('active');
+            if(active) { cv.width = document.getElementById('display').offsetWidth; cv.height = document.getElementById('display').scrollHeight; }
+        }
+        cv.onmousedown = (e) => { draw = true; cx.beginPath(); cx.moveTo(e.offsetX, e.offsetY); };
+        cv.onmousemove = (e) => { if(!draw) return; cx.strokeStyle='rgba(255,0,0,0.5)'; cx.lineWidth=3; cx.lineTo(e.offsetX, e.offsetY); cx.stroke(); };
+        cv.onmouseup = () => draw = false;
+        function clearDraw() { cx.clearRect(0,0,cv.width,cv.height); }
+        function dark() { document.body.classList.toggle('night-mode'); }
+        function zoom(s) { let d = document.getElementById('display'); let curr = parseFloat(window.getComputedStyle(d).fontSize); d.style.fontSize = (curr+s)+'px'; }
+    </script>
+</body>
+</html>
