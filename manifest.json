@@ -1,21 +1,23 @@
 {
   "name": "अधिराज Story",
-  "short_name": "AdhirajStory",
-  "description": "अधिराज सुनारका हिन्दी र नेपाली कथाहरूको सङ्ग्रह",
-  "start_url": "index.html",
+  "short_name": "Adhiraj",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f9f7f2",
   "theme_color": "#2d2d2d",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/3409/3409059.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "https://cdn-icons-png.flaticon.com/512/3409/3409059.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
