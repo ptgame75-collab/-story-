@@ -4,228 +4,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>अधिराज की डायरी 068</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Mukta:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2d3436;
-            --accent: #d63031;
-            --bg: #f9f7f2;
-            --card-bg: #ffffff;
-            --text: #2d2d2d;
-            --glass: rgba(255, 255, 255, 0.8);
+            --primary: #1a1a1a;
+            --accent: #e67e22;
+            --bg: #f4f1ea;
+            --card: #ffffff;
+            --text: #2c3e50;
+            --shadow: rgba(0,0,0,0.1);
         }
 
         [data-theme="dark"] {
-            --primary: #dfe6e9;
-            --accent: #ff7675;
-            --bg: #1e1e1e;
-            --card-bg: #2d2d2d;
-            --text: #f5f5f5;
-            --glass: rgba(45, 45, 45, 0.8);
+            --primary: #f5f6fa;
+            --accent: #f39c12;
+            --bg: #121212;
+            --card: #1e1e1e;
+            --text: #ecf0f1;
+            --shadow: rgba(0,0,0,0.5);
         }
 
-        * { box-sizing: border-box; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg); margin: 0; font-family: 'Poppins', 'Georgia', serif; color: var(--text); overflow-x: hidden; }
+        * { box-sizing: border-box; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { margin: 0; font-family: 'Poppins', 'Mukta', sans-serif; background-color: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        /* 1. Loading Splash Screen */
+        /* 1. Splash Screen Animation */
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #2d3436; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9999;
+            background: #1a1a1a; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 10000;
         }
-        .loader-text { color: white; font-size: 24px; font-weight: bold; letter-spacing: 2px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
-        .progress-bar { width: 200px; height: 4px; background: #555; border-radius: 10px; overflow: hidden; }
-        .progress-fill { width: 0%; height: 100%; background: var(--accent); animation: load 2.5s forwards; }
+        .splash-logo {
+            font-size: 32px; font-weight: 700; color: #fff; letter-spacing: 3px;
+            animation: fadeInOut 2s infinite ease-in-out;
+        }
+        .loader {
+            width: 150px; height: 3px; background: #333; margin-top: 20px;
+            border-radius: 5px; overflow: hidden;
+        }
+        .loader-fill { width: 0%; height: 100%; background: var(--accent); animation: load 2.5s forwards; }
 
         @keyframes load { to { width: 100%; } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes fadeInOut { 0%, 100% { opacity: 0.3; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1); } }
 
-        /* 2. Premium Header & Controls */
-        header { 
-            padding: 15px 20px; background: var(--glass); backdrop-filter: blur(10px);
-            display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        /* 2. Premium Header */
+        header {
+            padding: 15px 20px; background: var(--card); display: flex;
+            justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 999; box-shadow: 0 2px 15px var(--shadow);
         }
-        .controls { display: flex; gap: 15px; align-items: center; }
-        .icon-btn { cursor: pointer; font-size: 20px; background: none; border: none; color: var(--text); }
+        .logo { font-weight: 700; font-size: 1.2rem; color: var(--accent); }
+        .nav-tools { display: flex; gap: 15px; }
 
-        /* 3. Tab Navigation */
-        .tab-nav { display: flex; background: var(--card-bg); margin: 15px; border-radius: 15px; padding: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .tab-nav div { flex: 1; text-align: center; padding: 12px; cursor: pointer; border-radius: 12px; font-weight: 600; color: #888; }
-        .tab-nav div.active { background: var(--accent); color: white; box-shadow: 0 4px 10px rgba(214, 48, 49, 0.3); }
+        /* 3. Tab Switcher */
+        .tab-box {
+            display: flex; margin: 20px auto; width: 90%; max-width: 400px;
+            background: var(--card); padding: 5px; border-radius: 50px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        .tab-btn {
+            flex: 1; padding: 12px; border-radius: 50px; text-align: center;
+            cursor: pointer; font-weight: 600; color: #7f8c8d;
+        }
+        .tab-btn.active { background: var(--accent); color: white; }
 
-        /* 4. Content Wrapper */
-        .main-wrapper { display: flex; width: 200vw; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        section { width: 100vw; padding: 10px 20px; }
+        /* 4. Main Content Slider */
+        .slider-container { display: flex; width: 200vw; transition: 0.5s transform ease; }
+        .page-content { width: 100vw; padding: 10px 20px; }
 
-        /* 5. Story Card - Premium View */
+        /* 5. Premium Story Card */
         .story-card {
-            background: var(--card-bg); border-radius: 20px; padding: 20px;
-            margin-bottom: 25px; position: relative; border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden;
+            background: var(--card); border-radius: 20px; margin-bottom: 20px;
+            padding: 20px; position: relative; box-shadow: 0 8px 25px var(--shadow);
+            border: 1px solid rgba(127, 140, 141, 0.1);
         }
-        .story-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .story-title { font-size: 22px; font-weight: 700; margin: 0; cursor: pointer; }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .story-title { font-size: 22px; font-weight: 700; line-height: 1.4; max-width: 80%; cursor: pointer; }
         
-        /* 6. Bookmark Pencil */
-        .bookmark-btn { font-size: 22px; cursor: pointer; color: #ccc; z-index: 10; padding: 5px; }
-        .bookmark-btn.active { color: #2ecc71; transform: scale(1.2) rotate(-15deg); }
-
-        /* 7. Full Content & Transitions */
-        .full-content { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px dashed #ddd; opacity: 0; transform: translateY(20px); }
-        .full-content.show { display: block; animation: fadeInUp 0.5s forwards; }
-
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-
-        .story-text { font-size: 18px; line-height: 1.8; text-align: justify; white-space: pre-line; }
-        .quote-box { background: rgba(214, 48, 49, 0.05); border-left: 4px solid var(--accent); padding: 15px; margin: 20px 0; font-style: italic; }
-
-        .read-btn { 
-            background: var(--primary); color: white; border: none; padding: 12px 25px; 
-            border-radius: 12px; width: 100%; margin-top: 15px; font-weight: 600; cursor: pointer;
+        /* 6. Pencil Bookmark Icon */
+        .pencil-mark {
+            font-size: 24px; cursor: pointer; color: #bdc3c7;
+            padding: 5px; transition: 0.3s;
         }
+        .pencil-mark.active { color: #27ae60; transform: rotate(-45deg) scale(1.2); }
+
+        /* 7. Story Detail (Fade Animation) */
+        .story-detail {
+            display: none; opacity: 0; margin-top: 20px;
+            padding-top: 20px; border-top: 1px solid rgba(127, 140, 141, 0.2);
+        }
+        .story-detail.open { display: block; animation: fadeIn 0.6s forwards; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .content-text { font-size: 18px; line-height: 1.9; text-align: justify; }
+        .btn-view {
+            margin-top: 15px; width: 100%; padding: 12px; border: none;
+            border-radius: 12px; background: var(--primary); color: white;
+            font-weight: 600; cursor: pointer;
+        }
+
+        /* 8. Controls UI */
+        .theme-btn, .font-btn { background: none; border: none; cursor: pointer; font-size: 20px; color: var(--text); }
     </style>
 </head>
-<body>
+<body data-theme="light">
 
     <div id="splash">
-        <div class="loader-text">AADHIRAJ STORY</div>
-        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="splash-logo">AADHIRAJ STORY</div>
+        <div class="loader"><div class="loader-fill"></div></div>
     </div>
 
     <header>
-        <div class="logo-text">🅰️ 068</div>
-        <div class="controls">
-            <button class="icon-btn" onclick="toggleTheme()" id="themeIcon">🌙</button>
-            <div style="display:flex; gap:5px;">
-                <button class="icon-btn" onclick="changeFontSize(1.5)">A+</button>
-                <button class="icon-btn" onclick="changeFontSize(-1.5)">A-</button>
-            </div>
+        <div class="logo">Aadhiraj's Diary</div>
+        <div class="nav-tools">
+            <button class="theme-btn" onclick="toggleTheme()" id="themeSwitcher">🌙</button>
+            <button class="font-btn" onclick="resizeText(1)">A+</button>
+            <button class="font-btn" onclick="resizeText(-1)">A-</button>
         </div>
     </header>
 
-    <nav class="tab-nav">
-        <div id="tab0" class="active" onclick="showPage(0)">Hindi</div>
-        <div id="tab1" onclick="showPage(1)">Nepali</div>
-    </nav>
+    <div class="tab-box">
+        <div class="tab-btn active" id="btnH" onclick="switchTab(0)">हिन्दी</div>
+        <div class="tab-btn" id="btnN" onclick="switchTab(1)">नेपाली</div>
+    </div>
 
-    <div class="main-wrapper" id="slider">
+    <div class="slider-container" id="mainSlider">
         
-        <section>
+        <section class="page-content">
             <div class="story-card" data-id="h1">
-                <div class="story-header">
-                    <h2 class="story-title" onclick="toggleStory('c-h1', 'b-h1')">स्वार्थी भाई</h2>
-                    <span class="bookmark-btn" onclick="toggleBookmark(this, 'h1')">✎</span>
+                <div class="card-header">
+                    <h2 class="story-title" onclick="toggleStory('h1')">स्वार्थी भाई</h2>
+                    <span class="pencil-mark" onclick="markStory('h1')">✎</span>
                 </div>
-                <button class="read-btn" id="b-h1" onclick="toggleStory('c-h1', 'b-h1')">Open Story</button>
-                <div id="c-h1" class="full-content">
-                    <div class="story-text">
-                        बहुत साल पहले की बात है, एक छोटे से गाँव में विजय और अजय नाम के दो भाई रहते थे। विजय बड़ा था और अजय छोटा। उनके माता-पिता की एक सड़क दुर्घटना में मौत हो गई थी, जिसके बाद दस साल के विजय के कंधों पर पाँच साल के भाई को पालने की जिम्मेदारी आ गई...
-                        (तपाईँको पूर्ण कथा यहाँ रहनेछ)
+                <button class="btn-view" id="btn-h1" onclick="toggleStory('h1')">पूरा पढें</button>
+                <div class="story-detail" id="detail-h1">
+                    <div class="content-text">
+                        बहुत साल पहले की बात है, एक छोटे से गाँव में विजय और अजय नाम के दो भाई रहते थे...
+                        (तपाईँको पूर्ण कथा यहाँ राख्नुहोस्)
                     </div>
-                    <div class="quote-box">"बाबू अजय... तुम्हारी इज्जत अब सुरक्षित है, अब यह 'गंदा भाई' तुम्हारे घर कभी नहीं आएगा।"</div>
                 </div>
             </div>
+            </section>
 
-            <div class="story-card" data-id="h2">
-                <div class="story-header">
-                    <h2 class="story-title" onclick="toggleStory('c-h2', 'b-h2')">पत्थर का दिल</h2>
-                    <span class="bookmark-btn" onclick="toggleBookmark(this, 'h2')">✎</span>
-                </div>
-                <button class="read-btn" id="b-h2" onclick="toggleStory('c-h2', 'b-h2')">Open Story</button>
-                <div id="c-h2" class="full-content">
-                    <div class="story-text">गंगापुर एक छोटा-सा शांत गाँव था... (तपाईँको पूर्ण कथा यहाँ)</div>
-                </div>
-            </div>
-        </section>
-
-        <section>
+        <section class="page-content">
             <div class="story-card" data-id="n1">
-                <div class="story-header">
-                    <h2 class="story-title" onclick="toggleStory('c-n1', 'b-n1')">दिदीको समर्पण</h2>
-                    <span class="bookmark-btn" onclick="toggleBookmark(this, 'n1')">✎</span>
+                <div class="card-header">
+                    <h2 class="story-title" onclick="toggleStory('n1')">दिदीको समर्पण</h2>
+                    <span class="pencil-mark" onclick="markStory('n1')">✎</span>
                 </div>
-                <button class="read-btn" id="b-n1" onclick="toggleStory('c-n1', 'b-n1')">Open Story</button>
-                <div id="c-n1" class="full-content">
-                    <div class="story-text">पहाडको काखमा एउटा सानो गाउँ थियो... (तपाईँको पूर्ण कथा यहाँ)</div>
+                <button class="btn-view" id="btn-n1" onclick="toggleStory('n1')">पूरा पढ्नुहोस्</button>
+                <div class="story-detail" id="detail-n1">
+                    <div class="content-text">
+                        पहाडको काखमा एउटा सानो गाउँ थियो। त्यहाँ दुईजना बहिनीहरू बस्थे— शितल र कुसुम...
+                        (तपाईँको पूर्ण कथा यहाँ राख्नुहोस्)
+                    </div>
                 </div>
             </div>
-        </section>
+            </section>
+
     </div>
 
     <script>
-        // 1. Splash Screen Logic
-        window.addEventListener('load', () => {
+        // Splash Screen
+        window.onload = () => {
             setTimeout(() => {
-                document.getElementById('splash').style.opacity = '0';
-                setTimeout(() => document.getElementById('splash').remove(), 500);
+                document.getElementById('splash').style.transform = 'translateY(-100%)';
+                loadBookmarks();
             }, 2500);
-        });
+        };
 
-        // 2. Tab Navigation with Slide
-        function showPage(index) {
-            document.getElementById('slider').style.transform = `translateX(-${index * 100}vw)`;
-            document.querySelectorAll('.tab-nav div').forEach((tab, i) => {
-                tab.classList.toggle('active', i === index);
-            });
+        // Tab Switching
+        function switchTab(idx) {
+            document.getElementById('mainSlider').style.transform = `translateX(-${idx * 100}vw)`;
+            document.getElementById('btnH').classList.toggle('active', idx === 0);
+            document.getElementById('btnN').classList.toggle('active', idx === 1);
         }
 
-        // 3. Story Toggle with Fade Animation
-        function toggleStory(contentId, btnId) {
-            const content = document.getElementById(contentId);
-            const btn = document.getElementById(btnId);
-            
-            if (content.classList.contains('show')) {
-                content.classList.remove('show');
-                btn.innerText = "Open Story";
+        // Story Fade Toggle
+        function toggleStory(id) {
+            const detail = document.getElementById('detail-' + id);
+            const btn = document.getElementById('btn-' + id);
+            if (detail.classList.contains('open')) {
+                detail.classList.remove('open');
+                btn.innerText = "पूरा पढ्नुहोस्/पढें";
             } else {
-                content.classList.add('show');
-                btn.innerText = "Close Story";
+                detail.classList.add('open');
+                btn.innerText = "बन्द गर्नुहोस्";
             }
         }
 
-        // 4. Night Mode Logic
+        // Night Mode
         function toggleTheme() {
-            const body = document.body;
-            const theme = body.getAttribute('data-theme');
-            if (theme === 'dark') {
-                body.removeAttribute('data-theme');
-                document.getElementById('themeIcon').innerText = '🌙';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                document.getElementById('themeIcon').innerText = '☀️';
-            }
+            const b = document.body;
+            const current = b.getAttribute('data-theme');
+            const target = current === 'light' ? 'dark' : 'light';
+            b.setAttribute('data-theme', target);
+            document.getElementById('themeSwitcher').innerText = target === 'light' ? '🌙' : '☀️';
         }
 
-        // 5. Font Resizer
-        function changeFontSize(delta) {
-            const texts = document.querySelectorAll('.story-text');
-            texts.forEach(text => {
-                const currentSize = window.getComputedStyle(text).fontSize;
-                text.style.fontSize = (parseFloat(currentSize) + delta) + 'px';
+        // Font Resize
+        function resizeText(n) {
+            const texts = document.querySelectorAll('.content-text');
+            texts.forEach(t => {
+                const style = window.getComputedStyle(t).fontSize;
+                t.style.fontSize = (parseFloat(style) + n) + 'px';
             });
         }
 
-        // 6. Bookmark (Pencil) Logic - Saves to Device
-        function toggleBookmark(element, storyId) {
-            element.classList.toggle('active');
-            let marks = JSON.parse(localStorage.getItem('adhiraj_marks')) || {};
+        // Pencil Bookmark System
+        function markStory(id) {
+            const el = document.querySelector(`[data-id="${id}"] .pencil-mark`);
+            el.classList.toggle('active');
             
-            if (element.classList.contains('active')) {
-                marks[storyId] = true;
+            let marks = JSON.parse(localStorage.getItem('my_marks')) || {};
+            if (el.classList.contains('active')) {
+                marks[id] = true;
             } else {
-                delete marks[storyId];
+                delete marks[id];
             }
-            localStorage.setItem('adhiraj_marks', JSON.stringify(marks));
+            localStorage.setItem('my_marks', JSON.stringify(marks));
         }
 
-        // Load saved marks on startup
-        window.addEventListener('DOMContentLoaded', () => {
-            let marks = JSON.parse(localStorage.getItem('adhiraj_marks')) || {};
+        function loadBookmarks() {
+            let marks = JSON.parse(localStorage.getItem('my_marks')) || {};
             for (let id in marks) {
-                const el = document.querySelector(`[data-id="${id}"] .bookmark-btn`);
+                const el = document.querySelector(`[data-id="${id}"] .pencil-mark`);
                 if (el) el.classList.add('active');
             }
-        });
+        }
     </script>
 </body>
 </html>
