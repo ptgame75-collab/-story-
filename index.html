@@ -3,202 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StoryBook - Aadhiraj</title>
-    <link rel="manifest" href="manifest.json">
+    <title>अधिराज Story</title>
     <style>
         :root {
-            --bg: #FAF9F6;
-            --text: #000;
-            --header-bg: #fff;
-            --card-bg: #fff;
+            --bg-color: #F5F5F0; /* Off-White */
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --text-color: #222;
+            --accent-color: #000;
+            --glass-border: rgba(255, 255, 255, 0.3);
         }
 
-        .dark-mode {
-            --bg: #121212;
-            --text: #fff;
-            --header-bg: #1e1e1e;
-            --card-bg: #252525;
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: rgba(40, 40, 40, 0.6);
+            --text-color: #e0e0e0;
+            --accent-color: #fff;
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            overflow-x: hidden;
-            transition: 0.3s;
-        }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-color); color: var(--text-color); }
 
-        /* १. टप इन्टरफेस (फोटोमा देखाए जस्तै) */
-        header {
-            background: var(--header-bg);
-            padding: 15px 20px;
+        /* 1. Loading Screen */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; color: #fff; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+        }
+        .progress-container { width: 200px; height: 4px; background: #333; margin-top: 20px; border-radius: 2px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: #007AFF; animation: load 2s forwards; }
+        @keyframes load { to { width: 100%; } }
+
+        /* Header & Nav */
+        header { padding: 15px; display: flex; justify-content: space-between; align-items: center; background: var(--bg-color); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .theme-toggle { background: var(--accent-color); color: var(--bg-color); border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; }
+
+        .tabs { display: flex; justify-content: space-around; border-bottom: 1px solid #ccc; background: var(--bg-color); }
+        .tab { padding: 15px; cursor: pointer; opacity: 0.6; font-weight: bold; }
+        .tab.active { opacity: 1; border-bottom: 3px solid var(--accent-color); }
+
+        /* 13. Search Bar */
+        .search-container { padding: 10px 15px; }
+        #search { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc; background: var(--card-bg); color: var(--text-color); }
+
+        /* 3. Glass Card Design */
+        .story-grid { padding: 20px; display: grid; gap: 20px; }
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #ddd;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
+        .story-title { font-size: 1.2rem; font-weight: bold; margin: 0; }
+        .read-btn { background: var(--accent-color); color: var(--bg-color); border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; }
 
-        .logo-section { display: flex; align-items: center; gap: 8px; font-size: 22px; font-weight: bold; }
-        .nav-btns { display: flex; gap: 10px; }
-        .nav-btn {
-            background: #f0e6dd; border: none; padding: 8px 15px;
-            border-radius: 8px; color: #8d6e63; font-weight: bold; cursor: pointer;
-        }
-
-        /* २. मेन ब्यानर (Stories Worth Reading) */
-        .banner {
-            text-align: center; padding: 40px 20px;
-        }
-        .collection-tag {
-            background: #eee; padding: 5px 15px; border-radius: 20px;
-            font-size: 14px; color: #888; font-weight: bold;
-        }
-        .banner h1 { font-size: 45px; margin: 20px 0 10px; line-height: 1.1; }
-        .banner p { font-size: 18px; color: #555; }
-
-        /* ३. स्वाइप सेटिङ (हिन्दी पहिलो, नेपाली दोस्रो) */
-        .view-port { width: 100vw; overflow: hidden; }
-        .swipe-wrapper {
-            display: flex; width: 200vw;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .page {
-            width: 100vw; min-height: 60vh;
-            padding: 10px; box-sizing: border-box;
-            overflow-y: auto; /* तल स्क्रोल गर्न मिल्ने */
-        }
-
-        /* ४. स्टोरी कार्ड डिजाइन (शीर्षक मात्र ठूलो) */
-        .story-card {
-            background: var(--card-bg);
-            margin: 15px auto; padding: 35px 20px;
-            width: 90%; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            cursor: pointer;
-        }
-        .story-card h2 { font-size: 32px; margin: 0; font-weight: 900; }
-
-        /* ५. स्टोरी रिडर */
-        #reader {
+        /* 4. Story Modal (Transaction) */
+        #story-view {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg); z-index: 2000; display: none; overflow-y: auto;
+            background: var(--bg-color); z-index: 1000; display: none;
+            overflow-y: auto; padding: 25px; transform: translateY(100%); transition: transform 0.4s ease-out;
         }
-        .reader-top {
-            padding: 20px; display: flex; justify-content: space-between;
-            background: var(--header-bg); position: sticky; top: 0;
-        }
-        .content { padding: 30px; font-size: 22px; line-height: 1.7; }
-        .green-msg { color: #2e7d32; font-weight: bold; font-size: 26px; margin-top: 20px; }
+        #story-view.open { display: block; transform: translateY(0); }
+        
+        /* 5. Font Controls */
+        .font-controls { position: sticky; top: 0; background: var(--bg-color); padding: 10px 0; border-bottom: 1px solid #eee; display: flex; gap: 10px; }
+        
+        .content { margin-top: 20px; line-height: 1.6; }
+        .author { margin-top: 40px; font-weight: bold; border-top: 1px solid #eee; padding-top: 10px; }
+        .short-msg { color: #2ecc71; font-weight: bold; margin-top: 5px; } /* Green Color */
+        .thanks { font-style: italic; margin-top: 20px; color: gray; }
 
-        .hidden { display: none; }
+        /* 14. Bookmark Style */
+        .bookmark-btn { background: #f39c12; color: white; border: none; padding: 5px; border-radius: 5px; margin-bottom: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="splash" style="position:fixed;top:0;width:100%;height:100vh;background:#000;color:#fff;display:flex;justify-content:center;align-items:center;z-index:9999;">
-        <h1>Aadhiraj Story</h1>
+    <div id="loader">
+        <h1 style="letter-spacing: 2px;">Aadhiraj Story</h1>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
     </div>
 
     <header>
-        <div class="logo-section">
-            <img src="logo.png" width="30" alt="📖" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3389/3389081.png'">
-            StoryBook
-        </div>
-        <div class="nav-btns">
-            <button class="nav-btn" onclick="toggleTheme()">🌙</button>
-            <button class="nav-btn">Stories</button>
-            <button class="nav-btn">Admin</button>
-        </div>
+        <div class="logo">अधिराज Story</div>
+        <button class="theme-toggle" onclick="toggleTheme()">Day/Night</button>
     </header>
 
-    <div class="banner">
-        <span class="collection-tag">COLLECTION 2026</span>
-        <h1>Stories Worth Reading</h1>
-        <p>हृदय छुने कथाहरूको सङ्ग्रह।</p>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="कथा खोज्नुहोस्...">
     </div>
 
-    <div class="view-port">
-        <div class="swipe-wrapper" id="swipeBox">
-            <div class="page" id="hindi-list">
-                <center><small>हिन्दी कहानियाँ (← नेपालीका लागि स्लाइड गर्नुहोस्)</small></center>
-                </div>
-            <div class="page" id="nepali-list">
-                <center><small>नेपाली कथाहरू (हिन्दीका लागि → स्लाइड गर्नुहोस्)</small></center>
-                </div>
-        </div>
+    <div class="tabs">
+        <div class="tab active" onclick="showLang('hi')">हिन्दी कथाहरू</div>
+        <div class="tab" onclick="showLang('ne')">नेपाली कथाहरू</div>
     </div>
 
-    <div id="reader">
-        <div class="reader-top">
-            <button onclick="closeStory()" style="font-size:30px; border:none; background:none; color:var(--text);">✕</button>
-            <div>
-                <button onclick="zoom(-2)" style="padding:10px;">A-</button>
-                <button onclick="zoom(2)" style="padding:10px;">A+</button>
-            </div>
+    <main id="story-list" class="story-grid">
+        </main>
+
+    <div id="story-view">
+        <button onclick="closeStory()" style="padding: 10px; margin-bottom: 10px;">← Back</button>
+        
+        <div class="font-controls">
+            <button onclick="changeFont(2)">A+</button>
+            <button onclick="changeFont(-2)">A-</button>
+            <button onclick="saveBookmark()" class="bookmark-btn">Bookmark Here</button>
+            <button onclick="removeBookmark()" style="background:#e74c3c; color:white; border:none; border-radius:5px;">Clear</button>
         </div>
-        <div class="content" id="storyContent"></div>
-    </div>
+
+        <h1 id="view-title"></h1>
+        <div id="view-content" class="content"></div>
+        
+        <div class="author">लेखक: अधिराज सुनार</div> <div class="short-msg">शुभ यात्रा</div> <p class="thanks">Thanks for reading</p> </div>
 
     <script>
-        // स्प्लास स्क्रिन
+        // Data Sample
+        const stories = [
+            { id: 1, lang: 'hi', title: 'स्वार्थी भाई', content: 'यहाँ कथाको विवरण हुनेछ... धेरै लामो कथा यहाँ लेख्नुहोस्।' },
+            { id: 2, lang: 'ne', title: 'पत्थर का दिल', content: 'मेहनत र धैर्यको कथा यहाँ छ...' }
+        ];
+
+        // 1. Loader Timeout
         window.onload = () => {
-            setTimeout(() => document.getElementById('splash').style.display = 'none', 2000);
-            loadStories();
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+            }, 2000);
+            renderStories('hi');
         };
 
-        // थिम स्विच (Day/Night)
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-        }
-
-        // स्वाइप जेस्चर (Swipe Between Hindi & Nepali)
-        let startX = 0;
-        const swipeBox = document.getElementById('swipeBox');
-
-        swipeBox.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-        swipeBox.addEventListener('touchend', e => {
-            let diff = startX - e.changedTouches[0].clientX;
-            if (diff > 80) swipeBox.style.transform = 'translateX(-100vw)'; // To Nepali
-            if (diff < -80) swipeBox.style.transform = 'translateX(0vw)'; // To Hindi
-        });
-
-        // कथाहरू लोड गर्ने
-        async function loadStories() {
-            const res = await fetch('stories.json');
-            const stories = await res.json();
-            
-            const neList = document.getElementById('nepali-list');
-            const hiList = document.getElementById('hindi-list');
-
-            stories.forEach(s => {
-                const card = `
-                    <div class="story-card" onclick="openStory('${s.title}', \`${s.content}\`, '${s.author}', '${s.tag}')">
-                        <h2>${s.title}</h2>
-                    </div>`;
-                if(s.lang === "hi") hiList.innerHTML += card;
-                else neList.innerHTML += card;
+        // Render Cards
+        function renderStories(lang) {
+            const container = document.getElementById('story-list');
+            container.innerHTML = '';
+            stories.filter(s => s.lang === lang).forEach(story => {
+                const card = document.createElement('div');
+                card.className = 'glass-card';
+                card.innerHTML = `
+                    <p class="story-title">${story.title}</p>
+                    <button class="read-btn" onclick="openStory(${story.id})">Read</button>
+                `;
+                container.appendChild(card);
             });
         }
 
-        function openStory(title, content, author, tag) {
-            document.getElementById('storyContent').innerHTML = `
-                <h1 style="font-size:40px;">${title}</h1>
-                <p>${content}</p>
-                <hr>
-                <p>लेखक: <b>${author}</b></p>
-                <div class="green-msg">${tag}</div>
-                <p style="text-align:center; margin-top:60px; color:gray;">Thanks for reading</p>`;
-            document.getElementById('reader').style.display = 'block';
+        function showLang(lang) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            renderStories(lang);
         }
 
-        function closeStory() { document.getElementById('reader').style.display = 'none'; }
-        
-        let fSize = 22;
-        function zoom(n) { fSize += n; document.getElementById('storyContent').style.fontSize = fSize + 'px'; }
+        // 4. Open Story
+        let currentFontSize = 18;
+        function openStory(id) {
+            const story = stories.find(s => s.id === id);
+            document.getElementById('view-title').innerText = story.title;
+            document.getElementById('view-content').innerText = story.content;
+            const modal = document.getElementById('story-view');
+            modal.classList.add('open');
+            
+            // Check for bookmark
+            const savedScroll = localStorage.getItem('bookmark_' + id);
+            if(savedScroll) {
+                setTimeout(() => modal.scrollTo(0, savedScroll), 500);
+            }
+        }
+
+        function closeStory() {
+            document.getElementById('story-view').classList.remove('open');
+        }
+
+        // 5. Font Size
+        function changeFont(step) {
+            currentFontSize += step;
+            document.getElementById('view-content').style.fontSize = currentFontSize + 'px';
+        }
+
+        // 6. Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const current = body.getAttribute('data-theme');
+            body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
+
+        // 14. Bookmark Logic
+        function saveBookmark() {
+            const scrollPos = document.getElementById('story-view').scrollTop;
+            // Simplified: using a fixed key for demo
+            localStorage.setItem('temp_bookmark', scrollPos);
+            alert("यहाँसम्मको पढाई सेभ भयो!");
+        }
+
+        function removeBookmark() {
+            localStorage.removeItem('temp_bookmark');
+            alert("बुकमार्क हटाइयो।");
+        }
     </script>
 </body>
 </html>
