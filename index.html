@@ -5,138 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>अधिराज Story</title>
     <style>
+        /* तपाइँको मूल डिजाइन जस्ताको त्यस्तै */
         :root {
-            --bg-color: #f4f7f6;
-            --card-bg: rgba(255, 255, 255, 0.7);
+            --bg-color: #f9f7f2;
+            --card-bg: #ffffff;
             --text-dark: #2d2d2d;
             --accent-brown: #a68b6d;
-            --nav-bg: #ffffff;
-            --loading-bg: #000000;
+            --success-green: #2e7d32;
+            --header-bg: #fff;
         }
 
+        /* Night Mode को लागि थपिएको CSS */
         [data-theme="dark"] {
             --bg-color: #121212;
-            --card-bg: rgba(40, 40, 40, 0.7);
+            --card-bg: #1e1e1e;
             --text-dark: #e0e0e0;
-            --nav-bg: #1e1e1e;
-            --accent-brown: #d4b499;
+            --header-bg: #1e1e1e;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: background 0.3s ease; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: background 0.3s; }
         body { background-color: var(--bg-color); margin: 0; font-family: 'Georgia', serif; color: var(--text-dark); overflow-x: hidden; }
 
-        /* Loading Screen */
-        #splash-screen {
+        /* Splash Loading Screen */
+        #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--loading-bg); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9999;
+            background: #000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 10000;
         }
-        .splash-logo { color: white; font-size: 28px; font-weight: bold; margin-bottom: 20px; letter-spacing: 2px; }
-        .progress-container { width: 60%; height: 4px; background: #333; border-radius: 10px; overflow: hidden; }
-        .progress-bar { width: 0%; height: 100%; background: #2196F3; transition: width 0.1s; }
+        .splash-text { color: white; font-size: 24px; font-weight: bold; margin-bottom: 20px; }
+        .progress-box { width: 200px; height: 4px; background: #333; border-radius: 10px; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: #2196F3; transition: width 0.1s; }
 
         header { 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 5%; background: var(--nav-bg); position: sticky; top: 0; z-index: 1000; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            padding: 15px 5%; background: var(--header-bg); position: sticky; top: 0; z-index: 1000; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
         }
-        .logo-text { font-size: 20px; font-weight: bold; font-style: italic; }
-
-        /* Glass Card Design */
-        .story-card { 
-            background: var(--card-bg); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px; padding: 20px; 
-            margin: 20px auto; max-width: 600px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
+        .logo-text { font-size: 22px; font-weight: bold; font-style: italic; display: flex; align-items: center; gap: 8px; }
 
         .tab-nav { 
-            display: flex; justify-content: center; background: var(--nav-bg); 
-            position: sticky; top: 56px; z-index: 999; 
+            display: flex; justify-content: center; background: var(--header-bg); 
+            border-bottom: 1px solid #eee; position: sticky; top: 58px; z-index: 999; 
         }
-        .tab-nav div { padding: 15px 20px; cursor: pointer; font-weight: bold; color: #888; border-bottom: 3px solid transparent; }
+        .tab-nav div { 
+            padding: 12px 25px; cursor: pointer; font-weight: bold; color: #888; 
+            border-bottom: 3px solid transparent; font-size: 14px; 
+        }
         .tab-nav div.active { color: var(--text-dark); border-bottom: 3px solid var(--accent-brown); }
 
-        /* Transition for Story Opening */
-        .full-content { 
-            display: none; height: 0; overflow: hidden; opacity: 0;
-            transition: all 0.5s ease-in-out;
+        .main-wrapper { display: flex; width: 200vw; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        section { width: 100vw; padding: 20px; height: calc(100vh - 110px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+        .story-card { 
+            background: var(--card-bg); border-radius: 25px; padding: 25px; 
+            margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            max-width: 650px; margin-left: auto; margin-right: auto;
         }
-        .full-content.open { display: block; height: auto; opacity: 1; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; }
 
-        .story-text p { font-size: 18px; line-height: 1.8; margin-bottom: 15px; cursor: pointer; padding: 5px; border-radius: 5px; }
-        .story-text p.bookmarked { background: rgba(33, 150, 243, 0.2); border-left: 4px solid #2196F3; }
+        /* Transition फिचरको लागि थप */
+        .full-content { 
+            display: none; margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px; 
+            animation: slideIn 0.5s ease;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .btn-mode { background: none; border: 1px solid var(--accent-brown); color: var(--text-dark); padding: 5px 10px; border-radius: 15px; cursor: pointer; }
-        .read-btn { width: 100%; padding: 12px; background: var(--text-dark); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        .badge { color: var(--accent-brown); background: #efe9e1; padding: 5px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+        .story-title { font-size: 30px; margin: 15px 0; line-height: 1.3; }
+
+        /* Bookmark Style */
+        .story-text p { font-size: 18px; line-height: 1.9; text-align: justify; margin-bottom: 15px; cursor: pointer; }
+        .bookmarked { background: rgba(33, 150, 243, 0.15); border-left: 4px solid #2196F3; padding-left: 10px; }
+
+        .font-controls { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
+        .font-controls button { padding: 5px 12px; cursor: pointer; border: 1px solid #ccc; background: #fff; border-radius: 5px; font-weight: bold; }
+
+        .quote-box { background: rgba(183, 28, 28, 0.05); padding: 20px; border-left: 5px solid #b71c1c; margin: 25px 0; font-style: italic; font-weight: bold; }
+        .read-btn { width: 100%; padding: 15px; background: var(--text-dark); color: white; border: none; border-radius: 15px; font-size: 16px; font-weight: bold; cursor: pointer; }
+
+        .author-name { font-size: 15px; color: #777; text-align: left; margin: 20px 0; font-weight: bold; border-left: 3px solid var(--accent-brown); padding-left: 10px; }
+        .victory-msg { color: var(--success-green); text-align: center; font-weight: bold; font-size: 24px; margin: 30px 0 10px; }
+        .thanks-msg { text-align: center; color: #555; font-size: 16px; margin-bottom: 20px; }
         
-        .main-wrapper { display: flex; width: 200vw; transition: transform 0.4s ease; }
-        section { width: 100vw; padding: 10px; height: calc(100vh - 110px); overflow-y: auto; }
-
-        .quote-box { background: rgba(183, 28, 28, 0.1); padding: 15px; border-left: 5px solid #b71c1c; margin: 20px 0; font-style: italic; }
-        .author-name { font-size: 14px; opacity: 0.8; margin: 15px 0; border-left: 3px solid var(--accent-brown); padding-left: 10px; }
-        .victory-msg { text-align: center; font-weight: bold; font-size: 22px; color: var(--accent-brown); margin: 20px 0; }
-        
-        /* Bookmark indicator */
-        .bookmark-info { font-size: 12px; color: #2196F3; display: none; margin-bottom: 10px; }
+        #bookmark-alert { 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: #2196F3; color: white; padding: 10px 20px; border-radius: 30px;
+            font-size: 14px; display: none; z-index: 2000;
+        }
     </style>
 </head>
-<body>
+<body data-theme="light">
 
-    <div id="splash-screen">
-        <div class="splash-logo">ADHIRAJ STORY</div>
-        <div class="progress-container"><div class="progress-bar" id="p-bar"></div></div>
+    <div id="splash">
+        <div class="splash-text">अधिराज Story</div>
+        <div class="progress-box"><div class="progress-fill" id="fill"></div></div>
     </div>
 
+    <div id="bookmark-alert">चिन्ह लगाइयो (Bookmark Saved)</div>
+
     <header>
-        <div class="logo-text">🅰️ अधिराज</div>
-        <button class="btn-mode" onclick="toggleTheme()">Day/Night</button>
+        <div class="logo-text">🅰️ अधिराज Story</div>
+        <button onclick="toggleTheme()" style="background:var(--text-dark); color:#fff; border:none; padding:8px 18px; border-radius:20px; font-size:12px; cursor:pointer;">Mode</button>
     </header>
 
     <nav class="tab-nav">
-        <div id="tab0" class="active" onclick="showProfile(0)">हिन्दी</div>
-        <div id="tab1" onclick="showProfile(1)">नेपाली</div>
+        <div id="tab0" class="active" onclick="showProfile(0)">हिन्दी कथाहरू</div>
+        <div id="tab1" onclick="showProfile(1)">नेपाली कथाहरू</div>
     </nav>
 
     <div class="main-wrapper" id="contentWrapper">
         
         <section id="hindiSection">
             <div class="story-card" id="cardS1">
-                <span class="bookmark-info" id="infoS1">📍 यहाँबाट पढ्न बाँकी छ</span>
-                <h2 class="story-title">स्वार्थी भाई</h2>
-                <p class="short-desc">एक भाई का बलिदान और दूसरे का स्वार्थ।</p>
-                <button class="read-btn" onclick="toggleStory('contentS1', this)">Read Story</button>
+                <span class="badge">Collection: Hindi</span>
+                <h2 class="story-title" onclick="toggleStory('contentS1', 'btnS1')">स्वार्थी भाई</h2>
+                <p style="color: #666;">एक भाई का बलिदान और दूसरे का स्वार्थ।</p>
+                <button class="read-btn" id="btnS1" onclick="toggleStory('contentS1', 'btnS1')">Read</button>
 
                 <div id="contentS1" class="full-content">
-                    <div class="story-text" id="textS1">
-                        <p onclick="setBookmark('S1', 0)">गरीबी और सपनों की नींव...</p>
-                        <p onclick="setBookmark('S1', 1)">बहुत साल पहले की बात है, एक छोटे से गाँव में विजय और अजय नाम के दो भाई रहते थे।</p>
-                        <p onclick="setBookmark('S1', 2)">विजय पढ़ाई में बहुत तेज था, लेकिन उसने स्कूल जाना छोड़ दिया।</p>
-                        <div class="quote-box">"बाबू अजय, मुझे माफ करना... अब यह 'गंदा भाई' तुम्हारे घर कभी नहीं आएगा।"</div>
+                    <div class="font-controls">
+                        <button onclick="changeFontSize('textS1', 2)">A+</button>
+                        <button onclick="changeFontSize('textS1', -2)">A-</button>
                     </div>
+                    <div class="story-text" id="textS1">
+                        <p onclick="mark(this, 'S1', 0)">गरीबी और सपनों की नींव...</p>
+                        <p onclick="mark(this, 'S1', 1)">बहुत साल पहले की बात है, एक छोटे से गाँव में विजय और अजय नाम के दो भाई रहते थे।</p>
+                        <p onclick="mark(this, 'S1', 2)">विजय पढ़ाई में बहुत तेज था, लेकिन उसने स्कूल जाना छोड़ दिया।</p>
+                        </div>
                     <div class="author-name">लेखक: अधिराज सुनार</div>
                     <div class="victory-msg">बलिदान</div>
+                    <button onclick="clearBookmark('S1')" style="margin-top:10px; background:none; border:none; color:red; cursor:pointer;">चिन्ह मेटाउनुहोस्</button>
                 </div>
             </div>
-            
+
             </section>
 
         <section id="nepaliSection">
             <div class="story-card" id="cardN1">
-                <span class="bookmark-info" id="infoN1">📍 यहाँबाट पढ्न बाँकी छ</span>
-                <h2 class="story-title">दिदीको समर्पण</h2>
-                <p class="short-desc">शितल र कुसुम: त्याग र प्रेमको एउटा अमर गाउँले कथा।</p>
-                <button class="read-btn" onclick="toggleStory('contentN1', this)">Read Story</button>
+                <span class="badge" style="background:#e1f5fe; color:#0288d1;">Collection: Nepali</span>
+                <h2 class="story-title" onclick="toggleStory('contentN1', 'btnN1')">दिदीको समर्पण</h2>
+                <p style="color: #666;">शितल र कुसुम: त्याग र प्रेमको एउटा अमर गाउँले कथा।</p>
+                <button class="read-btn" id="btnN1" onclick="toggleStory('contentN1', 'btnN1')">Read</button>
 
                 <div id="contentN1" class="full-content">
                     <div class="story-text" id="textN1">
-                        <p onclick="setBookmark('N1', 0)">पहाडको काखमा एउटा सानो गाउँ थियो...</p>
-                        <p onclick="setBookmark('N1', 1)">जेठी दिदी शितल शान्त थिइन्, सायद पहाडका पुराना देउरालीहरू जस्तै।</p>
-                        </div>
+                        <p onclick="mark(this, 'N1', 0)">पहाडको काखमा एउटा सानो गाउँ थियो...</p>
+                        <p onclick="mark(this, 'N1', 1)">जेठी दिदी शितल शान्त थिइन्, सायद पहाडका पुराना देउरालीहरू जस्तै।</p>
+                    </div>
                     <div class="author-name">लेखक: अधिराज सुनार</div>
                     <div class="victory-msg">निस्वार्थ प्रेम</div>
+                    <button onclick="clearBookmark('N1')" style="margin-top:10px; background:none; border:none; color:red; cursor:pointer;">चिन्ह मेटाउनुहोस्</button>
                 </div>
             </div>
         </section>
@@ -145,81 +162,92 @@
     <script>
         // Loading Logic
         window.addEventListener('load', () => {
-            let bar = document.getElementById('p-bar');
+            let fill = document.getElementById('fill');
             let width = 0;
-            let interval = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(interval);
-                    document.getElementById('splash-screen').style.display = 'none';
-                    loadBookmarks();
+            let time = setInterval(() => {
+                if(width >= 100) {
+                    clearInterval(time);
+                    document.getElementById('splash').style.display = 'none';
+                    checkSavedBookmarks();
                 } else {
-                    width += 5;
-                    bar.style.width = width + '%';
+                    width += 4;
+                    fill.style.width = width + '%';
                 }
             }, 50);
         });
 
-        // Theme Toggle
+        // Night Mode Logic
         function toggleTheme() {
             const body = document.body;
-            const current = body.getAttribute('data-theme');
-            if (current === 'dark') {
-                body.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
+            const theme = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+        if(localStorage.getItem('theme')) document.body.setAttribute('data-theme', localStorage.getItem('theme'));
+
+        // Story Toggle with Animation
+        function toggleStory(contentId, btnId) {
+            const content = document.getElementById(contentId);
+            const btn = document.getElementById(btnId);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                btn.innerText = "Read";
             } else {
-                body.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
+                content.style.display = "block";
+                btn.innerText = "कथा लुकाउनुहोस्";
             }
         }
 
-        // Apply saved theme on load
-        if(localStorage.getItem('theme') === 'dark') document.body.setAttribute('data-theme', 'dark');
-
-        // Toggle Story Opening
-        function toggleStory(id, btn) {
-            const content = document.getElementById(id);
-            if (content.classList.contains('open')) {
-                content.classList.remove('open');
-                btn.innerText = "Read Story";
-            } else {
-                content.classList.add('open');
-                btn.innerText = "Close Story";
-            }
+        // Bookmark Logic
+        function mark(el, storyId, index) {
+            // सबैबाट हटाउने
+            const paragraphs = el.parentElement.querySelectorAll('p');
+            paragraphs.forEach(p => p.classList.remove('bookmarked'));
+            
+            // नयाँ थप्ने
+            el.classList.add('bookmarked');
+            localStorage.setItem('bookmark_' + storyId, index);
+            
+            // Alert देखाउने
+            const alertBox = document.getElementById('bookmark-alert');
+            alertBox.style.display = 'block';
+            setTimeout(() => alertBox.style.display = 'none', 2000);
         }
 
-        // Tab Switching
+        function checkSavedBookmarks() {
+            const storyIds = ['S1', 'N1']; // यहाँ सबै कथाको ID राख्नुहोस्
+            storyIds.forEach(id => {
+                const savedIndex = localStorage.getItem('bookmark_' + id);
+                if(savedIndex !== null) {
+                    const textDiv = document.getElementById('text' + id);
+                    if(textDiv) {
+                        const p = textDiv.querySelectorAll('p')[savedIndex];
+                        if(p) p.classList.add('bookmarked');
+                    }
+                }
+            });
+        }
+
+        function clearBookmark(storyId) {
+            localStorage.removeItem('bookmark_' + storyId);
+            const paragraphs = document.getElementById('text' + storyId).querySelectorAll('p');
+            paragraphs.forEach(p => p.classList.remove('bookmarked'));
+            alert("चिन्ह हटाइयो।");
+        }
+
         function showProfile(index) {
-            document.getElementById('contentWrapper').style.transform = `translateX(-${index * 100}vw)`;
+            const wrapper = document.getElementById('contentWrapper');
+            wrapper.style.transform = `translateX(-${index * 100}vw)`;
             document.querySelectorAll('.tab-nav div').forEach((tab, i) => {
                 tab.classList.toggle('active', i === index);
             });
         }
 
-        // Bookmark System
-        function setBookmark(storyId, paraIndex) {
-            const storyText = document.querySelector(`#content${storyId} .story-text`);
-            const paras = storyText.querySelectorAll('p');
-            
-            // Remove old bookmarks for this story
-            paras.forEach(p => p.classList.remove('bookmarked'));
-            
-            // Add new
-            paras[paraIndex].classList.add('bookmarked');
-            localStorage.setItem('bookmark_' + storyId, paraIndex);
-            
-            alert("पढ्ने ठाउँ सुरक्षित गरियो (Bookmark Saved)!");
-        }
-
-        function loadBookmarks() {
-            const stories = ['S1', 'N1']; // Add all story IDs here
-            stories.forEach(id => {
-                const savedIndex = localStorage.getItem('bookmark_' + id);
-                if (savedIndex !== null) {
-                    document.getElementById('info' + id).style.display = 'block';
-                    const paras = document.querySelectorAll(`#content${id} .story-text p`);
-                    if(paras[savedIndex]) paras[savedIndex].classList.add('bookmarked');
-                }
-            });
+        function changeFontSize(textId, delta) {
+            const el = document.getElementById(textId);
+            const style = window.getComputedStyle(el, null).getPropertyValue('font-size');
+            const currentSize = parseFloat(style);
+            el.style.fontSize = (currentSize + delta) + 'px';
         }
 
         // Swipe Logic
@@ -227,8 +255,10 @@
         document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
         document.addEventListener('touchend', e => {
             let endX = e.changedTouches[0].clientX;
-            if (startX - endX > 80) showProfile(1);
-            if (endX - startX > 80) showProfile(0);
+            if (Math.abs(startX - endX) > 80) {
+                if (startX - endX > 80) showProfile(1);
+                if (endX - startX > 80) showProfile(0);
+            }
         });
     </script>
 </body>
