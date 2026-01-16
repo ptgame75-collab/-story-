@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aadhiraj Story</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="splash-screen">
+        <div class="splash-content">
+            <h1>Aadhiraj Story</h1>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-area" id="app-logo">
+            </div>
+        <div class="top-controls">
+            <input type="text" id="searchBar" placeholder="कथा खोज्नुहोस्...">
+            <button id="themeToggle">🌙</button>
+        </div>
+    </header>
+
+    <main id="app-home" class="hidden">
+        <div class="tabs">
+            <button id="tab-ne" class="active">नेपाली</button>
+            <button id="tab-hi">हिन्दी</button>
+        </div>
+
+        <div id="story-list" class="glass-container">
+            </div>
+    </main>
+
+    <section id="story-reader" class="hidden">
+        <div class="reader-tools">
+            <button onclick="changeFontSize(-2)">A-</button>
+            <button onclick="changeFontSize(2)">A+</button>
+            <button id="savePoint">📌 सेभ गर्नुहोस</button>
+            <button onclick="closeStory()">Back</button>
+        </div>
+        <article id="content-area">
+            </article>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
