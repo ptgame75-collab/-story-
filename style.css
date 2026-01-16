@@ -1,81 +1,42 @@
-/* २. style.css */
 :root {
-    --bg-color: #FAF9F6; /* Off-White */
-    --card-bg: rgba(255, 255, 255, 0.7); /* Glass Effect */
-    --text-color: #333;
-    --accent-blue: #007AFF; /* प्रोग्रेस बारको लागि निलो */
+    --bg: #FAF9F6;
+    --glass: rgba(255, 255, 255, 0.8);
+    --text: #222;
 }
 
-/* स्प्लास स्क्रिन डिजाइन */
-#splash-screen {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: #000;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
-
-.progress-container {
-    width: 200px;
-    height: 4px;
-    background: #333;
-    margin-top: 20px;
-}
-
-.progress-bar {
-    width: 0%;
-    height: 100%;
-    background: var(--accent-blue);
-    animation: loading 2s forwards;
-}
-
-@keyframes loading {
-    to { width: 100%; }
-}
-
-/* मुख्य बडी */
-body {
-    background-color: var(--bg-color);
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    color: var(--text-color);
-}
-
-/* ग्लास कार्ड डिजाइन */
-.glass-container {
-    padding: 20px;
-}
-
-.story-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    border: 1px solid rgba(255,255,255,0.3);
-}
-
-/* Open Story बटन (कालो ब्याकग्राउन्ड, सेतो अक्षर) */
-.open-btn {
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-/* हरियो सन्देशको लागि */
-.green-msg {
-    color: green;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
+body { background: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; }
 .hidden { display: none; }
+
+/* Splash Screen */
+#splash-screen {
+    position: fixed; top: 0; width: 100%; height: 100vh;
+    background: #000; color: #fff; display: flex;
+    flex-direction: column; justify-content: center; align-items: center;
+}
+.loader-line {
+    width: 150px; height: 4px; background: #333; margin-top: 20px;
+    position: relative; overflow: hidden;
+}
+.loader-line::after {
+    content: ''; position: absolute; left: -100%; width: 100%; height: 100%;
+    background: #007AFF; animation: loading 2s infinite;
+}
+@keyframes loading { to { left: 100%; } }
+
+/* Glass Card */
+.story-card {
+    background: var(--glass); backdrop-filter: blur(10px);
+    margin: 15px; padding: 20px; border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.open-btn {
+    background: #000; color: #fff; border: none;
+    padding: 10px 20px; border-radius: 20px; cursor: pointer;
+}
+
+.green-tag { color: green; font-weight: bold; margin-top: 10px; }
+
+/* Dark Mode */
+body.dark { --bg: #121212; --text: #eee; --glass: rgba(30,30,30,0.8); }
