@@ -3,91 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aadhiraj Story</title>
+    <title>StoryBook - Aadhiraj</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        :root { --bg: #FAF9F6; --text: #222; }
-        body { background: var(--bg); color: var(--text); margin: 0; font-family: sans-serif; overflow-x: hidden; }
-        .hidden { display: none; }
-
-        /* स्प्लास स्क्रिन */
-        #splash {
-            position: fixed; top:0; width:100%; height:100vh; background: #000; color: #fff;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000;
+        :root {
+            --bg: #FAF9F6;
+            --text: #000;
+            --header-bg: #fff;
+            --card-bg: #fff;
         }
 
-        /* ट्याब डिजाइन */
-        .tabs { display: flex; background: #fff; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #ddd; }
-        .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-size: 18px; font-weight: bold; cursor: pointer; }
-        .tab-btn.active { border-bottom: 3px solid #007AFF; color: #007AFF; }
+        .dark-mode {
+            --bg: #121212;
+            --text: #fff;
+            --header-bg: #1e1e1e;
+            --card-bg: #252525;
+        }
 
-        /* स्वाइप कन्टेनर */
-        .swipe-container { display: flex; width: 200vw; transition: transform 0.3s ease-out; }
-        .page { width: 100vw; padding: 15px; box-sizing: border-box; }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            transition: 0.3s;
+        }
 
-        /* ठूला स्टोरी कार्डहरू */
+        /* १. टप इन्टरफेस (फोटोमा देखाए जस्तै) */
+        header {
+            background: var(--header-bg);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section { display: flex; align-items: center; gap: 8px; font-size: 22px; font-weight: bold; }
+        .nav-btns { display: flex; gap: 10px; }
+        .nav-btn {
+            background: #f0e6dd; border: none; padding: 8px 15px;
+            border-radius: 8px; color: #8d6e63; font-weight: bold; cursor: pointer;
+        }
+
+        /* २. मेन ब्यानर (Stories Worth Reading) */
+        .banner {
+            text-align: center; padding: 40px 20px;
+        }
+        .collection-tag {
+            background: #eee; padding: 5px 15px; border-radius: 20px;
+            font-size: 14px; color: #888; font-weight: bold;
+        }
+        .banner h1 { font-size: 45px; margin: 20px 0 10px; line-height: 1.1; }
+        .banner p { font-size: 18px; color: #555; }
+
+        /* ३. स्वाइप सेटिङ (हिन्दी पहिलो, नेपाली दोस्रो) */
+        .view-port { width: 100vw; overflow: hidden; }
+        .swipe-wrapper {
+            display: flex; width: 200vw;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .page {
+            width: 100vw; min-height: 60vh;
+            padding: 10px; box-sizing: border-box;
+            overflow-y: auto; /* तल स्क्रोल गर्न मिल्ने */
+        }
+
+        /* ४. स्टोरी कार्ड डिजाइन (शीर्षक मात्र ठूलो) */
         .story-card {
-            background: #fff; margin-bottom: 20px; padding: 35px 20px; border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); cursor: pointer;
+            background: var(--card-bg);
+            margin: 15px auto; padding: 35px 20px;
+            width: 90%; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            cursor: pointer;
         }
-        .story-card h2 { margin: 0; font-size: 30px; font-weight: 800; line-height: 1.2; }
+        .story-card h2 { font-size: 32px; margin: 0; font-weight: 900; }
 
-        /* रिडर स्क्रिन */
+        /* ५. स्टोरी रिडर */
         #reader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg);
-            z-index: 500; display: none; overflow-y: auto; animation: slideUp 0.4s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 2000; display: none; overflow-y: auto;
         }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .reader-nav { padding: 20px; display: flex; justify-content: space-between; background: #fff; position: sticky; top: 0; }
-        .content { padding: 25px; font-size: 22px; line-height: 1.6; }
-        .green-msg { color: green; font-weight: bold; font-size: 24px; margin-top: 20px; }
+        .reader-top {
+            padding: 20px; display: flex; justify-content: space-between;
+            background: var(--header-bg); position: sticky; top: 0;
+        }
+        .content { padding: 30px; font-size: 22px; line-height: 1.7; }
+        .green-msg { color: #2e7d32; font-weight: bold; font-size: 26px; margin-top: 20px; }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <div id="splash">
+    <div id="splash" style="position:fixed;top:0;width:100%;height:100vh;background:#000;color:#fff;display:flex;justify-content:center;align-items:center;z-index:9999;">
         <h1>Aadhiraj Story</h1>
-        <div style="width:150px; height:3px; background:#333; margin-top:20px; position:relative; overflow:hidden;">
-            <div style="width:100%; height:100%; background:#007AFF; position:absolute; left:-100%; animation: load 2s forwards;"></div>
+    </div>
+
+    <header>
+        <div class="logo-section">
+            <img src="logo.png" width="30" alt="📖" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3389/3389081.png'">
+            StoryBook
+        </div>
+        <div class="nav-btns">
+            <button class="nav-btn" onclick="toggleTheme()">🌙</button>
+            <button class="nav-btn">Stories</button>
+            <button class="nav-btn">Admin</button>
+        </div>
+    </header>
+
+    <div class="banner">
+        <span class="collection-tag">COLLECTION 2026</span>
+        <h1>Stories Worth Reading</h1>
+        <p>हृदय छुने कथाहरूको सङ्ग्रह।</p>
+    </div>
+
+    <div class="view-port">
+        <div class="swipe-wrapper" id="swipeBox">
+            <div class="page" id="hindi-list">
+                <center><small>हिन्दी कहानियाँ (← नेपालीका लागि स्लाइड गर्नुहोस्)</small></center>
+                </div>
+            <div class="page" id="nepali-list">
+                <center><small>नेपाली कथाहरू (हिन्दीका लागि → स्लाइड गर्नुहोस्)</small></center>
+                </div>
         </div>
     </div>
 
-    <header style="padding: 15px; display: flex; justify-content: space-between; align-items: center; background: #fff;">
-        <img src="logo.png" width="40" alt="Logo" onerror="this.style.display='none'">
-        <input type="text" id="search" placeholder="खोज्नुहोस्..." style="padding: 8px; border-radius: 10px; border: 1px solid #ddd;">
-    </header>
-
-    <div class="tabs">
-        <button class="tab-btn active" id="tabNe" onclick="switchTab(0)">नेपाली</button>
-        <button class="tab-btn" id="tabHi" onclick="switchTab(1)">हिन्दी</button>
-    </div>
-
-    <div class="swipe-container" id="swipeBox">
-        <div class="page" id="nepali-list"></div>
-        <div class="page" id="hindi-list"></div>
-    </div>
-
     <div id="reader">
-        <div class="reader-nav">
-            <button onclick="closeStory()" style="font-size: 24px; border:none; background:none;">✕</button>
+        <div class="reader-top">
+            <button onclick="closeStory()" style="font-size:30px; border:none; background:none; color:var(--text);">✕</button>
             <div>
-                <button onclick="zoom(-2)">A-</button>
-                <button onclick="zoom(2)">A+</button>
+                <button onclick="zoom(-2)" style="padding:10px;">A-</button>
+                <button onclick="zoom(2)" style="padding:10px;">A+</button>
             </div>
         </div>
         <div class="content" id="storyContent"></div>
     </div>
 
     <script>
-        let startX = 0;
-        const swipeBox = document.getElementById('swipeBox');
-
-        // स्प्लास स्क्रिन २.५ सेकेन्डमा हटाउने
+        // स्प्लास स्क्रिन
         window.onload = () => {
-            setTimeout(() => document.getElementById('splash').style.display = 'none', 2500);
+            setTimeout(() => document.getElementById('splash').style.display = 'none', 2000);
             loadStories();
         };
 
+        // थिम स्विच (Day/Night)
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // स्वाइप जेस्चर (Swipe Between Hindi & Nepali)
+        let startX = 0;
+        const swipeBox = document.getElementById('swipeBox');
+
+        swipeBox.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+        swipeBox.addEventListener('touchend', e => {
+            let diff = startX - e.changedTouches[0].clientX;
+            if (diff > 80) swipeBox.style.transform = 'translateX(-100vw)'; // To Nepali
+            if (diff < -80) swipeBox.style.transform = 'translateX(0vw)'; // To Hindi
+        });
+
+        // कथाहरू लोड गर्ने
         async function loadStories() {
             const res = await fetch('stories.json');
             const stories = await res.json();
@@ -97,38 +176,22 @@
 
             stories.forEach(s => {
                 const card = `
-                    <div class="story-card" onclick="openStory('${s.title}', '${s.content}', '${s.author}', '${s.tag}')">
+                    <div class="story-card" onclick="openStory('${s.title}', \`${s.content}\`, '${s.author}', '${s.tag}')">
                         <h2>${s.title}</h2>
-                        <p style="color:gray; margin-top:10px;">पढ्न ट्याप गर्नुहोस् →</p>
                     </div>`;
                 if(s.lang === "hi") hiList.innerHTML += card;
                 else neList.innerHTML += card;
             });
         }
 
-        // ट्याब स्विच र स्वाइप लोजिक
-        function switchTab(index) {
-            swipeBox.style.transform = `translateX(-${index * 100}vw)`;
-            document.getElementById('tabNe').classList.toggle('active', index === 0);
-            document.getElementById('tabHi').classList.toggle('active', index === 1);
-        }
-
-        // मोबाइल स्वाइप जेस्चर (Swipe Gesture)
-        swipeBox.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-        swipeBox.addEventListener('touchend', e => {
-            let diff = startX - e.changedTouches[0].clientX;
-            if (diff > 50) switchTab(1); // Right to Left (Hindi)
-            if (diff < -50) switchTab(0); // Left to Right (Nepali)
-        });
-
         function openStory(title, content, author, tag) {
             document.getElementById('storyContent').innerHTML = `
-                <h1>${title}</h1>
+                <h1 style="font-size:40px;">${title}</h1>
                 <p>${content}</p>
                 <hr>
                 <p>लेखक: <b>${author}</b></p>
                 <div class="green-msg">${tag}</div>
-                <p style="text-align:center; margin-top:50px; color:gray;">Thanks for reading</p>`;
+                <p style="text-align:center; margin-top:60px; color:gray;">Thanks for reading</p>`;
             document.getElementById('reader').style.display = 'block';
         }
 
