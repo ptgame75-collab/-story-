@@ -1,18 +1,35 @@
-[
-  {
-    "id": "1",
-    "lang": "ne",
-    "title": "नेपाली कथाको शीर्षक",
-    "content": "कथाको अंश...",
-    "author": "अधिराज सुनार",
-    "tag": "शुभम्"
-  },
-  {
-    "id": "2",
-    "lang": "hi",
-    "title": "हिन्दी कहानी का शीर्षक",
-    "content": "कहानी का हिस्सा...",
-    "author": "अधिराज सुनार",
-    "tag": "प्रेम"
-  }
-]
+function loadStories() {
+    const hindiSec = document.getElementById('hindiSection');
+    const nepaliSec = document.getElementById('nepaliSection');
+
+    storyLibrary.forEach(story => {
+        const card = `
+            <div class="story-card" onclick="openStory('${story.id}')">
+                <h2 class="story-title">${story.title}</h2>
+                <button class="read-btn">Read</button>
+            </div>
+        `;
+        if(story.lang === 'hindi') hindiSec.innerHTML += card;
+        else nepaliSec.innerHTML += card;
+    });
+}
+
+function openStory(id) {
+    const story = storyLibrary.find(s => s.id === id);
+    const page = document.getElementById('reading-page');
+    const content = document.getElementById('fullStoryContent');
+    
+    // कथालाई <p> ट्यागमा विभाजन गर्ने (Bookmark को लागि)
+    const formattedContent = story.content.split('\n').map(p => 
+        p.trim() ? `<p onclick="this.classList.toggle('bookmarked')">${p}</p>` : ''
+    ).join('');
+
+    content.innerHTML = `<h1>${story.title}</h1>${formattedContent}`;
+    page.style.display = 'flex';
+}
+
+function closeStory() { document.getElementById('reading-page').style.display = 'none'; }
+function showProfile(idx) { document.getElementById('contentWrapper').style.transform = `translateX(-${idx * 100}vw)`; }
+function toggleNightMode() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
+
+window.onload = loadStories;
