@@ -4,230 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>अधिराज Story</title>
-    <style>
-        :root {
-            --bg-color: #f9f7f2;
-            --text-dark: #2d2d2d;
-            --accent-brown: #a68b6d;
-            --success-green: #2e7d32;
-            --bookmark-bg: rgba(33, 150, 243, 0.1);
-        }
-
-        /* Night Mode Feature */
-        [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-dark: #e0e0e0;
-            background-color: #121212;
-        }
-        [data-theme="dark"] .story-card, [data-theme="dark"] header, [data-theme="dark"] .tab-nav {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-        }
-        [data-theme="dark"] .tab-nav div.active { border-bottom-color: #fff; color: #fff; }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-color); margin: 0; font-family: 'Georgia', serif; color: var(--text-dark); overflow-x: hidden; transition: background 0.3s; }
-
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 5%; background: #fff; position: sticky; top: 0; z-index: 1000; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
-        }
-        .logo-text { font-size: 22px; font-weight: bold; font-style: italic; display: flex; align-items: center; gap: 8px; }
-
-        .tab-nav { 
-            display: flex; justify-content: center; background: #fff; 
-            border-bottom: 1px solid #eee; position: sticky; top: 58px; z-index: 999; 
-        }
-        .tab-nav div { 
-            padding: 12px 25px; cursor: pointer; font-weight: bold; color: #888; 
-            border-bottom: 3px solid transparent; font-size: 14px; 
-        }
-        .tab-nav div.active { color: var(--text-dark); border-bottom: 3px solid var(--text-dark); }
-
-        .main-wrapper { display: flex; width: 200vw; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-        section { width: 100vw; padding: 20px; height: calc(100vh - 110px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
-
-        .story-card { 
-            background: #fff; border-radius: 25px; padding: 25px; 
-            margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-            max-width: 650px; margin-left: auto; margin-right: auto;
-        }
-        .badge { color: var(--accent-brown); background: #efe9e1; padding: 5px 12px; border-radius: 15px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
-        
-        /* शीर्षकमा ट्याप गर्दा खुल्ने बनाउन Pointer */
-        .story-title { font-size: 30px; margin: 15px 0 10px; line-height: 1.3; cursor: pointer; }
-
-        /* Read बटन सानो र बायाँ साइडमा */
-        .read-btn { 
-            display: inline-block; width: auto; padding: 8px 25px; 
-            background: var(--text-dark); color: white; border: none; 
-            border-radius: 20px; font-size: 14px; font-weight: bold; 
-            cursor: pointer; transition: 0.3s;
-        }
-
-        /* कथा खुल्दा हुने सानो Transition एनिमेसन */
-        .full-content { 
-            display: none; margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px;
-            animation: slideUp 0.5s ease-out; 
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .story-text { font-size: 18px; line-height: 1.9; text-align: justify; white-space: pre-line; }
-        
-        /* बुकमार्क फिचरको लागि */
-        .story-text p { cursor: pointer; padding: 5px; border-radius: 8px; margin: 5px 0; }
-        .bookmarked { background-color: var(--bookmark-bg); border-left: 4px solid #2196f3; }
-
-        .font-controls { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
-        .font-controls button { padding: 5px 12px; cursor: pointer; border: 1px solid #ccc; background: #fff; border-radius: 5px; font-weight: bold; }
-
-        .quote-box { background: #fff5f5; padding: 20px; border-left: 5px solid #b71c1c; margin: 25px 0; font-style: italic; font-weight: bold; }
-        .author-name { font-size: 15px; color: #777; text-align: left; margin: 20px 0; font-weight: bold; border-left: 3px solid var(--accent-brown); padding-left: 10px; }
-        .victory-msg { color: var(--success-green); text-align: center; font-weight: bold; font-size: 24px; margin: 30px 0 10px; }
-        .thanks-msg { text-align: center; color: #555; font-size: 16px; margin-bottom: 20px; }
-
-        /* Night Mode Button Style */
-        .night-toggle { background: #eee; border: none; padding: 8px; border-radius: 50%; cursor: pointer; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <div class="logo-text">🅰️ अधिराज Story</div>
-        <div style="display: flex; gap: 10px; align-items: center;">
-            <button onclick="toggleNightMode()" class="night-toggle" title="Night Mode">🌙</button>
-            <button style="background:var(--text-dark); color:#fff; border:none; padding:8px 18px; border-radius:20px; font-size:12px;">Stories</button>
-        </div>
+    <header id="mainHeader">
+        <div class="logo-text">✍🏻 अधिराज Story</div>
+        <button onclick="toggleNightMode()" class="night-toggle">🌙</button>
     </header>
 
     <nav class="tab-nav">
-        <div id="tab0" class="active" onclick="showProfile(0)">हिन्दी कथाहरू</div>
+        <div id="tab0" class="active" onclick="showProfile(0)">हिन्दी कहानीहरू</div>
         <div id="tab1" onclick="showProfile(1)">नेपाली कथाहरू</div>
     </nav>
 
     <div class="main-wrapper" id="contentWrapper">
-        
-        <section id="hindiSection">
-            <div class="story-card">
-                <span class="badge">Collection: Hindi</span>
-                <h2 class="story-title" onclick="toggleStory('contentS1', 'btnS1')">स्वार्थी भाई</h2>
-                <button class="read-btn" id="btnS1" onclick="toggleStory('contentS1', 'btnS1')">Read</button>
-
-                <div id="contentS1" class="full-content">
-                    <div class="font-controls">
-                        <button onclick="changeFontSize('textS1', 2)">A+</button>
-                        <button onclick="changeFontSize('textS1', -2)">A-</button>
-                    </div>
-                    <div class="story-text" id="textS1">
-                        <p onclick="toggleBookmark(this)">गरीबी और सपनों की नींव</p>
-                        <p onclick="toggleBookmark(this)">बहुत साल पहले की बात है, एक छोटे से गाँव में विजय और अजय नाम के दो भाई रहते थे। विजय बड़ा था और अजय छोटा। उनके माता-पिता की एक सड़क दुर्घटना में मौत हो गई थी, जिसके बाद दस साल के विजय के कंधों पर पाँच साल के भाई को पालने की जिम्मेदारी आ गई।</p>
-                        <p onclick="toggleBookmark(this)">विजय पढ़ाई में बहुत तेज था, लेकिन उसने स्कूल जाना छोड़ दिया। उसने समझ लिया था कि अगर वह पढ़ने गया, तो छोटा भाई भूखा मर जाएगा। विजय ने एक चाय की दुकान पर गिलास धोने का काम शुरू किया। छोटी उम्र, कोमल हाथ, लेकिन जिम्मेदारी पहाड़ जैसी।</p>
-                        </div>
-                    <div class="author-name">लेखक: अधिराज सुनार</div>
-                    <div class="victory-msg">बलिदान</div>
-                    <div class="thanks-msg">♡︎ Thanks For Reading ♡︎</div>
-                </div>
-            </div>
-
-            <div class="story-card">
-                <span class="badge">Collection: Hindi</span>
-                <h2 class="story-title" onclick="toggleStory('contentS4', 'btnS4')">पत्थर का दिल</h2>
-                <button class="read-btn" id="btnS4" onclick="toggleStory('contentS4', 'btnS4')">Read</button>
-
-                <div id="contentS4" class="full-content">
-                    <div class="font-controls">
-                        <button onclick="changeFontSize('textS4', 2)">A+</button>
-                        <button onclick="changeFontSize('textS4', -2)">A-</button>
-                    </div>
-                    <div class="story-text" id="textS4">
-                        <p onclick="toggleBookmark(this)">गंगापुर एक छोटा-सा शांत गाँव था, जो हरे-भरे खेतों और घने आम के बागों से घिरा हुआ था। इसी गाँव में रहता था बूढ़ा किसान, हरि।</p>
-                    </div>
-                    <div class="author-name">लेखक: अधिराज सुनार</div>
-                    <div class="victory-msg">धैर्यको फल</div>
-                    <div class="thanks-msg">♡︎ Thanks For Reading ♡︎</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="nepaliSection">
-            <div class="story-card">
-                <span class="badge" style="background:#e1f5fe; color:#0288d1;">Collection: Nepali</span>
-                <h2 class="story-title" onclick="toggleStory('contentN1', 'btnN1')">दिदीको समर्पण</h2>
-                <button class="read-btn" style="background:#0288d1;" id="btnN1" onclick="toggleStory('contentN1', 'btnN1')">Read</button>
-
-                <div id="contentN1" class="full-content">
-                    <div class="story-text" id="textN1">
-                        <p onclick="toggleBookmark(this)">पहाडको काखमा एउटा सानो गाउँ थियो, जहाँ बादलहरू घरका झ्यालबाट भित्र पस्ने गर्थे।</p>
-                    </div>
-                    <div class="author-name">लेखक: अधिराज सुनार</div>
-                    <div class="victory-msg">निस्वार्थ प्रेम</div>
-                    <div class="thanks-msg">♡︎ Thanks For Reading ♡︎</div>
-                </div>
-            </div>
-        </section>
+        <section id="hindiSection"></section>
+        <section id="nepaliSection"></section>
     </div>
 
-    <script>
-        // १. ट्याब स्विच गर्ने
-        function showProfile(index) {
-            const wrapper = document.getElementById('contentWrapper');
-            wrapper.style.transform = `translateX(-${index * 100}vw)`;
-            document.querySelectorAll('.tab-nav div').forEach((tab, i) => {
-                tab.classList.toggle('active', i === index);
-            });
-            document.querySelectorAll('section')[index].scrollTo(0, 0);
-        }
+    <div id="reading-page">
+        <div class="reading-header">
+            <button class="close-btn" onclick="closeStory()">✕ Close</button>
+        </div>
+        <div class="reading-content" id="fullStoryContent"></div>
+    </div>
 
-        // २. कथा खोल्ने र बन्द गर्ने (Transition सहित)
-        function toggleStory(contentId, btnId) {
-            const content = document.getElementById(contentId);
-            const btn = document.getElementById(btnId);
-            if (content.style.display === "block") {
-                content.style.display = "none";
-                btn.innerText = "Read";
-            } else {
-                content.style.display = "block";
-                btn.innerText = "लुकाउनुहोस्";
-            }
-        }
-
-        // ३. बुकमार्क फिचर (हरफमा क्लिक गर्दा रङ्ग बदलिने)
-        function toggleBookmark(element) {
-            element.classList.toggle('bookmarked');
-        }
-
-        // ४. नाइट मोड फिचर
-        function toggleNightMode() {
-            const body = document.body;
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-            } else {
-                body.setAttribute('data-theme', 'dark');
-            }
-        }
-
-        // फन्ट साइज परिवर्तन
-        function changeFontSize(textId, delta) {
-            const el = document.getElementById(textId);
-            const style = window.getComputedStyle(el, null).getPropertyValue('font-size');
-            const currentSize = parseFloat(style);
-            el.style.fontSize = (currentSize + delta) + 'px';
-        }
-
-        // स्वाइप फिचर
-        let startX;
-        document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-        document.addEventListener('touchend', e => {
-            let endX = e.changedTouches[0].clientX;
-            if (Math.abs(startX - endX) > 80) {
-                if (startX - endX > 80) showProfile(1);
-                if (endX - startX > 80) showProfile(0);
-            }
-        });
-    </script>
+    <script src="stories.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
