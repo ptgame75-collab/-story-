@@ -3,31 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>अधिराज Story</title>
+    <title>Aadhiraj Story</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header id="mainHeader">
-        <div class="logo-text">✍🏻 अधिराज Story</div>
-        <button onclick="toggleNightMode()" class="night-toggle">🌙</button>
-    </header>
-
-    <nav class="tab-nav">
-        <div id="tab0" class="active" onclick="showProfile(0)">हिन्दी कहानीहरू</div>
-        <div id="tab1" onclick="showProfile(1)">नेपाली कथाहरू</div>
-    </nav>
-
-    <div class="main-wrapper" id="contentWrapper">
-        <section id="hindiSection"></section>
-        <section id="nepaliSection"></section>
+    <div id="loader">
+        <h1>Aadhiraj Story</h1>
+        <div class="progress-container"><div class="progress-bar"></div></div>
     </div>
 
-    <div id="reading-page">
-        <div class="reading-header">
-            <button class="close-btn" onclick="closeStory()">✕ Close</button>
+    <header>
+        <span class="logo">✍🏻 अधिराज Story</span>
+        <div class="header-right">
+            <input type="text" id="searchBar" placeholder="खोज्नुहोस्..." oninput="searchStory()">
+            <button onclick="toggleTheme()" class="theme-btn">🌗</button>
         </div>
-        <div class="reading-content" id="fullStoryContent"></div>
+    </header>
+
+    <div class="tabs">
+        <div class="tab active" id="tabH" onclick="switchTab(0)">हिन्दी</div>
+        <div class="tab" id="tabN" onclick="switchTab(1)">नेपाली</div>
+    </div>
+
+    <div class="slider" id="mainSlider">
+        <div class="page" id="hindiList"></div>
+        <div class="page" id="nepaliList"></div>
+    </div>
+
+    <div id="reader-mode">
+        <div class="reader-header">
+            <button onclick="closeReader()" class="close-btn">बन्द गर्नुहोस्</button>
+            <div class="font-tools">
+                <button onclick="changeFont(2)">A+</button>
+                <button onclick="changeFont(-2)">A-</button>
+            </div>
+        </div>
+        <div class="reader-body" id="readerBody"></div>
     </div>
 
     <script src="stories.js"></script>
