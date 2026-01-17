@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aadhiraj Story</title>
+    <title>अधिराज Story</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#000000">
 </head>
 <body>
 
@@ -18,30 +20,48 @@
     <div id="app-content" class="hidden">
         <nav class="top-nav">
             <div class="nav-left">📖 अधिराज Story</div>
-            <button onclick="toggleNightMode()" id="theme-btn">🌙</button>
+            <div class="nav-right">
+                <button onclick="toggleNightMode()" id="theme-btn">🌙</button>
+            </div>
         </nav>
 
         <header class="hero">
-            <h1>COLLECTION 2026</h1>
-            <p>Stories Worth Reading</p>
+            <span class="pill">COLLECTION 2026</span>
+            <h1>Stories Worth Reading</h1>
+            <p>हृदय छुने कथाहरूको सङ्ग्रह।</p>
         </header>
 
-        <div class="tab-bar">
-            <div class="tab" onclick="switchLang('nepali', 0)">नेपाली</div>
-            <div class="tab" onclick="switchLang('hindi', 50)">हिन्दी</div>
-            <div id="tab-underline" class="underline"></div>
+        <div class="tab-wrapper">
+            <div class="tab-bar">
+                <div class="tab" onclick="switchLang('hindi', 0)">हिन्दी कथाहरू</div>
+                <div class="tab" onclick="switchLang('nepali', 50)">नेपाली कथाहरू</div>
+                <div id="tab-underline" class="underline"></div>
+            </div>
         </div>
 
-        <div class="controls">
-            <span>अक्षर:</span>
-            <button onclick="changeFontSize(-2)">A-</button>
-            <button onclick="changeFontSize(2)">A+</button>
-        </div>
+        <main id="story-list-container"></main>
 
-        <main id="story-container"></main>
+        <div id="story-view" class="hidden">
+            <div class="view-header">
+                <button onclick="closeStory()" class="back-btn">← पछाडि</button>
+                <div class="font-controls">
+                    <button onclick="changeFontSize(-2)">A-</button>
+                    <button onclick="changeFontSize(2)">A+</button>
+                </div>
+            </div>
+            <div id="full-story-content"></div>
+        </div>
     </div>
 
     <script src="stories.js"></script>
     <script src="script.js"></script>
+    <script>
+        // इन्स्टल गर्न मिल्ने बनाउन Service Worker दर्ता
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(()=>{});
+            });
+        }
+    </script>
 </body>
 </html>
