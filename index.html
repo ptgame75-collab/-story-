@@ -3,46 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aadhiraj Story</title>
+    <title>अधिराज Story</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="loader">
-        <div class="loader-content">
-            <span class="pen-icon">✍️</span>
-            <h1>अधिराज Story</h1>
-            <div class="progress-bar"><div class="fill"></div></div>
-        </div>
+<div id="loader">
+    <div class="loading-pen">✍️</div>
+    <h2 style="color:white;">अधिराज Story</h2>
+</div>
+
+<header>
+    <span class="logo">✍️ अधिराज Story</span>
+    <div class="header-right">
+        <input type="text" id="searchBar" placeholder="खोज्नुहोस्..." oninput="searchStory()">
+        <button onclick="toggleTheme()" class="theme-btn">🌓</button>
     </div>
+</header>
 
-    <header>
-        <span class="logo">✍️ अधिराज Story</span>
-        <div class="header-right">
-            <input type="text" id="searchBar" placeholder="खोज्नुहोस्..." oninput="searchStory()">
-            <button onclick="toggleTheme()" class="theme-btn">🌗</button>
-        </div>
-    </header>
+<div class="tabs">
+    <div class="tab active" id="tabH" onclick="switchTab(0)">हिन्दी कथाहरू</div>
+    <div class="tab" id="tabN" onclick="switchTab(1)">नेपाली कथाहरू</div>
+</div>
 
-    <div class="tabs">
-        <div class="tab active" id="tabH" onclick="switchTab(0)">हिन्दी</div>
-        <div class="tab" id="tabN" onclick="switchTab(1)">नेपाली</div>
+<div class="slider" id="mainSlider">
+    <div class="page" id="hindiList"></div>
+    <div class="page" id="nepaliList"></div>
+</div>
+
+<div id="reader-mode">
+    <div style="padding:15px; background:var(--card-bg); display:flex; justify-content:space-between;">
+        <button onclick="closeReader()" style="border:none; background:none; font-size:20px;">✕</button>
+        <span style="font-weight:bold;">पढ्दै...</span>
     </div>
+    <div class="reader-body" id="readerBody"></div>
+</div>
 
-    <div class="slider" id="mainSlider">
-        <div class="page" id="hindiList"></div>
-        <div class="page" id="nepaliList"></div>
-    </div>
-
-    <div id="reader-mode" class="hidden">
-        <div class="reader-header">
-            <button onclick="closeReader()" class="back-btn">← पछाडि</button>
-            <span id="reading-title">पढ्दै...</span>
-        </div>
-        <div class="reader-body" id="readerBody"></div>
-    </div>
-
-    <script src="stories.js"></script>
-    <script src="script.js"></script>
+<script src="stories.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
