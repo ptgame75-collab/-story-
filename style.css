@@ -1,70 +1,55 @@
 :root {
-    --bg-color: #f8f9fa;
+    --bg-color: #f5f5f5;
     --card-bg: #ffffff;
-    --text-color: #333;
+    --text-color: #222;
     --accent: #2196f3;
+    --ghiu-color: #b8a99a; /* लेखकको लागि मधुरो घिउ कलर */
 }
 [data-theme="dark"] {
-    --bg-color: #1a1a1a;
-    --card-bg: #2d2d2d;
-    --text-color: #f1f1f1;
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #e0e0e0;
 }
-body { margin: 0; font-family: sans-serif; background: var(--bg-color); color: var(--text-color); overflow: hidden; }
+body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg-color); color: var(--text-color); overflow: hidden; }
 
-/* Header & Search */
-header { padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-.header-right { display: flex; align-items: center; gap: 10px; }
-
-#searchBar { 
-    width: 100px; /* सर्च बार सानो पारिएको */
-    padding: 6px; 
-    border-radius: 8px; 
-    border: 1px solid #ccc; 
-    font-size: 13px;
-    background: var(--bg-color);
-    color: var(--text-color);
+/* लोडर एनिमेसन */
+#loader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #121212; display: flex; justify-content: center; align-items: center; z-index: 9999;
 }
-.theme-btn { background: none; border: none; font-size: 20px; cursor: pointer; padding: 0; }
+.loader-content { text-align: center; color: white; }
+.pen-icon { font-size: 50px; display: block; animation: bounce 1s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.progress-bar { width: 150px; height: 4px; background: #333; margin: 20px auto; border-radius: 5px; overflow: hidden; }
+.fill { width: 0%; height: 100%; background: var(--accent); animation: progress 2.5s forwards; }
+@keyframes progress { to { width: 100%; } }
 
-/* Tabs */
-.tabs { display: flex; border-bottom: 2px solid #ddd; background: var(--card-bg); }
-.tab { flex: 1; text-align: center; padding: 12px; font-weight: bold; cursor: pointer; color: #888; }
-.tab.active { color: var(--accent); border-bottom: 3px solid var(--accent); }
-
-/* Scrolling System */
-.slider { display: flex; width: 200vw; transition: transform 0.3s ease; }
-.page { 
-    width: 100vw; 
-    height: calc(100vh - 110px); 
-    overflow-y: auto; /* ठाडो स्क्रोलिङ */
-    overflow-x: hidden; /* तेर्सो स्क्रोलिङ ट्याबबाट मात्र */
-    padding: 15px; 
-    box-sizing: border-box; 
-}
-
-/* Story Card - Read Button पछाडि */
+/* कार्ड डिजाइन - रिड बटन पछाडि */
 .story-card {
-    background: var(--card-bg);
-    margin-bottom: 12px;
-    padding: 15px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between; /* शीर्षक अगाडि, बटन पछाडि */
-    align-items: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background: var(--card-bg); margin-bottom: 12px; padding: 18px;
+    border-radius: 15px; display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: 0.3s;
 }
-.story-title { font-size: 16px; font-weight: bold; flex: 1; margin-right: 10px; }
+.story-title { font-size: 17px; font-weight: bold; flex: 1; }
 .read-btn-small { 
-    background: var(--accent); 
-    color: white; 
-    border: none; 
-    padding: 8px 16px; 
-    border-radius: 8px; 
-    font-size: 12px;
-    cursor: pointer;
+    background: var(--accent); color: white; border: none; padding: 10px 18px;
+    border-radius: 10px; cursor: pointer; font-size: 13px; margin-left: 10px;
 }
 
-/* Reader Mode */
-#reader-mode { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 1000; display: none; flex-direction: column; }
-.reader-header { padding: 15px; display: flex; justify-content: space-between; background: var(--card-bg); }
-.reader-body { flex: 1; padding: 20px; overflow-y: auto; line-height: 1.8; font-size: 18px; }
+/* लेखक र सन्देश कलर */
+.author-name { color: var(--ghiu-color); font-size: 15px; margin-top: 15px; font-style: italic; }
+.green-summary { color: #2e7d32; font-weight: bold; margin: 10px 0; font-size: 18px; }
+
+/* ट्रान्जिसन */
+#reader-mode {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-color); z-index: 2000; display: flex; flex-direction: column;
+    transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#reader-mode.active { transform: translateY(0); }
+.hidden { display: none !important; }
+
+/* सर्च बार सानो र नाइट मोड छेउमा */
+header { padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); }
+.header-right { display: flex; align-items: center; gap: 8px; }
+#searchBar { width: 90px; padding: 6px; border-radius: 8px; border: 1px solid #ccc; font-size: 12px; }
