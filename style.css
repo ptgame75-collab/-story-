@@ -1,55 +1,57 @@
 :root {
-    --bg-color: #f5f5f5;
+    --bg-color: #f8f9fa;
     --card-bg: #ffffff;
-    --text-color: #222;
-    --accent: #2196f3;
-    --ghiu-color: #b8a99a; /* लेखकको लागि मधुरो घिउ कलर */
+    --text-color: #2c3e50;
+    --accent: #3498db;
+    --ghiu-color: #a09383; /* मधुरो घिउ कलर */
 }
 [data-theme="dark"] {
     --bg-color: #121212;
     --card-bg: #1e1e1e;
-    --text-color: #e0e0e0;
+    --text-color: #ecf0f1;
 }
 body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg-color); color: var(--text-color); overflow: hidden; }
 
 /* लोडर एनिमेसन */
 #loader {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #121212; display: flex; justify-content: center; align-items: center; z-index: 9999;
+    background: #1a1a1a; display: flex; flex-direction: column; 
+    justify-content: center; align-items: center; z-index: 9999;
 }
-.loader-content { text-align: center; color: white; }
-.pen-icon { font-size: 50px; display: block; animation: bounce 1s infinite; }
-@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-.progress-bar { width: 150px; height: 4px; background: #333; margin: 20px auto; border-radius: 5px; overflow: hidden; }
-.fill { width: 0%; height: 100%; background: var(--accent); animation: progress 2.5s forwards; }
-@keyframes progress { to { width: 100%; } }
+.loading-pen { font-size: 40px; animation: write 1.5s infinite alternate; }
+@keyframes write { from { transform: translateX(-20px) rotate(-10deg); } to { transform: translateX(20px) rotate(10deg); } }
 
-/* कार्ड डिजाइन - रिड बटन पछाडि */
-.story-card {
-    background: var(--card-bg); margin-bottom: 12px; padding: 18px;
-    border-radius: 15px; display: flex; justify-content: space-between; align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: 0.3s;
-}
-.story-title { font-size: 17px; font-weight: bold; flex: 1; }
-.read-btn-small { 
-    background: var(--accent); color: white; border: none; padding: 10px 18px;
-    border-radius: 10px; cursor: pointer; font-size: 13px; margin-left: 10px;
-}
-
-/* लेखक र सन्देश कलर */
-.author-name { color: var(--ghiu-color); font-size: 15px; margin-top: 15px; font-style: italic; }
-.green-summary { color: #2e7d32; font-weight: bold; margin: 10px 0; font-size: 18px; }
-
-/* ट्रान्जिसन */
-#reader-mode {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--bg-color); z-index: 2000; display: flex; flex-direction: column;
-    transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-#reader-mode.active { transform: translateY(0); }
-.hidden { display: none !important; }
-
-/* सर्च बार सानो र नाइट मोड छेउमा */
+/* हेडर र सर्च सानो बनाइएको */
 header { padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); }
-.header-right { display: flex; align-items: center; gap: 8px; }
-#searchBar { width: 90px; padding: 6px; border-radius: 8px; border: 1px solid #ccc; font-size: 12px; }
+.header-right { display: flex; align-items: center; gap: 6px; }
+#searchBar { width: 85px; padding: 5px; border-radius: 6px; border: 1px solid #ccc; font-size: 12px; }
+
+/* ट्याब साइड डिजाइन */
+.tabs { display: flex; background: var(--card-bg); border-bottom: 1px solid #eee; }
+.tab { flex: 1; text-align: center; padding: 12px; font-weight: bold; cursor: pointer; color: #888; transition: 0.3s; }
+.tab.active { color: var(--accent); border-bottom: 3px solid var(--accent); }
+
+/* स्लाइडिङ सिस्टम (हिन्दी र नेपाली साइड) */
+.slider { display: flex; width: 200vw; transition: transform 0.4s ease-out; }
+.page { width: 100vw; height: calc(100vh - 110px); overflow-y: auto; padding: 15px; box-sizing: border-box; }
+
+/* कार्ड: शीर्षक अगाडि, बटन पछाडि */
+.story-card {
+    background: var(--card-bg); margin-bottom: 12px; padding: 16px;
+    border-radius: 12px; display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.story-title { font-size: 16px; font-weight: 600; flex: 1; }
+.read-btn-small { background: var(--accent); color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; }
+
+/* लेखक र सन्देश स्टाइल */
+.author-txt { color: var(--ghiu-color); font-size: 14px; margin-top: 10px; }
+.msg-txt { color: #27ae60; font-weight: bold; margin-top: 5px; font-size: 16px; }
+
+/* कथा खुल्दाको ट्रान्जिसन */
+#reader-mode {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color);
+    z-index: 5000; display: none; transform: scale(0.9); opacity: 0; transition: all 0.3s ease;
+}
+#reader-mode.active { display: block; transform: scale(1); opacity: 1; }
+.reader-body { padding: 25px; line-height: 1.8; font-size: 18px; overflow-y: auto; height: 90vh; }
