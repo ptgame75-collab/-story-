@@ -1,34 +1,43 @@
-/* लेखकको नाम मधुरो घिउ कलरमा */
-.author-name { 
-    color: #bcaaa4; /* मधुरो घिउ/क्रिम कलर */
-    font-size: 15px; 
-    font-style: italic;
-    margin-top: 20px;
+:root {
+    --bg-color: #ffffff;
+    --text-color: #1a1a1a;
+    --accent-blue: #007bff;
+    --ghiu-color: #f5f5dc; /* घिउ रङ */
 }
 
-/* सन्देश हरियो अक्षरमा */
-.victory-msg { 
-    color: #2e7d32; /* हरियो अक्षर */
-    font-weight: bold; 
-    font-size: 22px; 
-    margin: 15px 0; 
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #ffffff;
 }
 
-/* रिड बटन शीर्षकको पछाडि (Right side) */
-.story-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-}
-.story-title { font-size: 18px; flex: 1; margin: 0; }
-.read-btn-small { 
-    padding: 8px 15px; background: #333; color: #fff; 
-    border-radius: 10px; border: none; font-size: 12px;
-}
+body { margin: 0; font-family: sans-serif; background: var(--bg-color); color: var(--text-color); transition: 0.3s; }
 
-/* लोडर डिजाइन */
-#loader {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #121212; z-index: 5000; display: flex; justify-content: center; align-items: center;
+/* Splash Screen Animation */
+#splash-screen {
+    position: fixed; width: 100%; height: 100vh; background: black;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 100;
 }
+.zoom-text { color: white; font-size: 2.5rem; animation: zoom 3s forwards; }
+.loader-container { width: 60%; height: 4px; background: #333; margin-top: 20px; }
+.loader-bar { width: 0%; height: 100%; background: var(--accent-blue); animation: load 3s forwards; }
+
+@keyframes zoom { from { transform: scale(0.8); } to { transform: scale(1.2); } }
+@keyframes load { to { width: 100%; } }
+.hidden { display: none; }
+
+/* Navigation & Tabs */
+.top-nav { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid #ddd; font-weight: bold; }
+.hero { text-align: center; padding: 40px; background: #f9f9f9; }
+body.dark-mode .hero { background: #1e1e1e; }
+
+.tab-bar { display: flex; position: relative; border-bottom: 2px solid #ddd; }
+.tab { flex: 1; text-align: center; padding: 15px; cursor: pointer; font-weight: bold; }
+.underline { position: absolute; bottom: 0; left: 0; width: 50%; height: 4px; background: var(--accent-blue); transition: 0.3s; }
+
+/* Story Footer Styles */
+.story-card { padding: 20px; border-bottom: 1px solid #eee; position: relative; }
+.author-info { text-align: left; background: var(--ghiu-color); color: #333; padding: 5px 10px; display: inline-block; margin-top: 20px; border-radius: 4px; }
+.moral-text { text-align: center; color: #28a745; font-weight: bold; font-size: 1.5rem; margin: 15px 0; }
+.thanks-msg { text-align: center; font-style: italic; color: var(--accent-blue); margin-top: 10px; }
+.tick-btn { float: right; cursor: pointer; font-size: 1.5rem; filter: grayscale(1); }
+.tick-btn.active { filter: grayscale(0); }
