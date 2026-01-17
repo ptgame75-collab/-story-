@@ -8,33 +8,41 @@
 </head>
 <body>
 
-<header>
-    <span class="logo">✍️ अधिराज Story</span>
-    <div class="header-right">
-        <input type="text" id="searchBar" placeholder="खोज्नुहोस्..." oninput="searchStory()">
-        <button onclick="toggleTheme()" class="theme-btn">🌗</button>
+    <div id="loader">
+        <div class="loader-content">
+            <span class="pen-icon">✍️</span>
+            <h1>अधिराज Story</h1>
+            <div class="progress-bar"><div class="fill"></div></div>
+        </div>
     </div>
-</header>
 
-<div class="tabs">
-    <div class="tab active" id="tabH" onclick="switchTab(0)">हिन्दी</div>
-    <div class="tab" id="tabN" onclick="switchTab(1)">नेपाली</div>
-</div>
+    <header>
+        <span class="logo">✍️ अधिराज Story</span>
+        <div class="header-right">
+            <input type="text" id="searchBar" placeholder="खोज्नुहोस्..." oninput="searchStory()">
+            <button onclick="toggleTheme()" class="theme-btn">🌗</button>
+        </div>
+    </header>
 
-<div class="slider" id="mainSlider">
-    <div class="page" id="hindiList"></div>
-    <div class="page" id="nepaliList"></div>
-</div>
-
-<div id="reader-mode">
-    <div class="reader-header">
-        <button onclick="closeReader()">बन्द गर्नुहोस्</button>
-        <span>Aadhiraj Story</span>
+    <div class="tabs">
+        <div class="tab active" id="tabH" onclick="switchTab(0)">हिन्दी</div>
+        <div class="tab" id="tabN" onclick="switchTab(1)">नेपाली</div>
     </div>
-    <div class="reader-body" id="readerBody"></div>
-</div>
 
-<script src="stories.js"></script>
-<script src="script.js"></script>
+    <div class="slider" id="mainSlider">
+        <div class="page" id="hindiList"></div>
+        <div class="page" id="nepaliList"></div>
+    </div>
+
+    <div id="reader-mode" class="hidden">
+        <div class="reader-header">
+            <button onclick="closeReader()" class="back-btn">← पछाडि</button>
+            <span id="reading-title">पढ्दै...</span>
+        </div>
+        <div class="reader-body" id="readerBody"></div>
+    </div>
+
+    <script src="stories.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
