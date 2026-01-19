@@ -1,4 +1,3 @@
-// १. लोडिङ स्क्रिन हटाउने
 window.addEventListener('load', () => {
     setTimeout(() => {
         const loader = document.getElementById('loadingScreen');
@@ -7,7 +6,6 @@ window.addEventListener('load', () => {
     }, 2500);
 });
 
-// २. ट्याब स्विच र साइड स्वाइप
 function switchTab(index) {
     const wrapper = document.getElementById('contentWrapper');
     wrapper.style.transform = `translateX(-${index * 50}%)`;
@@ -16,7 +14,6 @@ function switchTab(index) {
     });
 }
 
-// ३. कथा म्यानेजमेन्ट
 function openStory(title, contentId) {
     const overlay = document.getElementById('storyView');
     const body = document.getElementById('storyBody');
@@ -47,7 +44,7 @@ function changeFontSize(delta) {
     el.style.fontSize = (currentSize + delta) + 'px';
 }
 
-// ४. स्वाइप जेस्चर
+// Side Swipe Feature
 let startX;
 document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
 document.addEventListener('touchend', e => {
