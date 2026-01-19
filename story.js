@@ -17,7 +17,7 @@ function openStory(title, contentId) {
     
     overlay.style.display = 'block';
     setTimeout(() => { overlay.classList.add('active'); }, 10);
-    window.scrollTo(0,0);
+    overlay.scrollTo(0, 0); // कथा खोल्दा सधैं माथिबाट खुल्नेछ
 }
 
 function closeStory() {
@@ -35,14 +35,3 @@ function changeFontSize(delta) {
     const style = window.getComputedStyle(el, null).getPropertyValue('font-size');
     el.style.fontSize = (parseFloat(style) + delta) + 'px';
 }
-
-// Swipe for tabs
-let startX;
-document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-document.addEventListener('touchend', e => {
-    let endX = e.changedTouches[0].clientX;
-    if (!document.getElementById('storyView').classList.contains('active')) {
-        if (startX - endX > 80) switchTab(1);
-        if (endX - startX > 80) switchTab(0);
-    }
-});
