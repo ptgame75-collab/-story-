@@ -23,7 +23,6 @@
                 <div class="story-title-card" onclick="openStory('प्रतिज्ञा या प्रतीक्षा?', 'contentH68')">
                     <span class="badge">Diary 068</span>
                     <h3>प्रतिज्ञा या प्रतीक्षा?</h3>
-                    <p>अधिराज और समृद्धि की दास्तान...</p>
                 </div>
             </section>
 
@@ -31,7 +30,6 @@
                 <div class="story-title-card nepali-card" onclick="openStory('प्रतिज्ञा कि प्रतीक्षा?', 'contentN68')">
                     <span class="badge nepali-badge">डायरी ०६८</span>
                     <h3>प्रतिज्ञा कि प्रतीक्षा?</h3>
-                    <p>अधिराज र समृद्धिको गाथा...</p>
                 </div>
             </section>
         </div>
@@ -40,11 +38,13 @@
     <div id="storyView" class="story-view-overlay">
         <div class="story-header">
             <button class="back-btn" onclick="closeStory()">←</button>
-            <h2 id="viewTitle">Story Title</h2>
+            <div style="flex-grow:1;"></div>
             <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
         </div>
         
         <div class="story-content-area">
+            <h1 id="viewTitle" class="inner-story-title">Story Title</h1>
+
             <div class="font-tools">
                 <button onclick="changeFontSize(2)">A+</button>
                 <button onclick="changeFontSize(-2)">A-</button>
@@ -55,15 +55,14 @@
 
             <div class="story-footer">
                 <div class="author-name">लेखक: अधिराज सुनार</div>
-                <div class="victory-msg" id="storyVictory">अधुरो प्रतीक्षा</div>
-                <button class="home-btn" onclick="closeStory()">Home</button>
+                <div class="victory-msg">अधुरो प्रतीक्षा</div>
             </div>
         </div>
     </div>
 
     <div id="storyDatabase" style="display:none;">
-        <div id="contentH68"> (पूर्ण हिन्दी कथा यहाँ...) </div>
-        <div id="contentN68"> (पूर्ण नेपाली कथा यहाँ...) </div>
+        <div id="contentH68"> (यहाँ पूर्ण हिन्दी कथा पेस्ट गर्नुहोस्) </div>
+        <div id="contentN68"> (यहाँ पूर्ण नेपाली कथा पेस्ट गर्नुहोस्) </div>
     </div>
 
     <script src="story.js"></script>
