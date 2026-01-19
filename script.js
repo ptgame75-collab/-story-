@@ -1,43 +1,41 @@
-// ३ सेकेन्डको स्प्ल्याश स्क्रिन
-setTimeout(() => {
-    document.getElementById('splash-screen').classList.add('hidden');
-    document.getElementById('app-content').classList.remove('hidden');
-    renderStories('nepali');
-}, 3000);
-
-function switchLang(lang, pos) {
-    document.getElementById('tab-underline').style.left = pos + '%';
-    renderStories(lang);
-}
-
-function renderStories(lang) {
-    const container = document.getElementById('story-container');
-    container.innerHTML = '';
-    allStories[lang].forEach(s => {
-        const isDone = localStorage.getItem(s.id) === 'true';
-        container.innerHTML += `
-            <div class="story-card">
-                <span class="tick-btn ${isDone ? 'active' : ''}" onclick="toggleTick(this, '${s.id}')">✅</span>
-                <h2>${s.title}</h2>
-                <p class="story-text">${s.content}</p>
-                <div class="author-info">लेखकको नाम:- ${s.author}</div>
-                <div class="moral-text">${s.moral}</div>
-                <div class="thanks-msg">♡︎ Thanks For Reading ♡︎</div>
-            </div>`;
+// ट्याब परिवर्तन गर्ने फङ्सन
+function showProfile(index) {
+    const wrapper = document.getElementById('contentWrapper');
+    wrapper.style.transform = `translateX(-${index * 100}vw)`;
+    document.querySelectorAll('.tab-nav div').forEach((tab, i) => {
+        tab.classList.toggle('active', i === index);
     });
+    document.querySelectorAll('section')[index].scrollTo(0, 0);
 }
 
-function toggleTick(el, id) {
-    const active = el.classList.toggle('active');
-    localStorage.setItem(id, active);
+// कथा खोल्ने र बन्द गर्ने फङ्सन
+function toggleStory(contentId, btnId) {
+    const content = document.getElementById(contentId);
+    const btn = document.getElementById(btnId);
+    if (content.style.display === "block") {
+        content.style.display = "none";
+        btn.innerText = "Read";
+    } else {
+        content.style.display = "block";
+        btn.innerText = "कथा लुकाउनुहोस्";
+    }
 }
 
-function toggleNightMode() {
-    document.body.classList.toggle('dark-mode');
+// फन्ट साइज परिवर्तन गर्ने फङ्सन
+function changeFontSize(textId, delta) {
+    const el = document.getElementById(textId);
+    const style = window.getComputedStyle(el, null).getPropertyValue('font-size');
+    const currentSize = parseFloat(style);
+    el.style.fontSize = (currentSize + delta) + 'px';
 }
 
-let fSize = 18;
-function changeFontSize(n) {
-    fSize += n;
-    document.querySelectorAll('.story-text').forEach(p => p.style.fontSize = fSize + 'px');
-}
+// मोबाइलमा स्वाइप (Swipe) गरेर ट्याब फेर्ने
+let startX;
+document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+    let endX = e.changedTouches[0].clientX;
+    if (Math.abs(startX - endX) > 80) {
+        if (startX - endX > 80) showProfile(1); // Left Swipe -> Nepali
+        if (endX - startX > 80) showProfile(0); // Right Swipe -> Hindi
+    }
+});
