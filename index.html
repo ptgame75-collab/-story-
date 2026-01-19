@@ -6,57 +6,66 @@
     <title>अधिराज Story</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="day-mode">
 
-    <header>
-        <div class="logo-text">📚 अधिराज Story</div>
-        <button class="top-btn">Stories</button>
-    </header>
+    <div id="homePage">
+        <header>
+            <div class="logo-text">✍🏻 अधिराज Story</div>
+        </header>
 
-    <nav class="tab-nav">
-        <div id="tab0" class="active" onclick="showProfile(0)">हिन्दी कथाहरू</div>
-        <div id="tab1" onclick="showProfile(1)">नेपाली कथाहरू</div>
-    </nav>
+        <nav class="tab-nav">
+            <div id="tab0" class="active" onclick="switchTab(0)">हिन्दी कथाहरू</div>
+            <div id="tab1" onclick="switchTab(1)">नेपाली कथाहरू</div>
+        </nav>
 
-    <div class="main-wrapper" id="contentWrapper">
-        <section id="hindiSection">
-            <div class="story-card">
-                <span class="badge">Collection: Hindi</span>
-                <h2 class="story-title">स्वार्थी भाई</h2>
-                <p style="color: #666;">एक भाई का बलिदान और दूसरे का स्वार्थ।</p>
-                <button class="read-btn" id="btnS1" onclick="toggleStory('contentS1', 'btnS1')">Read</button>
-                <div id="contentS1" class="full-content">
-                    <div class="font-controls">
-                        <button onclick="changeFontSize('textS1', 2)">A+</button>
-                        <button onclick="changeFontSize('textS1', -2)">A-</button>
-                    </div>
-                    <div class="story-text" id="textS1">... (हिन्दी कथा १ को सामग्री) ...</div>
-                    <div class="author-name">लेखक: अधिराज सुनार</div>
-                    <div class="victory-msg">बलिदान</div>
-                    <div class="thanks-msg">♡︎ Thanks For Reading ♡︎</div>
+        <div class="main-wrapper" id="contentWrapper">
+            <section id="hindiSection">
+                <div class="story-title-card" onclick="openStory('प्रतिज्ञा या प्रतीक्षा?', 'contentH68')">
+                    <span class="badge">Diary 068</span>
+                    <h3>प्रतिज्ञा या प्रतीक्षा?</h3>
+                    <p>अधिराज और समृद्धि की दास्तान...</p>
                 </div>
-            </div>
             </section>
 
-        <section id="nepaliSection">
-            <div class="story-card">
-                <span class="badge nepali-badge">Collection: Nepali</span>
-                <h2 class="story-title">दिदीको समर्पण</h2>
-                <button class="read-btn blue-btn" id="btn1" onclick="toggleStory('content1', 'btn1')">Read</button>
-                <div id="content1" class="full-content">
-                    <div class="font-controls">
-                        <button onclick="changeFontSize('text1', 2)">A+</button>
-                        <button onclick="changeFontSize('text1', -2)">A-</button>
-                    </div>
-                    <div class="story-text" id="text1">... (नेपाली कथा १ को सामग्री) ...</div>
-                    <div class="author-name">लेखक: अधिराज सुनार</div>
-                    <div class="victory-msg">निस्वार्थ प्रेम</div>
-                    <div class="thanks-msg">♡︎ Thanks For Reading ♡︎</div>
+            <section id="nepaliSection">
+                <div class="story-title-card nepali-card" onclick="openStory('प्रतिज्ञा कि प्रतीक्षा?', 'contentN68')">
+                    <span class="badge nepali-badge">डायरी ०६८</span>
+                    <h3>प्रतिज्ञा कि प्रतीक्षा?</h3>
+                    <p>अधिराज र समृद्धिको गाथा...</p>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <div id="storyView" class="story-view-overlay">
+        <div class="story-header">
+            <button class="back-btn" onclick="closeStory()">←</button>
+            <h2 id="viewTitle">Story Title</h2>
+            <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+        </div>
+        
+        <div class="story-content-area">
+            <div class="font-tools">
+                <button onclick="changeFontSize(2)">A+</button>
+                <button onclick="changeFontSize(-2)">A-</button>
+            </div>
+            
+            <div id="storyBody" class="story-body-text">
+                </div>
+
+            <div class="story-footer">
+                <div class="author-name">लेखक: अधिराज सुनार</div>
+                <div class="victory-msg" id="storyVictory">अधुरो प्रतीक्षा</div>
+                <button class="home-btn" onclick="closeStory()">Home</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="storyDatabase" style="display:none;">
+        <div id="contentH68"> (पूर्ण हिन्दी कथा यहाँ...) </div>
+        <div id="contentN68"> (पूर्ण नेपाली कथा यहाँ...) </div>
+    </div>
+
+    <script src="story.js"></script>
 </body>
 </html>
