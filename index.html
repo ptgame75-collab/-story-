@@ -68,12 +68,15 @@
         </div>
         
         <div class="story-content-area">
-            <h1 id="viewTitle" class="inner-story-title">Title</h1>
-            <div class="font-tools">
-                    <button onclick="speakStory()" class="play-btn" id="voiceBtn">▶️</button>
-    <button onclick="changeFontSize(2)">A+</button>
-    <button onclick="changeFontSize(-2)">A-</button>
-            </div>
+    <div class="title-wrapper" style="display: flex; justify-content: space-between; align-items: center;">
+        <h1 id="viewTitle" class="inner-story-title">Title</h1>
+        <button onclick="speakStory()" class="play-btn" id="voiceBtn">▶️</button>
+    </div>
+    <div class="font-tools">
+        <button onclick="changeFontSize(2)">A+</button>
+        <button onclick="changeFontSize(-2)">A-</button>
+    </div>
+</div>
             
             <div id="storyBody" class="story-body-text"></div>
 
