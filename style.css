@@ -75,8 +75,13 @@ section { width: 50%; padding: 20px; overflow-y: auto; height: 100%; }
 /* डार्क मोडमा कथाको अक्षर र शीर्षक सुधार्ने */
 .inner-story-title { font-size: 32px; margin: 40px 0 20px 0; padding: 0 10px; line-height: 1.2; color: var(--text-dark); }
 .story-body-text { 
-    font-size: 18px; line-height: 1.9; text-align: justify; 
-    white-space: pre-line; padding: 0 20px; color: var(--text-dark); 
+        font-size: 18px;
+    line-height: 1.9;
+    text-align: justify;
+    white-space: pre-line;
+    padding: 0 20px;
+    color: var(--text-dark);
+    font-weight: 600;
 }
 
 /* FOOTER DESIGN */
