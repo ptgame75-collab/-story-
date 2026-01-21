@@ -54,38 +54,3 @@ document.addEventListener('touchend', e => {
         if (endX - startX > 100) switchTab(0);
     }
 });
-function speakStory() {
-        const btn = document.getElementById('voiceBtn');
-    
-    if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
-        window.speechSynthesis.pause();
-        btn.innerHTML = "▶️";
-        return;
-    }
-
-    if (window.speechSynthesis.paused) {
-        window.speechSynthesis.resume();
-        btn.innerHTML = "⏸️";
-        return;
-    }
-
-    const storyText = document.getElementById('storyBody').innerText;
-    const speech = new SpeechSynthesisUtterance(storyText);
-
-    // भाषा पहिचान (नेपाली वा हिन्दी)
-    const isHindi = /[\u0900-\u097F]/.test(storyText);
-    
-    if (isHindi) {
-        speech.lang = 'hi-IN';
-        speech.rate = 0.9;
-    } else {
-        speech.lang = 'ne-NP'; 
-        speech.rate = 0.85;
-        speech.pitch = 1.1;
-    }
-
-    speech.onend = () => { btn.innerHTML = "▶️"; };
-
-    window.speechSynthesis.speak(speech);
-    btn.innerHTML = "⏸️";
-    
