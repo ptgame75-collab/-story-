@@ -54,3 +54,33 @@ document.addEventListener('touchend', e => {
         if (endX - startX > 100) switchTab(0);
     }
 });
+function speakStory() {
+    const btn = document.getElementById('voiceBtn');
+    
+    // यदि पहिले नै बोलिरहेको छ भने रोक्ने र आइकन बदल्ने
+    if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        btn.innerHTML = "▶️";
+        return;
+    }
+
+    // कथाको मुख्य भागबाट अक्षरहरू लिने
+    const storyText = document.getElementById('storyBody').innerText;
+    const speech = new SpeechSynthesisUtterance(storyText);
+
+    // भाषा पहिचान: हिन्दी अक्षर भए हिन्दी आवाज, नत्र नेपाली
+    const isHindi = /[\u0900-\u097F]/.test(storyText);
+    speech.lang = isHindi ? 'hi-IN' : 'ne-NP';
+    
+    // सुन्न मिठो सुनिने गति
+    speech.rate = 0.9;
+
+    // जब कथा वाचन सकिन्छ, आइकन आफैँ बदल्ने
+    speech.onend = () => {
+        btn.innerHTML = "▶️";
+    };
+
+    // आवाज सुरु गर्ने र बटनको आइकन बदल्ने
+    window.speechSynthesis.speak(speech);
+    btn.innerHTML = "⏸️";
+}
