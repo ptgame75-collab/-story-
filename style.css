@@ -100,8 +100,48 @@ section { width: 50%; padding: 20px; overflow-y: auto; height: 100%; }
 }
 
 .back-btn, .theme-toggle { background: none; border: none; font-size: 24px; color: var(--text-dark); cursor: pointer; }
-.font-tools { display: flex; justify-content: flex-end; gap: 10px; padding: 0 20px; margin-bottom: 20px; }
-.font-tools button { 
-    padding: 8px 16px; border-radius: 6px; border: 1px solid #ccc; 
-    background: var(--card-bg); color: var(--text-dark); font-weight: bold;
+/* १. शीर्षक र प्ले बटनलाई दायाँ-बायाँ मिलाउन */
+.title-wrapper {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 20px !important;
+    margin-top: 40px !important;
+}
+
+/* २. सुन्तला रङको प्ले बटन (फोटोमा जस्तै) */
+.play-btn {
+    background: #ff9800 !important;
+    color: white !important;
+    border: none !important;
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 8px !important;
+    font-size: 20px !important;
+    cursor: pointer;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+}
+
+/* ३. A+ र A- बटनहरूलाई दाहिने कुनामा मिलाउन */
+.font-tools {
+    display: flex !important;
+    gap: 12px !important;
+    justify-content: flex-end !important;
+    padding: 0 20px !important;
+    margin-top: 15px !important;
+    margin-bottom: 25px !important;
+}
+
+/* ४. A+ र A- बटनको डिजाइन */
+.font-tools button {
+    padding: 6px 15px !important;
+    border-radius: 8px !important;
+    border: 1px solid #ccc !important;
+    background: var(--card-bg) !important;
+    color: var(--text-dark) !important;
+    font-weight: bold !important;
+    cursor: pointer;
 }
