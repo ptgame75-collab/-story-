@@ -36,6 +36,7 @@ function openStory(title, contentId) {
         case 'contentN3': message = "त्यागको मूर्ति"; msgColor = "#28A745"; break; // हरियो
         case 'contentH1': message = "अमर सुहाग"; msgColor = "#B22222"; break; // गाढा रातो
         case 'contentH2': message = "रगतको मसी"; msgColor = "#4A4A4A"; break; // खरानी
+        case 'contentN4': message = "पवित्र बिछोड"; msgColor = "#4B0082"; break;// गाढा बैजनी
     }
 
     const victoryElement = document.querySelector('.victory-msg');
