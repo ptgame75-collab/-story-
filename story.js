@@ -31,11 +31,11 @@ function openStory(title, contentId) {
     let msgColor = "";
 
     switch(contentId) {
-        case 'contentN1': message = "सिन्दुरको चिहान"; msgColor = "#FF0000"; break; // रातो
+        case 'contentN1': message = "सिन्दुरको चिहान"; msgColor = "#FF0000"; break; // सिन्दुर रातो
         case 'contentN2': message = "एकलव्य प्रेम"; msgColor = "#007BFF"; break; // नीलो
         case 'contentN3': message = "त्यागको मूर्ति"; msgColor = "#28A745"; break; // हरियो
         case 'contentH1': message = "अमर सुहाग"; msgColor = "#B22222"; break; // गाढा रातो
-        case 'contentH2': message = "रगतको मसी"; msgColor = "#4A4A4A"; break; // खरानी
+        case 'contentH2': message = "टुटा हुआ भरोसा"; msgColor = "#4A4A4A"; break; // खरानी
         case 'contentN4': message = "पवित्र बिछोड"; msgColor = "#4B0082"; break;// गाढा बैजनी
     }
 
