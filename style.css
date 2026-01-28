@@ -18,8 +18,7 @@ body.night-mode {
 
 body, html { 
     margin: 0; padding: 0; width: 100%; height: 100%; 
-    overflow: hidden; font-family: 'Georgia', serif; 
-}
+    }
 
 /* पूरा एपमा कपी गर्न नमिल्ने बनाइएको छ */
 body {
