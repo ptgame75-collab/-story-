@@ -176,3 +176,13 @@ body.night-mode .quote-box {
 body.night-mode .quote-box p {
     color: #ffcccc !important;
 }
+/* पुरानो डिजाइन नबिगारी स्क्रोलिङ सुधार्न थपिएको कोड */
+section {
+    overflow-y: auto !important; /* सामग्री बढी भएमा मात्र स्क्रोल देखाउन */
+    -webkit-overflow-scrolling: touch; /* मोबाइलमा स्मूथ अनुभवको लागि */
+    height: 100%; /* सेक्सनको उचाइ निश्चित गर्न */
+}
+
+.main-wrapper {
+    overflow: hidden; /* बाहिरी भागलाई अनावश्यक स्क्रोल हुन नदिन */
+}
