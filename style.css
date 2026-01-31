@@ -51,8 +51,23 @@ header { padding: 15px; background: var(--card-bg); text-align: center; border-b
 .tab-nav div { flex: 1; text-align: center; padding: 15px; cursor: pointer; font-weight: bold; color: #888; border-bottom: 3px solid transparent; }
 .tab-nav div.active { color: var(--text-dark); border-bottom: 3px solid var(--text-dark); }
 
-.main-wrapper { display: flex; width: 200%; height: calc(100% - 110px); transition: transform 0.4s ease; }
-section { width: 50%; padding: 20px; overflow-y: auto; height: 100%; }
+.main-wrapper { 
+    display: flex; 
+    width: 200%; 
+    height: calc(100% - 110px); 
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    column-gap: 0; /* दुई सेक्सन बीचको ग्याप मार्न */
+}
+
+section { 
+    width: 50%; 
+    padding: 20px; 
+    overflow-y: auto !important; 
+    height: 100%; 
+    flex-shrink: 0; /* यो नभई हुँदैन, यसले बाकसलाई खुम्चिन दिँदैन */
+    box-sizing: border-box; /* प्याडिङलाई भित्रै राख्न */
+    -webkit-overflow-scrolling: touch;
+}
 
 /* CARD DESIGN */
 .story-title-card {
