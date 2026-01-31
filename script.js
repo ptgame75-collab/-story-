@@ -1,7 +1,7 @@
 // ट्याब परिवर्तन गर्ने फङ्सन
 function showProfile(index) {
     const wrapper = document.getElementById('contentWrapper');
-    wrapper.style.transform = `translateX(-${index * 100}vw)`;
+    wrapper.style.transform = `translateX(-${index * 50}%)`;
     document.querySelectorAll('.tab-nav div').forEach((tab, i) => {
         tab.classList.toggle('active', i === index);
     });
