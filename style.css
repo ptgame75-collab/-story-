@@ -181,3 +181,7 @@ section {
     -webkit-overflow-scrolling: touch; /* मोबाइलमा स्मूथ अनुभवको लागि */
     height: 100%; /* सेक्सनको उचाइ निश्चित गर्न */
 }
+
+.main-wrapper {
+    overflow: hidden; /* बाहिरी भागलाई अनावश्यक स्क्रोल हुन नदिन */
+}
