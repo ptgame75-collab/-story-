@@ -7,10 +7,10 @@
     --success-green: #2e7d32;
 }
 
-/* नाइट मोडको लागि रङहरू सच्याइएको छ */
+/* नाइट मोडको लागि रङहरू */
 body.night-mode {
-    --bg-color: #121212;   /* गाढा ब्याकग्राउन्ड */
-    --text-dark: #e0e0e0;  /* अक्षरको लागि हल्का सेतो */
+    --bg-color: #121212;
+    --text-dark: #e0e0e0;
     --card-bg: #1e1e1e;
 }
 
@@ -18,17 +18,13 @@ body.night-mode {
 
 body, html { 
     margin: 0; padding: 0; width: 100%; height: 100%; 
-    }
+}
 
-/* पूरा एपमा कपी गर्न नमिल्ने बनाइएको छ */
 body {
     background-color: var(--bg-color);
     color: var(--text-dark);
     -webkit-user-select: none;  
-    -moz-user-select: none;     
-    -ms-user-select: none;      
     user-select: none;          
-    -webkit-touch-callout: none; 
 }
 
 /* LOADING SCREEN */
@@ -51,20 +47,20 @@ header { padding: 15px; background: var(--card-bg); text-align: center; border-b
 .tab-nav div { flex: 1; text-align: center; padding: 15px; cursor: pointer; font-weight: bold; color: #888; border-bottom: 3px solid transparent; }
 .tab-nav div.active { color: var(--text-dark); border-bottom: 3px solid var(--text-dark); }
 
-/* सुधार गरिएको भाग: % को सट्टा vw प्रयोग गरिएको छ जसले खाली ठाउँ हटाउँछ */
+/* सुधारिएको भाग: सार्दा खाली ठाउँ नदेखिने बनाउन */
 .main-wrapper { 
     display: flex; 
-    width: 200vw; 
+    width: 200%; 
     height: calc(100% - 110px); 
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 section { 
-    width: 100vw; 
+    width: 50%; 
     padding: 20px; 
     overflow-y: auto; 
     height: 100%; 
-    flex-shrink: 0;
+    flex-shrink: 0; /* यसले गर्दा कार्डहरू खुम्चिँदैनन् र ग्याप रहँदैन */
 }
 
 /* CARD DESIGN */
@@ -76,7 +72,7 @@ section {
 .story-title-card h3 { font-size: 18px; margin: 8px 0 0 0; }
 .badge { font-size: 10px; padding: 3px 8px; border-radius: 10px; background: #efe9e1; color: var(--accent-brown); font-weight: bold; }
 
-/* STORY VIEW */
+/* STORY VIEW OVERLAY */
 .story-view-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color);
     z-index: 2000; transform: translateY(100%); transition: transform 0.4s ease; overflow-y: auto; display: none;
@@ -84,117 +80,31 @@ section {
 .story-view-overlay.active { transform: translateY(0); display: block; }
 .story-header { display: flex; padding: 15px; background: var(--card-bg); position: sticky; top: 0; z-index: 10; }
 
-/* डार्क मोडमा कथाको अक्षर र शीर्षक सुधार्ने */
 .inner-story-title { font-size: 32px; margin: 40px 0 20px 0; padding: 0 10px; line-height: 1.2; color: var(--text-dark); }
 .story-body-text { 
-    font-size: 18px;
-    line-height: 1.9;
-    text-align: justify;
-    white-space: pre-line;
-    padding: 0 20px;
-    color: var(--text-dark);
-    font-weight: 600;
+    font-size: 18px; line-height: 1.9; text-align: justify; white-space: pre-line;
+    padding: 0 20px; color: var(--text-dark); font-weight: 600;
 }
 
-/* FOOTER DESIGN */
+/* FOOTER & TOOLS */
 .story-footer { padding-bottom: 60px; }
-.author-name {
-    font-size: 22px; font-weight: bold; border-left: 4px solid var(--accent-brown);
-    padding-left: 12px; margin: 60px 20px 10px 20px; color: var(--text-dark);
-}
-.victory-msg {
-    font-size: 28px; 
-    font-weight: 900; 
-    text-align: center;
-    margin: 25px 0;
-    display: block;
-    transition: color 0.4s ease;
-}
-.thanks-msg {
-    text-align: center; color: #888; margin: 50px 0 80px 0;
-    font-style: italic; font-size: 16px;
-}
+.author-name { font-size: 22px; font-weight: bold; border-left: 4px solid var(--accent-brown); padding-left: 12px; margin: 60px 20px 10px 20px; color: var(--text-dark); }
+.victory-msg { font-size: 28px; font-weight: 900; text-align: center; margin: 25px 0; display: block; }
+.thanks-msg { text-align: center; color: #888; margin: 50px 0 80px 0; font-style: italic; font-size: 16px; }
 
 .back-btn, .theme-toggle { background: none; border: none; font-size: 24px; color: var(--text-dark); cursor: pointer; }
-/* १. शीर्षक र प्ले बटनलाई दायाँ-बायाँ मिलाउन */
-.title-wrapper {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 0 20px !important;
-    margin-top: 40px !important;
-}
 
-/* २. सुन्तला रङको प्ले बटन (फोटोमा जस्तै) */
-.play-btn {
-    background: #ff9800 !important;
-    color: white !important;
-    border: none !important;
-    width: 45px !important;
-    height: 45px !important;
-    border-radius: 8px !important;
-    font-size: 20px !important;
-    cursor: pointer;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
-}
+.title-wrapper { display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 0 20px !important; margin-top: 40px !important; }
+.play-btn { background: #ff9800 !important; color: white !important; width: 45px !important; height: 45px !important; border-radius: 8px !important; font-size: 20px !important; display: flex !important; justify-content: center !important; align-items: center !important; border: none !important; }
 
-/* ३. A+ र A- बटनहरूलाई दाहिने कुनामा मिलाउन */
-.font-tools {
-    display: flex !important;
-    gap: 12px !important;
-    justify-content: flex-end !important;
-    padding: 0 20px !important;
-    margin-top: 15px !important;
-    margin-bottom: 25px !important;
-}
+.font-tools { display: flex !important; gap: 12px !important; justify-content: flex-end !important; padding: 0 20px !important; margin-top: 15px !important; margin-bottom: 25px !important; }
+.font-tools button { padding: 6px 15px !important; border-radius: 8px !important; border: 1px solid #ccc !important; background: var(--card-bg) !important; color: var(--text-dark) !important; font-weight: bold !important; }
 
-/* ४. A+ र A- बटनको डिजाइन */
-.font-tools button {
-    padding: 6px 15px !important;
-    border-radius: 8px !important;
-    border: 1px solid #ccc !important;
-    background: var(--card-bg) !important;
-    color: var(--text-dark) !important;
-    font-weight: bold !important;
-    cursor: pointer;
-}
-/* भनाइहरू (Quotes) को लागि डिजाइन */
-.quote-box {
-    background: #fff5f5 !important; 
-    border-left: 5px solid #d32f2f !important; 
-    padding: 20px !important;
-    margin: 30px 20px !important;
-    border-radius: 0 10px 10px 0 !important;
-    font-style: italic !important;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.05) !important;
-}
+/* Quotes Box */
+.quote-box { background: #fff5f5 !important; border-left: 5px solid #d32f2f !important; padding: 20px !important; margin: 30px 20px !important; border-radius: 0 10px 10px 0 !important; font-style: italic !important; }
+.quote-box p { margin: 0 !important; color: #333 !important; font-size: 1.1rem !important; line-height: 1.6 !important; font-weight: bold !important; }
 
-.quote-box p {
-    margin: 0 !important;
-    color: #333 !important;
-    font-size: 1.1rem !important;
-    line-height: 1.6 !important;
-    font-weight: bold !important;
-}
+body.night-mode .quote-box { background: #2c1a1a !important; border-left-color: #ff5252 !important; }
+body.night-mode .quote-box p { color: #ffcccc !important; }
 
-/* नाइट मोडमा बक्सको रङ मिलाउने */
-body.night-mode .quote-box {
-    background: #2c1a1a !important;
-    border-left-color: #ff5252 !important;
-}
-body.night-mode .quote-box p {
-    color: #ffcccc !important;
-}
-
-section {
-    overflow-y: auto !important; 
-    -webkit-overflow-scrolling: touch; 
-    height: 100%; 
-}
-
-.main-wrapper {
-    overflow: hidden; 
-}
+.main-wrapper { overflow: hidden; }
