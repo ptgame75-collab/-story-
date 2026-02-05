@@ -274,4 +274,13 @@
 
 <script src="story.js"></script>
 </body>
+        <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./pwabuilder-sw.js')
+                    .then(reg => console.log('Service Worker Registered!'))
+                    .catch(err => console.log('Registration Failed', err));
+            });
+        }
+        </script>
 </html>
