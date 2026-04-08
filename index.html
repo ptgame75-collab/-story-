@@ -61,6 +61,22 @@
                     <span class="badge nepali-badge">कथा ५</span>
                     <h3>बाजेको चिठी</h3>
                 </div>
+<div class="story-title-card nepali-card" onclick="openStory('प्रतिज्ञा कि प्रतिक्षा', 'n6')">
+                    <span class="badge nepali-badge">कथा ६</span>
+                    <h3>प्रतिज्ञा कि प्रतिक्षा</h3>
+                </div>
+<div class="story-title-card nepali-card" onclick="openStory('प्रगतको मस्ती', 'n7')">
+    <span class="badge nepali-badge">कथा ७</span>
+    <h3>प्रगतको मस्ती</h3>
+</div>
+<div class="story-title-card nepali-card" onclick="openStory('सपना यात्रा', 'n8')">
+    <span class="badge nepali-badge">कथा ८</span>
+    <h3>सपना यात्रा</h3>
+</div>
+<div class="story-title-card nepali-card" onclick="openStory('निलो फूल', 'n9')">
+    <span class="badge nepali-badge">कथा ९</span>
+    <h3>निलो फूल</h3>
+</div>
             </section>
         </div>
     </div>
@@ -117,14 +133,18 @@
             storyBody.innerHTML = content;
 
             const config = {
-                n1: { msg: "सिन्दुरको चिहान", color: "#FF0000" },
-                n2: { msg: "एकलव्य प्रेम", color: "#007BFF" },
-                n3: { msg: "त्यागको मूर्ति", color: "#28A745" },
-                n4: { msg: "पवित्र बिछोड", color: "#4B0082" },
-                n5: { msg: "बाजेको चिठी", color: "#8B4513" },
-                h1: { msg: "अमर सुहागन", color: "#B22222" },
-                h2: { msg: "टुटा भरोसा", color: "#4A4A4A" }
-            };
+    n1: { msg: "सिन्दुरको चिहान", color: "#FF0000" },
+    n2: { msg: "एकलव्य प्रेम", color: "#007BFF" },
+    n3: { msg: "त्यागको मूर्ति", color: "#28A745" },
+    n4: { msg: "पवित्र बिछोड", color: "#4B0082" },
+    n5: { msg: "बाजेको चिठी", color: "#8B4513" },
+    n6: { msg: "प्रतिज्ञा कि प्रतिक्षा", color: "#E91E63" },
+    n7: { msg: "प्रगतको मस्ती", color: "#FF5722" }, // नयाँ
+    n8: { msg: "सपनाको संसार", color: "#9C27B0" }, // नयाँ
+    n9: { msg: "निलो फूल", color: "#2196F3" },     // नयाँ
+    h1: { msg: "अमर सुहागन", color: "#B22222" },
+    h2: { msg: "टुटा भरोसा", color: "#4A4A4A" }
+};
 
             if(config[id]) {
                 victoryTag.innerText = config[id].msg;
