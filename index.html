@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>अधिराज Story</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#121212">
+    <link rel="apple-touch-icon" href="new-logo.png">
 </head>
 <body class="day-mode">
 
@@ -26,7 +29,6 @@
         </nav>
 
         <div class="main-wrapper" id="contentWrapper">
-            
             <section id="hindiSection">
                 <div class="story-title-card" onclick="openStory('वियोग का सिन्दुर', 'h1')">
                     <span class="badge">कहानी १</span>
@@ -75,14 +77,11 @@
                 <h1 id="viewTitle" class="inner-story-title">शीर्षक</h1>
                 <button onclick="speakStory()" class="play-btn" id="voiceBtn">▶️</button>
             </div>
-            
             <div class="font-tools">
                 <button onclick="changeFontSize(2)">A+</button>
                 <button onclick="changeFontSize(-2)">A-</button>
             </div>
-            
             <div id="storyBody" class="story-body-text"></div>
-            
             <div class="story-footer">
                 <div class="author-name">लेखक: अधिराज सुनार</div>
                 <div id="victoryTag" class="victory-msg">प्रतीक्षा...</div>
@@ -95,7 +94,13 @@
     <script src="hindi-stories.js"></script>
     
     <script>
-        // १. ट्याब परिवर्तन र ह्वोरिजेन्टल स्क्रोलिङ
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
+            });
+        }
+
         function switchTab(index) {
             const wrapper = document.getElementById('contentWrapper');
             wrapper.style.transform = `translateX(-${index * 50}%)`;
@@ -104,18 +109,13 @@
             });
         }
 
-        // २. कथा खोल्ने लोजिक (JS फाइलहरूबाट डाटा तान्ने)
         function openStory(title, id) {
             const storyBody = document.getElementById('storyBody');
             const victoryTag = document.getElementById('victoryTag');
-            
-            // नेपाली वा हिन्दी डाटा छान्ने
             const content = id.startsWith('n') ? nepaliStories[id] : hindiStories[id];
-            
             document.getElementById('viewTitle').innerText = title;
             storyBody.innerHTML = content;
 
-            // कथा अनुसारको विशेष सन्देश र रङ्ग (तपाईँकै पुरानो व्यवस्था)
             const config = {
                 n1: { msg: "सिन्दुरको चिहान", color: "#FF0000" },
                 n2: { msg: "एकलव्य प्रेम", color: "#007BFF" },
@@ -138,7 +138,6 @@
             window.speechSynthesis.cancel(); 
         }
 
-        // ३. ब्याक बटन
         function closeStory() {
             window.speechSynthesis.cancel();
             const sv = document.getElementById('storyView');
@@ -150,7 +149,6 @@
             document.body.style.overflow = 'auto';
         }
 
-        // ४. नाइट मोड र फन्ट साइज
         function toggleTheme() { document.body.classList.toggle('night-mode'); }
         let currentFS = 18;
         function changeFontSize(d) { 
@@ -158,7 +156,6 @@
             document.getElementById('storyBody').style.fontSize = currentFS + 'px'; 
         }
 
-        // ५. अडियो (TTS) प्ले/पज
         function speakStory() {
             const btn = document.getElementById('voiceBtn');
             if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
@@ -171,35 +168,28 @@
                 btn.innerHTML = "⏸️";
                 return;
             }
-
             const text = document.getElementById('storyBody').innerText;
             const speech = new SpeechSynthesisUtterance(text);
             const isHindi = /[\u0900-\u097F]/.test(text);
-            
             speech.lang = isHindi ? 'hi-IN' : 'ne-NP';
             speech.rate = 0.85;
-            
             speech.onend = () => { btn.innerHTML = "▶️"; };
             window.speechSynthesis.speak(speech);
             btn.innerHTML = "⏸️";
         }
 
-        // ६. व्यवस्थित साइड स्वाइप (Side Scrolling)
         let touchStartX = 0;
         document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, false);
         document.addEventListener('touchend', e => {
             let touchEndX = e.changedTouches[0].clientX;
             let diff = touchStartX - touchEndX;
             const storyView = document.getElementById('storyView');
-            
-            // यदि कथाको पाना खुलेको छैन भने मात्र ट्याब फेर्ने
             if (storyView.style.display !== 'block') {
-                if (diff > 80) switchTab(1);  // Right to Left Swipe -> Nepali
-                if (diff < -80) switchTab(0); // Left to Right Swipe -> Hindi
+                if (diff > 80) switchTab(1);
+                if (diff < -80) switchTab(0);
             }
         }, false);
 
-        // ७. लोडिङ स्क्रिन हटाउने
         window.onload = () => {
             setTimeout(() => {
                 const ls = document.getElementById('loadingScreen');
