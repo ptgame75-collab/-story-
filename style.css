@@ -1,128 +1,229 @@
-:root {
-    --bg-color: #f9f7f2;
-    --text-dark: #2d2d2d;
-    --accent-brown: #a68b6d;
-    --blue-accent: #0288d1;
-    --card-bg: #ffffff;
-    --success-green: #2e7d32;
+/* style.css - अधिराज की डायरी 068 */
+
+/* Snickles फन्ट लोड गर्ने */
+@font-face {
+    font-family: 'Snickles';
+    src: url('Snickles.ttf');
 }
 
-/* नाइट मोड */
-body.night-mode {
-    --bg-color: #121212;
-    --text-dark: #e0e0e0;
-    --card-bg: #1e1e1e;
+/* root variables र basic styles */
+:root { 
+    --bg: #fcfbf7; 
+    --text: #333; 
+    --red: #d32f2f; 
+    --card-bg: #ffffff; 
+    --line: #ccc; 
 }
 
-* { 
-    box-sizing: border-box; 
-    -webkit-tap-highlight-color: transparent; 
-    margin: 0; 
-    padding: 0; 
+.dark-mode { 
+    --bg: #121212; 
+    --text: #e0e0e0; 
+    --red: #ff5252; 
+    --card-bg: #1e1e1e; 
+    --line: #444; 
 }
 
-body, html { 
-    width: 100%; 
-    height: 100%; 
-    overflow-x: hidden; /* दायाँ-बायाँ हल्लिन नदिन */
-}
-
-body {
-    background-color: var(--bg-color);
-    color: var(--text-dark);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    -webkit-user-select: none;  
-    user-select: none;
-}
-
-/* LOADING SCREEN */
-#loadingScreen {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #000; color: #fff; z-index: 9999;
-    display: flex; justify-content: center; align-items: center;
-}
-.loading-content { text-align: center; width: 80%; }
-.progress-container { width: 100%; height: 4px; background: #333; border-radius: 10px; margin-top: 20px; overflow: hidden; }
-.progress-bar { width: 0%; height: 100%; background: var(--blue-accent); animation: fillBar 2.5s forwards; }
-@keyframes fillBar { 100% { width: 100%; } }
-
-/* HOME LAYOUT & HEADER */
-header { padding: 15px; background: var(--card-bg); text-align: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
-.logo-text { font-size: 22px; font-weight: bold; font-style: italic; }
-
-.tab-nav { display: flex; width: 100%; background: var(--card-bg); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
-.tab-nav div { flex: 1; text-align: center; padding: 15px; cursor: pointer; font-weight: bold; color: #888; border-bottom: 3px solid transparent; transition: 0.3s; }
-.tab-nav div.active { color: var(--text-dark); border-bottom: 3px solid var(--text-dark); }
-
-/* MAIN WRAPPER - यसले स्क्रोलिङ फिक्स गर्छ */
-#homePage { width: 100%; height: 100%; overflow: hidden; }
-
-.main-wrapper { 
-    display: flex; 
-    width: 200%; /* दुई ट्याबको लागि */
-    height: calc(100% - 115px); 
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: transform;
-}
-
-section { 
-    width: 50%; /* १००% को आधा */
-    height: 100%;
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: 'Georgia', serif; 
     padding: 20px; 
-    overflow-y: auto !important; 
-    flex-shrink: 0; 
-    box-sizing: border-box; 
-    -webkit-overflow-scrolling: touch;
+    margin: 0; 
+    -webkit-user-select: none; 
+    user-select: none; 
+    transition: opacity 1.2s ease, background 0.4s; 
+    line-height: 1.8;
 }
 
-/* STORY CARDS */
-.story-title-card {
-    background: var(--card-bg); padding: 18px 20px; border-radius: 15px; margin-bottom: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-left: 5px solid var(--accent-brown);
-}
-.nepali-card { border-left-color: var(--blue-accent); }
-.story-title-card h3 { font-size: 18px; margin: 8px 0 0 0; }
-.badge { font-size: 10px; padding: 3px 8px; border-radius: 10px; background: #efe9e1; color: var(--accent-brown); font-weight: bold; }
-.nepali-badge { background: #e1f5fe; color: var(--blue-accent); }
+.fade-out { opacity: 0; }
 
-/* STORY VIEW OVERLAY */
-.story-view-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color);
-    z-index: 2000; transform: translateY(100%); transition: transform 0.4s ease; overflow-y: auto; display: none;
-}
-.story-view-overlay.active { transform: translateY(0); display: block; }
-.story-header { display: flex; align-items: center; padding: 15px; background: var(--card-bg); position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-
-/* CONTENT STYLING */
-.title-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; margin-top: 30px; }
-.inner-story-title { font-size: 28px; line-height: 1.2; color: var(--text-dark); flex: 1; padding-right: 10px; }
-
-.play-btn {
-    background: #ff9800 !important; color: white !important; border: none; width: 45px; height: 45px;
-    border-radius: 8px; font-size: 20px; cursor: pointer; display: flex; justify-content: center; align-items: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+.toolbar { 
+    position: sticky; 
+    top: 0; 
+    background: var(--bg); 
+    padding: 10px 0; 
+    display: flex; 
+    justify-content: space-between; 
+    border-bottom: 1px solid var(--line); 
+    z-index: 100; 
+    margin-bottom: 30px;
 }
 
-.font-tools { display: flex; gap: 10px; justify-content: flex-end; padding: 0 20px; margin: 15px 0 25px 0; }
-.font-tools button { padding: 6px 15px; border-radius: 8px; border: 1px solid #ccc; background: var(--card-bg); color: var(--text-dark); font-weight: bold; }
-
-.story-body-text { 
-    font-size: 18px; line-height: 1.9; text-align: justify; white-space: pre-line; padding: 0 20px; color: var(--text-dark); font-weight: 500;
+.btn { 
+    padding: 7px 18px; 
+    border: 1px solid var(--line); 
+    background: var(--card-bg); 
+    cursor: pointer; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    color: var(--text); 
+    font-size: 14px; 
+    font-weight: bold;
 }
 
-/* QUOTE BOX */
-.quote-box {
-    background: #fff5f5 !important; border-left: 5px solid #d32f2f !important; padding: 20px; margin: 30px 20px;
-    border-radius: 0 10px 10px 0; font-style: italic; box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+.section { display: none; max-width: 650px; margin: 0 auto; animation: fadeIn 0.6s ease-out; }
+.section:target { display: block; } 
+
+.title-container { text-align: center; margin-bottom: 35px; }
+.main-title { font-size: 32px; font-weight: 900; margin-bottom: 10px; display: block; }
+.straight-line { width: 100%; height: 2px; background: var(--line); border: none; margin-bottom: 20px; }
+.sub-title { font-size: 40px; font-weight: 900; color: var(--text); display: block; margin-bottom: 30px; }
+
+/* English अक्षरहरूका लागि Snickles फन्ट */
+.snickles-font {
+    font-family: 'Snickles', cursive;
+    font-size: 26px; /* फन्ट अलि सानो देखिने हुनाले यसलाई बढाइएको */
+    font-weight: normal;
+    text-transform: uppercase;
 }
-.quote-box p { margin: 0; color: #333; font-size: 1.1rem; line-height: 1.6; font-weight: bold; }
 
-body.night-mode .quote-box { background: #2c1a1a !important; border-left-color: #ff5252 !important; }
-body.night-mode .quote-box p { color: #ffcccc !important; }
+/* नेपाली अक्षरको साइज र बोल्ड प्रभाव परिवर्तन गरिएको */
+.intro-text { 
+    font-size: 22px; /* पहिले २२px नै थियो, यसलाई यथावत राख्दै बोल्ड गरिएको */
+    margin-bottom: 50px; 
+    text-align: justify; 
+    font-weight: 900;
+    line-height: 1.9; 
+    color: var(--text);
+}
 
-/* FOOTER */
-.author-name { font-size: 20px; font-weight: bold; border-left: 4px solid var(--accent-brown); padding-left: 12px; margin: 50px 20px 10px 20px; color: var(--text-dark); }
-.victory-msg { font-size: 26px; font-weight: 900; text-align: center; margin: 25px 0; display: block; }
-.thanks-msg { text-align: center; color: #888; margin: 40px 0 60px 0; font-style: italic; font-size: 15px; }
+.day-box { 
+    background: var(--card-bg); 
+    border-left: 6px solid var(--red); 
+    padding: 18px; 
+    margin-bottom: 20px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
+    border-radius: 0 8px 8px 0;
+}
 
-.back-btn, .theme-toggle { background: none; border: none; font-size: 24px; color: var(--text-dark); cursor: pointer; }
+.day-title { color: var(--red); display: block; margin-bottom: 8px; font-size: 16px; font-weight: 900; }
+.bold-name { font-weight: 900; font-size: 17px; color: var(--text); } 
+
+/* सामग्रीको अक्षर साइज १९px बाट बढाएर २२px बनाइएको ताकि पढ्न सजिलो होस् */
+.day-content { font-size: 22px; margin: 0; font-weight: 900; line-height: 1.6; }
+
+.bold-feeling p { font-weight: 900; font-size: 24px; line-height: 1.8; margin-bottom: 35px; }
+
+/* फोटोको डिजाइन यथावत */
+.photo-wrapper {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.diary-image {
+    width: 95%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border: 1px solid var(--line);
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* --- भिडियो र मिडिया सेटिङ्स (अधिराज की डायरी 068) --- */
+
+/* भिडियो प्लेयरलाई फोटो जस्तै आकर्षक बनाउन */
+video {
+    width: 95%; 
+    max-width: 450px; 
+    height: auto; 
+    display: block; 
+    margin: 25px auto; 
+    border-radius: 15px; 
+    background: #000; /* भिडियो लोड नहुँदा कालो देखिन्छ */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+    border: 1px solid var(--line);
+    outline: none;
+}
+
+/* भिडियोको कोन्टेनर (यदि div प्रयोग गर्नुभएको छ भने) */
+.video-wrapper {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+
+/* मोबाइलमा भिडियो राम्रोसँग फिट होस् भनेर */
+@media (max-width: 480px) {
+    video {
+        width: 100%;
+        border-radius: 8px;
+    }
+}
+/* थपिएको कोड - हाइलाइट फिचरका लागि */
+.bold-feeling p.highlighted {
+    background-color: rgba(255, 235, 59, 0.6) !important; 
+    color: #000 !important;
+}
+/* --- एल्बम सेक्सन (Side Scrolling & Snap) --- */
+
+.album-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 10px 0;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    max-width: 650px;
+    margin: 20px auto;
+}
+
+.album-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.album-photo {
+    flex: 0 0 80%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    background: var(--card-bg);
+    padding: 8px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+}
+
+.album-photo img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+#photo-counter {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 900;
+    margin-top: 15px;
+    color: var(--text);
+    font-family: 'Georgia', serif;
+}/* एल्बम शीर्षकको मुनिको छोटो धर्का */
+.sub-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.album-line {
+    width: 140px; /* धर्काको लम्बाई */
+    height: 3px; /* धर्काको मोटाई */
+    background-color: var(--red); /* वा तपाईंको डायरीको प्राथमिकता अनुसारको रङ */
+    margin: 0 auto 30px auto; /* यसले धर्कालाई बीचमा राख्छ र तल स्पेस दिन्छ */
+    border-radius: 2px;
+}
+.album-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 auto; /* यसले पुरानो स्क्रोलिङ जस्तै राख्छ */
+}
+
+.caption-text {
+    margin-top: 5px; /* फोटो र क्याप्सन बिचको थोरै खाली ठाउँ */
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
