@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>अधिराज Story - Welcome</title>
+    <title>अधिराज Story</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="google" content="notranslate">
+    <link rel="apple-touch-icon" href="new-logo.png">
     <style>
-        /* वेलकम स्क्रिनका लागि विशेष स्टाइल */
+        /* लोडिङ स्क्रिनको प्रिमियम र सफा डिजाइन */
         #loadingScreen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -17,7 +18,7 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
         }
         .loading-content { text-align: center; }
         .progress-container {
@@ -33,39 +34,31 @@
             animation: load 2s linear forwards;
         }
         @keyframes load { to { width: 100%; } }
-        .welcome-btn {
-            display: none;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease;
-        }
     </style>
 </head>
 <body class="day-mode">
 
     <div id="loadingScreen">
         <div class="loading-content">
-            <h1 class="snickles-font" style="color:white;">Aadhiraj Story</h1>
+            <h1 style="color: white; font-family: 'Georgia', serif; font-weight: 900; letter-spacing: 1px;">Aadhiraj Story</h1>
             <div class="progress-container">
                 <div class="progress-bar"></div>
-            </div>
-            <!-- प्रोग्रेस बार सकिएपछि देखिने बटन -->
-            <div id="enterApp" class="welcome-btn">
-                <a href="home.html" class="btn" style="border-color: #d32f2f; color: #d32f2f;">डायरी खोल्नुहोस् →</a>
             </div>
         </div>
     </div>
 
     <script>
-        // २ सेकेन्डपछि प्रोग्रेस बार सकिएपछि प्रवेश बटन देखाउने
+        // प्रोग्रेस बार २ सेकेन्ड (2000ms) चल्छ र सकिने बित्तिकै सिधै होम पेजमा लैजान्छ
         window.onload = () => {
             setTimeout(() => {
-                document.getElementById('enterApp').style.display = 'block';
-                // यदि प्रयोगकर्ताले क्लिक नगरे पनि १ सेकेन्डपछि आफैं रिडाइरेक्ट गराउन चाहेमा:
-                setTimeout(() => {
-                    document.body.classList.add('fade-out');
-                    window.location.href = "home.html";
-                }, 1500);
-            }, 2000);
+                const ls = document.getElementById('loadingScreen');
+                if (ls) {
+                    ls.style.opacity = '0'; // हल्का फेड-आउट एनिमेसन
+                    setTimeout(() => {
+                        window.location.href = "home.html"; // सिधै मुख्य डाइरीमा प्रवेश
+                    }, 400); // एनिमेसन फिनिस हुन दिने समय
+                }
+            }, 2000); // २ सेकेन्डको प्रोग्रेस बार टाइमर
         };
     </script>
 </body>
