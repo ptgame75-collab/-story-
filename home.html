@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>अधिराज Story</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
     <meta name="google" content="notranslate">
-    <link rel="apple-touch-icon" href="new-logo.png">
 </head>
 <body class="day-mode">
 
@@ -16,12 +14,15 @@
             <div class="logo-text">✍🏻 अधिराज Story</div>
         </header>
 
+        <!-- पुरानै सुन्दर नेभिगेसन ट्याबहरू -->
         <nav class="tab-nav">
             <div id="tab0" class="active" onclick="switchTab(0)">हिन्दी कथाहरू</div>
             <div id="tab1" onclick="switchTab(1)">नेपाली कथाहरू</div>
         </nav>
 
+        <!-- मुख्य सामग्री क्षेत्र (स्वाइपिङ सहित) -->
         <div class="main-wrapper" id="contentWrapper">
+            <!-- हिन्दी सेक्सन -->
             <section id="hindiSection">
                 <div class="story-title-card" onclick="openStory('वियोग का सिन्दुर', 'h1')">
                     <span class="badge">कहानी १</span>
@@ -33,66 +34,72 @@
                 </div>
             </section>
 
+            <!-- नेपाली सेक्सन -->
             <section id="nepaliSection">
-                <div class="story-title-card nepali-card" onclick="openStory('वैवाहिक वेश्या', 'n1')">
-                    <span class="badge nepali-badge">कथा १</span>
+                <div class="story-title-card" onclick="openStory('वैवाहिक वेश्या', 'n1')">
+                    <span class="badge">कथा १</span>
                     <h3>वैवाहिक वेश्या</h3>
                 </div>
-                <div class="story-title-card nepali-card" onclick="openStory('अधुरो प्रतिज्ञा', 'n2')">
-                    <span class="badge nepali-badge">कथा २</span>
+                <div class="story-title-card" onclick="openStory('अधुरो प्रतिज्ञा', 'n2')">
+                    <span class="badge">कथा २</span>
                     <h3>अधुरो प्रतिज्ञा</h3>
                 </div>
-                <div class="story-title-card nepali-card" onclick="openStory('दिदीको समर्पण', 'n3')">
-                    <span class="badge nepali-badge">कथा ३</span>
+                <div class="story-title-card" onclick="openStory('दिदीको समर्पण', 'n3')">
+                    <span class="badge">कथा ३</span>
                     <h3>दिदीको समर्पण</h3>
                 </div>
-                <div class="story-title-card nepali-card" onclick="openStory('लालुङको याद', 'n4')">
-                    <span class="badge nepali-badge">कथा ४</span>
+                <div class="story-title-card" onclick="openStory('लालुङको याद', 'n4')">
+                    <span class="badge">कथा ४</span>
                     <h3>लालुङको याद</h3>
                 </div>
-                <div class="story-title-card nepali-card" onclick="openStory('बाजेको चिठी', 'n5')">
-                    <span class="badge nepali-badge">कथा ५</span>
+                <div class="story-title-card" onclick="openStory('बाजेको चिठी', 'n5')">
+                    <span class="badge">कथा ५</span>
                     <h3>बाजेको चिठी</h3>
                 </div>
-                <div class="story-title-card nepali-card" onclick="openStory('प्रतिज्ञा कि प्रतिक्षा', 'n6')">
-                    <span class="badge nepali-badge">कथा ६</span>
+                <div class="story-title-card" onclick="openStory('प्रतिज्ञा कि प्रतिक्षा', 'n6')">
+                    <span class="badge">कथा ६</span>
                     <h3>प्रतिज्ञा कि प्रतिक्षा</h3>
                 </div>
-                <div class="story-title-card nepali-card" onclick="openStory('प्रगतको मस्ती', 'n7')">
-                    <span class="badge nepali-badge">कथा ७</span>
+                <div class="story-title-card" onclick="openStory('प्रगतको मस्ती', 'n7')">
+                    <span class="badge">कथा ७</span>
                     <h3>प्रगतको मस्ती</h3>
                 </div>
-                <div class="story-title-card nepali-card" onclick="openStory('सपना यात्रा', 'n8')">
-                    <span class="badge nepali-badge">कथा ८</span>
+                <div class="story-title-card" onclick="openStory(' सपना यात्रा', 'n8')">
+                    <span class="badge">कथा ८</span>
                     <h3>सपना यात्रा</h3>
                 </div>
-                <div class="story-title-card nepali-card" onclick="openStory('निलो फूल', 'n9')">
-                    <span class="badge nepali-badge">कथा ९</span>
+                <div class="story-title-card" onclick="openStory('निलो फूल', 'n9')">
+                    <span class="badge">कथा ९</span>
                     <h3>निलो फूल</h3>
                 </div>
             </section>
         </div>
     </div>
 
+    <!-- कथा भ्युअर ओभरले स्क्रिन -->
     <div id="storyView" class="story-view-overlay">
         <div class="story-header">
-            <button class="back-btn" onclick="closeStory()">←</button>
-            <div style="flex-grow:1;"></div>
-            <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+            <button class="back-btn" onclick="closeStory()">← बन्द गर्ने</button>
+            <button class="theme-toggle" onclick="toggleTheme()">🌓 मोड</button>
         </div>
         
         <div class="story-content-area">
             <div class="title-wrapper">
                 <h1 id="viewTitle" class="inner-story-title">शीर्षक</h1>
-                <button onclick="speakStory()" class="play-btn" id="voiceBtn">▶️</button>
+                <div class="album-line"></div>
+                <button onclick="speakStory()" class="play-btn" id="voiceBtn">▶️ वाचन</button>
             </div>
+            
             <div class="font-tools">
                 <button onclick="changeFontSize(2)">A+</button>
                 <button onclick="changeFontSize(-2)">A-</button>
             </div>
+
+            <!-- मुख्य सामग्री जहाँ फन्ट साइज २२px सम्म बस्छ -->
             <div id="storyBody" class="story-body-text"></div>
-            <div class="story-footer">
-                <div class="author-name">लेखक: अधिराज सुनार</div>
+            
+            <div style="margin-top: 40px;">
+                <div class="author-name bold-name">लेखक: अधिराज सुनार</div>
                 <div id="victoryTag" class="victory-msg">प्रतीक्षा...</div>
                 <div class="thanks-msg">♡︎ thanks for reading ♡︎</div>
             </div>
@@ -114,7 +121,14 @@
         function openStory(title, id) {
             const storyBody = document.getElementById('storyBody');
             const victoryTag = document.getElementById('victoryTag');
-            const content = id.startsWith('n') ? nepaliStories[id] : hindiStories[id];
+            
+            let content = "";
+            if(id.startsWith('n')) {
+                content = (typeof nepaliStories !== 'undefined' && nepaliStories[id]) ? nepaliStories[id] : "कथा सामग्री लोड हुँदैछ...";
+            } else {
+                content = (typeof hindiStories !== 'undefined' && hindiStories[id]) ? hindiStories[id] : "कहानी लोड हो रही है...";
+            }
+            
             document.getElementById('viewTitle').innerText = title;
             storyBody.innerHTML = content;
 
@@ -137,28 +151,25 @@
                 victoryTag.style.color = config[id].color;
             }
 
-            const sv = document.getElementById('storyView');
-            sv.style.display = 'block';
-            setTimeout(() => sv.classList.add('active'), 10);
+            document.getElementById('storyView').style.display = 'block';
             document.body.style.overflow = 'hidden';
             window.speechSynthesis.cancel(); 
         }
 
         function closeStory() {
             window.speechSynthesis.cancel();
-            const sv = document.getElementById('storyView');
-            sv.classList.remove('active');
-            setTimeout(() => {
-                sv.style.display = 'none';
-                document.getElementById('voiceBtn').innerHTML = "▶️";
-            }, 400);
+            document.getElementById('storyView').style.display = 'none';
+            document.getElementById('voiceBtn').innerHTML = "▶️ वाचन";
             document.body.style.overflow = 'auto';
         }
 
         function toggleTheme() { document.body.classList.toggle('night-mode'); }
-        let currentFS = 18;
+        
+        let currentFS = 22; // हजुरको CSS को बेस फन्ट साइज २२px मा सेट गरिएको
         function changeFontSize(d) { 
             currentFS += d; 
+            if(currentFS < 16) currentFS = 16;
+            if(currentFS > 32) currentFS = 32;
             document.getElementById('storyBody').style.fontSize = currentFS + 'px'; 
         }
 
@@ -166,12 +177,12 @@
             const btn = document.getElementById('voiceBtn');
             if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
                 window.speechSynthesis.pause();
-                btn.innerHTML = "▶️";
+                btn.innerHTML = "▶️ वाचन";
                 return;
             }
             if (window.speechSynthesis.paused) {
                 window.speechSynthesis.resume();
-                btn.innerHTML = "⏸️";
+                btn.innerHTML = "⏸️ रोक्नुहोस्";
                 return;
             }
             const text = document.getElementById('storyBody').innerText;
@@ -179,18 +190,18 @@
             const isHindi = /[\u0900-\u097F]/.test(text);
             speech.lang = isHindi ? 'hi-IN' : 'ne-NP';
             speech.rate = 0.85;
-            speech.onend = () => { btn.innerHTML = "▶️"; };
+            speech.onend = () => { btn.innerHTML = "▶️ वाचन"; };
             window.speechSynthesis.speak(speech);
-            btn.innerHTML = "⏸️";
+            btn.innerHTML = "⏸️ रोक्नुहोस्";
         }
 
+        // टच स्वाइपिङ कोड
         let touchStartX = 0;
         document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, false);
         document.addEventListener('touchend', e => {
             let touchEndX = e.changedTouches[0].clientX;
             let diff = touchStartX - touchEndX;
-            const storyView = document.getElementById('storyView');
-            if (storyView.style.display !== 'block') {
+            if (document.getElementById('storyView').style.display !== 'block') {
                 if (diff > 80) switchTab(1);
                 if (diff < -80) switchTab(0);
             }
