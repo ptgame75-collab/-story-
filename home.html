@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ne" translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>अधिराज Story - होम</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="google" content="notranslate">
+</head>
+<body class="day-mode">
+
+    <!-- डायरी टुलबार -->
+    <div class="toolbar">
+        <div class="logo-text bold-name" style="font-size: 20px;">✍🏻 अधिराज Story</div>
+        <div style="display: flex; gap: 8px;">
+            <button onclick="changeFontSize(2)" class="btn">A+</button>
+            <button onclick="changeFontSize(-2)" class="btn">A-</button>
+            <button onclick="toggleTheme()" class="btn">🌓 मोड</button>
+        </div>
+    </div>
+
+    <div id="homePage" class="section" style="display: block;">
+        <div class="title-container">
+            <span class="snickles-font main-title">Aadhiraj's Diary</span>
+            <hr class="straight-line">
+            <span class="sub-title">कथा सङ्ग्रह</span>
+        </div>
+
+        <!-- नेभिगेसन ट्याब -->
+        <div style="display: flex; justify-content: space-around; margin-bottom: 25px; border-bottom: 2px solid var(--line);">
+            <button id="tab0" class="btn" style="border: none; background: transparent; font-size: 16px;" onclick="switchTab(0)">हिन्दी कथाहरू</button>
+            <button id="tab1" class="btn" style="border: none; background: transparent; font-size: 16px; border-bottom: 3px solid var(--red);" onclick="switchTab(1)">नेपाली कथाहरू</button>
+        </div>
+
+        <!-- मुख्य सामग्री र्‍यापर (ट्याब कन्टेन्ट) -->
+        <div class="main-wrapper" id="contentWrapper" style="display: flex; width: 200%; transition: transform 0.4s ease;">
+            
+            <!-- हिन्दी सेक्सन -->
+            <section id="hindiSection" style="width: 50%;">
+                <div class="day-box" onclick="openStory('वियोग का सिन्दुर', 'h1')">
+                    <span class="day-title">कहानी १</span>
+                    <p class="day-content">वियोग का सिन्दुर</p>
+                </div>
+                <div class="day-box" onclick="openStory('गरीबी और सपनों की नींव', 'h2')">
+                    <span class="day-title">कहानी २</span>
+                    <p class="day-content">गरीबी और सपनों की नींव</p>
+                </div>
+            </section>
+
+            <!-- नेपाली सेक्सन -->
+            <section id="nepaliSection" style="width: 50%;">
+                <div class="day-box" onclick="openStory('वैवाहिक वेश्या', 'n1')">
+                    <span class="day-title">कथा १</span> <p class="day-content">वैवाहिक वेश्या</p>
+                </div>
+                <div class="day-box" onclick="openStory('अधुरो प्रतिज्ञा', 'n2')">
+                    <span class="day-title">कथा २</span> <p class="day-content">अधुरो प्रतिज्ञा</p>
+                </div>
+                <div class="day-box" onclick="openStory('दिदीको समर्पण', 'n3')">
+                    <span class="day-title">कथा ३</span> <p class="day-content">दिदीको समर्पण</p>
+                </div>
+                <div class="day-box" onclick="openStory('लालुङको याद', 'n4')">
+                    <span class="day-title">कथा ४</span> <p class="day-content">लालुङको याद</p>
+                </div>
+                <div class="day-box" onclick="openStory('बाजेको चिठी', 'n5')">
+                    <span class="day-title">कथा ५</span> <p class="day-content">बाजेको चिठी</p>
+                </div>
+                <div class="day-box" onclick="openStory('प्रतिज्ञा कि प्रतिक्षा', 'n6')">
+                    <span class="day-title">कथा ६</span> <p class="day-content">प्रतिज्ञा कि प्रतिक्षा</p>
+                </div>
+                <div class="day-box" onclick="openStory('प्रगतको मस्ती', 'n7')">
+                    <span class="day-title">कथा ७</span> <p class="day-content">प्रगतको मस्ती</p>
+                </div>
+                <div class="day-box" onclick="openStory('सपना यात्रा', 'n8')">
+                    <span class="day-title">कथा ८</span> <p class="day-content">सपना यात्रा</p>
+                </div>
+                <div class="day-box" onclick="openStory('निलो फूल', 'n9')">
+                    <span class="day-title">कथा ९</span> <p class="day-content">निलो फूल</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- फुल स्क्रिन कथा भ्युअर ओभरले -->
+    <div id="storyView" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 1000; overflow-y: auto; padding: 20px; box-sizing: border-box;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <button class="btn" onclick="closeStory()">← बन्द गर्नुहोस्</button>
+            <button onclick="speakStory()" class="btn" id="voiceBtn">▶️ वाचन</button>
+        </div>
+        
+        <div class="title-container">
+            <h1 id="viewTitle" class="sub-title" style="font-size: 30px; margin-bottom: 10px;">शीर्षक</h1>
+            <div class="album-line"></div>
+        </div>
+
+        <!-- कथाको मुख्य भाग (CSS को २२px म्याच हुने गरी) -->
+        <div id="storyBody" class="intro-text" style="font-size: 22px;"></div>
+
+        <hr class="straight-line" style="margin-top: 40px;">
+        <div style="text-align: center; margin-top: 20px; font-family: 'Georgia', serif;">
+            <div class="bold-name" style="font-size: 16px; color: var(--red);" id="victoryTag">प्रतीक्षा...</div>
+            <div style="font-size: 14px; margin-top: 5px; opacity: 0.7;">लेखक: अधिराज सुनार</div>
+            <div style="font-size: 13px; margin-top: 10px; font-style: italic;">♡ thanks for reading ♡</div>
+        </div>
+    </div>
+
+    <!-- बाह्य स्क्रिप्ट फाइलहरू -->
+    <script src="nepali-stories.js"></script>
+    <script src="hindi-stories.js"></script>
+    
+    <script>
+        // ट्याब व्यवस्थापन (स्वाइप वा क्लिक इफेक्ट)
+        function switchTab(index) {
+            const wrapper = document.getElementById('contentWrapper');
+            const t0 = document.getElementById('tab0');
+            const t1 = document.getElementById('tab1');
+            
+            if(index === 0) {
+                wrapper.style.transform = 'translateX(0%)';
+                t0.style.borderBottom = '3px solid var(--red)';
+                t1.style.borderBottom = 'none';
+            } else {
+                wrapper.style.transform = 'translateX(-50%)';
+                t1.style.borderBottom = '3px solid var(--red)';
+                t0.style.borderBottom = 'none';
+            }
+        }
+
+        // कथा खोल्ने फङ्सन
+        function openStory(title, id) {
+            const storyBody = document.getElementById('storyBody');
+            const victoryTag = document.getElementById('victoryTag');
+            
+            // डेटा लोड गर्ने प्रक्रिया
+            let content = "";
+            if (id.startsWith('n')) {
+                content = (typeof nepaliStories !== 'undefined' && nepaliStories[id]) ? nepaliStories[id] : "कथा चाँडै थपिँदैछ...";
+            } else {
+                content = (typeof hindiStories !== 'undefined' && hindiStories[id]) ? hindiStories[id] : "कहानी जल्द आ रही है...";
+            }
+            
+            document.getElementById('viewTitle').innerText = title;
+            storyBody.innerHTML = content;
+
+            // ब्याकइन्ड कन्फिग म्यापिङ (ट्याग र रङ)
+            const config = {
+                n1: { msg: "सिन्दुरको चिहान", color: "#FF0000" },
+                n2: { msg: "एकलव्य प्रेम", color: "#007BFF" },
+                n3: { msg: "त्यागको मूर्ति", color: "#28A745" },
+                n4: { msg: "पवित्र बिछोड", color: "#4B0082" },
+                n5: { msg: "बाजेको चिठी", color: "#8B4513" },
+                n6: { msg: "प्रतिज्ञा कि प्रतिक्षा", color: "#E91E63" },
+                n7: { msg: "प्रगतको मस्ती", color: "#FF5722" },
+                n8: { msg: "सपनाको संसार", color: "#9C27B0" },
+                n9: { msg: "निलो फूल", color: "#2196F3" },
+                h1: { msg: "अमर सुहागन", color: "#B22222" },
+                h2: { msg: "टुटा भरोसा", color: "#4A4A4A" }
+            };
+
+            if(config[id]) {
+                victoryTag.innerText = config[id].msg;
+                victoryTag.style.color = config[id].color;
+            }
+
+            document.getElementById('storyView').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // होम स्क्रिन स्क्रोल रोक्न
+            window.speechSynthesis.cancel(); 
+        }
+
+        function closeStory() {
+            window.speechSynthesis.cancel();
+            document.getElementById('storyView').style.display = 'none';
+            document.getElementById('voiceBtn').innerHTML = "▶️ वाचन";
+            document.body.style.overflow = 'auto';
+        }
+
+        // थिम टगल (Dark Mode / Day Mode)
+        function toggleTheme() { 
+            document.body.classList.toggle('dark-mode'); 
+        }
+
+        // फन्ट साइज कन्ट्रोलर (२२px को आधारमा)
+        let currentFS = 22;
+        function changeFontSize(d) { 
+            currentFS += d; 
+            if(currentFS < 16) currentFS = 16;
+            if(currentFS > 32) currentFS = 32;
+            document.getElementById('storyBody').style.fontSize = currentFS + 'px'; 
+        }
+
+        // टेक्स्ट टु स्पीच (TTS) अडियो फिचर
+        function speakStory() {
+            const btn = document.getElementById('voiceBtn');
+            if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+                window.speechSynthesis.pause();
+                btn.innerHTML = "▶️ वाचन";
+                return;
+            }
+            if (window.speechSynthesis.paused) {
+                window.speechSynthesis.resume();
+                btn.innerHTML = "⏸️ रोक्नुहोस्";
+                return;
+            }
+            const text = document.getElementById('storyBody').innerText;
+            const speech = new SpeechSynthesisUtterance(text);
+            const isHindi = /[\u0900-\u097F]/.test(text);
+            speech.lang = isHindi ? 'hi-IN' : 'ne-NP';
+            speech.rate = 0.85;
+            speech.onend = () => { btn.innerHTML = "▶️ वाचन"; };
+            window.speechSynthesis.speak(speech);
+            btn.innerHTML = "⏸️ रोक्नुहोस्";
+        }
+    </script>
+</body>
+                  </html>
+                  
