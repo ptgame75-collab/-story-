@@ -10,17 +10,17 @@
 <body class="day-mode">
 
     <div id="homePage">
+        <!-- यो पुरै हेडर र ट्याब अब स्क्रोल गर्दा माथि नै टाँसिएर (Sticky) बस्नेछ -->
         <header>
             <div class="logo-text">✍🏻 अधिराज Story</div>
         </header>
 
-        <!-- पुरानै सुन्दर नेभिगेसन ट्याबहरू -->
         <nav class="tab-nav">
             <div id="tab0" class="active" onclick="switchTab(0)">हिन्दी कथाहरू</div>
             <div id="tab1" onclick="switchTab(1)">नेपाली कथाहरू</div>
         </nav>
 
-        <!-- मुख्य सामग्री क्षेत्र (स्वाइपिङ सहित) -->
+        <!-- कथाहरूको सूची (पुरानो डिजाइन कार्डहरू) -->
         <div class="main-wrapper" id="contentWrapper">
             <!-- हिन्दी सेक्सन -->
             <section id="hindiSection">
@@ -95,7 +95,6 @@
                 <button onclick="changeFontSize(-2)">A-</button>
             </div>
 
-            <!-- मुख्य सामग्री जहाँ फन्ट साइज २२px सम्म बस्छ -->
             <div id="storyBody" class="story-body-text"></div>
             
             <div style="margin-top: 40px;">
@@ -165,7 +164,7 @@
 
         function toggleTheme() { document.body.classList.toggle('night-mode'); }
         
-        let currentFS = 22; // हजुरको CSS को बेस फन्ट साइज २२px मा सेट गरिएको
+        let currentFS = 22;
         function changeFontSize(d) { 
             currentFS += d; 
             if(currentFS < 16) currentFS = 16;
