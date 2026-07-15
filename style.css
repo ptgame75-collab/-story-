@@ -1,236 +1,210 @@
-/* style.css - अधिराज की डायरी 068 (Updated for Layout) */
+<!DOCTYPE html>
+<html lang="ne" translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>अधिराज Story</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="google" content="notranslate">
+</head>
+<body class="day-mode">
 
-/* Snickles फन्ट लोड गर्ने */
-@font-face {
-    font-family: 'Snickles';
-    src: url('Snickles.ttf');
-}
+    <div id="homePage">
+        <!-- यो पुरै हेडर र ट्याब अब स्क्रोल गर्दा माथि नै टाँसिएर (Sticky) बस्नेछ -->
+        <header>
+            <div class="logo-text">✍🏻 अधिराज Story</div>
+        </header>
 
-/* root variables र basic styles */
-:root { 
-    --bg: #fcfbf7; 
-    --text: #333; 
-    --red: #d32f2f; 
-    --card-bg: #ffffff; 
-    --line: #ccc; 
-}
+        <nav class="tab-nav">
+            <div id="tab0" class="active" onclick="switchTab(0)">हिन्दी कथाहरू</div>
+            <div id="tab1" onclick="switchTab(1)">नेपाली कथाहरू</div>
+        </nav>
 
-.night-mode { /* जाभास्क्रिप्ट टगलसँग म्याच गरिएको */
-    --bg: #121212; 
-    --text: #e0e0e0; 
-    --red: #ff5252; 
-    --card-bg: #1e1e1e; 
-    --line: #444; 
-}
+        <!-- कथाहरूको सूची (पुरानो डिजाइन कार्डहरू) -->
+        <div class="main-wrapper" id="contentWrapper">
+            <!-- हिन्दी सेक्सन -->
+            <section id="hindiSection">
+                <div class="story-title-card" onclick="openStory('वियोग का सिन्दुर', 'h1')">
+                    <span class="badge">कहानी १</span>
+                    <h3>वियोग का सिन्दुर</h3>
+                </div>
+                <div class="story-title-card" onclick="openStory('गरीबी और सपनों की नींव', 'h2')">
+                    <span class="badge">कहानी २</span>
+                    <h3>गरीबी और सपनों की नींव</h3>
+                </div>
+            </section>
 
-body { 
-    background: var(--bg); 
-    color: var(--text); 
-    font-family: 'Georgia', serif; 
-    padding: 20px; 
-    margin: 0; 
-    -webkit-user-select: none; 
-    user-select: none; 
-    transition: opacity 1.2s ease, background 0.4s; 
-    line-height: 1.8;
-}
+            <!-- नेपाली सेक्सन -->
+            <section id="nepaliSection">
+                <div class="story-title-card" onclick="openStory('वैवाहिक वेश्या', 'n1')">
+                    <span class="badge">कथा १</span>
+                    <h3>वैवाहिक वेश्या</h3>
+                </div>
+                <div class="story-title-card" onclick="openStory('अधुरो प्रतिज्ञा', 'n2')">
+                    <span class="badge">कथा २</span>
+                    <h3>अधुरो प्रतिज्ञा</h3>
+                </div>
+                <div class="story-title-card" onclick="openStory('दिदीको समर्पण', 'n3')">
+                    <span class="badge">कथा ३</span>
+                    <h3>दिदीको समर्पण</h3>
+                </div>
+                <div class="story-title-card" onclick="openStory('लालुङको याद', 'n4')">
+                    <span class="badge">कथा ४</span>
+                    <h3>लालुङको याद</h3>
+                </div>
+                <div class="story-title-card" onclick="openStory('बाजेको चिठी', 'n5')">
+                    <span class="badge">कथा ५</span>
+                    <h3>बाजेको चिठी</h3>
+                </div>
+                <div class="story-title-card" onclick="openStory('प्रतिज्ञा कि प्रतिक्षा', 'n6')">
+                    <span class="badge">कथा ६</span>
+                    <h3>प्रतिज्ञा कि प्रतिक्षा</h3>
+                </div>
+                <div class="story-title-card" onclick="openStory('प्रगतको मस्ती', 'n7')">
+                    <span class="badge">कथा ७</span>
+                    <h3>प्रगतको मस्ती</h3>
+                </div>
+                <div class="story-title-card" onclick="openStory(' सपना यात्रा', 'n8')">
+                    <span class="badge">कथा ८</span>
+                    <h3>सपना यात्रा</h3>
+                </div>
+                <div class="story-title-card" onclick="openStory('निलो फूल', 'n9')">
+                    <span class="badge">कथा ९</span>
+                    <h3>निलो फूल</h3>
+                </div>
+            </section>
+        </div>
+    </div>
 
-.fade-out { opacity: 0; }
+    <!-- कथा भ्युअर ओभरले स्क्रिन -->
+    <div id="storyView" class="story-view-overlay">
+        <div class="story-header">
+            <button class="back-btn" onclick="closeStory()">← बन्द गर्ने</button>
+            <button class="theme-toggle" onclick="toggleTheme()">🌓 मोड</button>
+        </div>
+        
+        <div class="story-content-area">
+            <div class="title-wrapper">
+                <h1 id="viewTitle" class="inner-story-title">शीर्षक</h1>
+                <div class="album-line"></div>
+                <button onclick="speakStory()" class="play-btn" id="voiceBtn">▶️ वाचन</button>
+            </div>
+            
+            <div class="font-tools">
+                <button onclick="changeFontSize(2)">A+</button>
+                <button onclick="changeFontSize(-2)">A-</button>
+            </div>
 
-/* हेडर र टुलबार */
-header {
-    text-align: center;
-    padding: 20px 0 10px 0;
-}
-.logo-text {
-    font-size: 26px;
-    font-weight: 900;
-    color: var(--text);
-    text-align: center;
-}
+            <div id="storyBody" class="story-body-text"></div>
+            
+            <div style="margin-top: 40px;">
+                <div class="author-name bold-name">लेखक: अधिराज सुनार</div>
+                <div id="victoryTag" class="victory-msg">प्रतीक्षा...</div>
+                <div class="thanks-msg">♡︎ thanks for reading ♡︎</div>
+            </div>
+        </div>
+    </div>
 
-/* ट्याब नेभिगेसन - पुरानो डिजाइन जस्तै */
-.tab-nav {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin: 20px 0 30px 0;
-    border-bottom: 2px solid var(--line);
-    padding-bottom: 10px;
-}
-.tab-nav div {
-    font-size: 18px;
-    font-weight: 900;
-    cursor: pointer;
-    color: var(--text);
-    opacity: 0.6;
-    padding: 5px 10px;
-    transition: all 0.3s;
-}
-.tab-nav div.active {
-    opacity: 1;
-    color: var(--red);
-    border-bottom: 3px solid var(--red);
-}
+    <script src="nepali-stories.js"></script>
+    <script src="hindi-stories.js"></script>
+    
+    <script>
+        function switchTab(index) {
+            const wrapper = document.getElementById('contentWrapper');
+            wrapper.style.transform = `translateX(-${index * 50}%)`;
+            document.querySelectorAll('.tab-nav div').forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+        }
 
-/* स्वाइप र्‍यापर लेआउट */
-#homePage {
-    max-width: 650px;
-    margin: 0 auto;
-    overflow: hidden;
-}
-.main-wrapper {
-    display: flex;
-    width: 200%;
-    transition: transform 0.4s ease-in-out;
-}
-#hindiSection, #nepaliSection {
-    width: 50%;
-    box-sizing: border-box;
-    padding: 0 10px;
-}
+        function openStory(title, id) {
+            const storyBody = document.getElementById('storyBody');
+            const victoryTag = document.getElementById('victoryTag');
+            
+            let content = "";
+            if(id.startsWith('n')) {
+                content = (typeof nepaliStories !== 'undefined' && nepaliStories[id]) ? nepaliStories[id] : "कथा सामग्री लोड हुँदैछ...";
+            } else {
+                content = (typeof hindiStories !== 'undefined' && hindiStories[id]) ? hindiStories[id] : "कहानी लोड हो रही है...";
+            }
+            
+            document.getElementById('viewTitle').innerText = title;
+            storyBody.innerHTML = content;
 
-/* पुरानो जस्तै देखिने सुन्दर स्टोरी टाइटल कार्डहरू */
-.story-title-card { 
-    background: var(--card-bg); 
-    border-left: 6px solid var(--red); 
-    padding: 18px; 
-    margin-bottom: 20px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-.story-title-card:active {
-    transform: scale(0.98);
-}
-.story-title-card h3 {
-    font-size: 22px;
-    margin: 0;
-    font-weight: 900;
-    line-height: 1.6;
-    color: var(--text);
-}
-.badge { 
-    color: var(--red); 
-    display: block; 
-    margin-bottom: 8px; 
-    font-size: 14px; 
-    font-weight: 900; 
-}
+            const config = {
+                n1: { msg: "सिन्दुरको चिहान", color: "#FF0000" },
+                n2: { msg: "एकलव्य प्रेम", color: "#007BFF" },
+                n3: { msg: "त्यागको मूर्ति", color: "#28A745" },
+                n4: { msg: "पवित्र बिछोड", color: "#4B0082" },
+                n5: { msg: "बाजेको चिठी", color: "#8B4513" },
+                n6: { msg: "प्रतिज्ञा कि प्रतिक्षा", color: "#E91E63" },
+                n7: { msg: "प्रगतको मस्ती", color: "#FF5722" }, 
+                n8: { msg: "सपनाको संसार", color: "#9C27B0" }, 
+                n9: { msg: "निलो फूल", color: "#2196F3" },     
+                h1: { msg: "अमर सुहागन", color: "#B22222" },
+                h2: { msg: "टुटा भरोसा", color: "#4A4A4A" }
+            };
 
-/* ओभरले भ्युअर (कथा भित्र पढ्ने स्क्रिन) */
-.story-view-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--bg);
-    z-index: 1000;
-    overflow-y: auto;
-    display: none;
-    padding: 20px;
-    box-sizing: border-box;
-}
-.story-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 650px;
-    margin: 0 auto 20px auto;
-}
-.btn, .back-btn, .theme-toggle, .play-btn { 
-    padding: 7px 18px; 
-    border: 1px solid var(--line); 
-    background: var(--card-bg); 
-    cursor: pointer; 
-    border-radius: 5px; 
-    text-decoration: none; 
-    color: var(--text); 
-    font-size: 14px; 
-    font-weight: bold;
-}
+            if(config[id]) {
+                victoryTag.innerText = config[id].msg;
+                victoryTag.style.color = config[id].color;
+            }
 
-.story-content-area {
-    max-width: 650px;
-    margin: 0 auto;
-}
-.title-wrapper {
-    text-align: center;
-    margin-bottom: 25px;
-}
-.inner-story-title {
-    font-size: 32px;
-    font-weight: 900;
-    margin-bottom: 15px;
-    color: var(--text);
-}
-.font-tools {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 25px;
-}
-.font-tools button {
-    padding: 5px 15px;
-    border: 1px solid var(--line);
-    background: var(--card-bg);
-    color: var(--text);
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-}
+            document.getElementById('storyView').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            window.speechSynthesis.cancel(); 
+        }
 
-/* फन्टहरू र टेक्स्ट क्लासहरू (हजुरको CSS बाट जस्ताको तस्तै) */
-.snickles-font {
-    font-family: 'Snickles', cursive;
-    font-size: 26px;
-    font-weight: normal;
-    text-transform: uppercase;
-}
-.story-body-text { 
-    font-size: 22px; 
-    margin-bottom: 50px; 
-    text-align: justify; 
-    font-weight: 900;
-    line-height: 1.9; 
-    color: var(--text);
-}
-.bold-name { font-weight: 900; font-size: 17px; color: var(--text); } 
-.victory-msg { font-weight: 900; font-size: 18px; margin-top: 15px; text-align: center; }
-.author-name { text-align: center; font-size: 16px; opacity: 0.8; }
-.thanks-msg { text-align: center; font-size: 14px; margin-top: 10px; font-style: italic; }
+        function closeStory() {
+            window.speechSynthesis.cancel();
+            document.getElementById('storyView').style.display = 'none';
+            document.getElementById('voiceBtn').innerHTML = "▶️ वाचन";
+            document.body.style.overflow = 'auto';
+        }
 
-/* फोटो र मिडिया सेटिङ्स */
-.photo-wrapper { text-align: center; margin: 30px 0; }
-.diary-image {
-    width: 95%; max-width: 400px; height: auto;
-    border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    border: 1px solid var(--line);
-}
+        function toggleTheme() { document.body.classList.toggle('night-mode'); }
+        
+        let currentFS = 22;
+        function changeFontSize(d) { 
+            currentFS += d; 
+            if(currentFS < 16) currentFS = 16;
+            if(currentFS > 32) currentFS = 32;
+            document.getElementById('storyBody').style.fontSize = currentFS + 'px'; 
+        }
 
-video {
-    width: 95%; max-width: 450px; height: auto; display: block; 
-    margin: 25px auto; border-radius: 15px; background: #000; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 1px solid var(--line);
-    outline: none;
-}
-.video-wrapper { text-align: center; padding: 10px; margin-bottom: 30px; }
+        function speakStory() {
+            const btn = document.getElementById('voiceBtn');
+            if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+                window.speechSynthesis.pause();
+                btn.innerHTML = "▶️ वाचन";
+                return;
+            }
+            if (window.speechSynthesis.paused) {
+                window.speechSynthesis.resume();
+                btn.innerHTML = "⏸️ रोक्नुहोस्";
+                return;
+            }
+            const text = document.getElementById('storyBody').innerText;
+            const speech = new SpeechSynthesisUtterance(text);
+            const isHindi = /[\u0900-\u097F]/.test(text);
+            speech.lang = isHindi ? 'hi-IN' : 'ne-NP';
+            speech.rate = 0.85;
+            speech.onend = () => { btn.innerHTML = "▶️ वाचन"; };
+            window.speechSynthesis.speak(speech);
+            btn.innerHTML = "⏸️ रोक्नुहोस्";
+        }
 
-/* एल्बम सेक्सन (Side Scrolling) */
-.album-scroll-container {
-    display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 20px;
-    padding: 10px 0; scrollbar-width: none; scroll-behavior: smooth; max-width: 650px; margin: 20px auto;
-}
-.album-scroll-container::-webkit-scrollbar { display: none; }
-.album-photo {
-    flex: 0 0 80%; scroll-snap-align: center; scroll-snap-stop: always;
-    background: var(--card-bg); padding: 8px; border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid var(--line); flex-shrink: 0;
-}
-.album-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 8px; display: block; }
-.album-line { width: 140px; height: 3px; background-color: var(--red); margin: 0 auto 30px auto; border-radius: 2px; }
-.album-group { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; }
-.caption-text { margin-top: 5px; font-size: 14px; color: var(--text); text-align: center; }
-
-@media (max-width: 480px) {
-    video { width: 100%; border-radius: 8px; }
-}
+        // टच स्वाइपिङ कोड
+        let touchStartX = 0;
+        document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, false);
+        document.addEventListener('touchend', e => {
+            let touchEndX = e.changedTouches[0].clientX;
+            let diff = touchStartX - touchEndX;
+            if (document.getElementById('storyView').style.display !== 'block') {
+                if (diff > 80) switchTab(1);
+                if (diff < -80) switchTab(0);
+            }
+        }, false);
+    </script>
+</body>
+</html>
