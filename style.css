@@ -33,6 +33,7 @@ body {
     user-select: none; 
     transition: opacity 1.2s ease, background 0.4s; 
     line-height: 1.8;
+    overflow-x: hidden; /* तेर्सो स्क्रोल रोक्न */
 }
 
 .fade-out { opacity: 0; }
@@ -41,17 +42,21 @@ body {
 #homePage {
     max-width: 650px;
     margin: 0 auto;
-    overflow: hidden;
 }
 
-/* --- स्टिकी हेडर र ट्याबहरू (माथि टाँसिने) --- */
-#homePage header {
+/* --- नयाँ फिक्स: सिङ्गो हेडर कन्टेनरलाई मात्र स्टिकी बनाइएको --- */
+.sticky-header-container {
     position: sticky;
     top: 0;
     background: var(--bg);
     z-index: 1000;
-    padding: 20px 0 10px 0;
+    padding-top: 20px;
+    border-bottom: 2px solid var(--line);
     transition: background 0.4s;
+}
+
+header {
+    padding-bottom: 10px;
 }
 
 .logo-text {
@@ -62,17 +67,11 @@ body {
 }
 
 .tab-nav {
-    position: sticky;
-    top: 65px; /* हेडरको ठीक मुनि बस्नका लागि */
-    background: var(--bg);
-    z-index: 999;
     display: flex;
     justify-content: center;
     gap: 30px;
     margin: 0;
     padding: 10px 0 15px 0;
-    border-bottom: 2px solid var(--line);
-    transition: background 0.4s;
 }
 
 .tab-nav div {
@@ -96,7 +95,8 @@ body {
     display: flex;
     width: 200%;
     transition: transform 0.4s ease-in-out;
-    margin-top: 25px; /* ट्याबभन्दा मुनि स्पेस दिन */
+    margin-top: 25px;
+    touch-action: pan-y; /* टच स्क्रोललाई सधैं खुल्ला राख्न */
 }
 
 #hindiSection, #nepaliSection {
@@ -105,14 +105,14 @@ body {
     padding: 0 5px;
 }
 
-/* --- स्क्रिनसट जस्तै पुरानो बक्स (कार्ड) डिजाइन --- */
+/* --- पुरानो बक्स (कार्ड) डिजाइन --- */
 .story-title-card { 
     background: var(--card-bg); 
     border-left: 6px solid var(--red); 
     padding: 20px 24px; 
     margin-bottom: 25px; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* सफ्ट छाया */
-    border-radius: 12px; /* चारैतिर गोलो भएको बोर्डर */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+    border-radius: 12px; 
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s, background 0.4s;
     box-sizing: border-box;
@@ -124,7 +124,7 @@ body {
 
 .story-title-card h3 {
     font-size: 22px;
-    margin: 10px 0 0 0; /* ब्याचभन्दा मुनि खाली ठाउँ */
+    margin: 10px 0 0 0; 
     font-weight: 900;
     line-height: 1.6;
     color: var(--text);
@@ -137,7 +137,6 @@ body {
     font-weight: 900; 
 }
 
-/* English अक्षरहरूका लागि Snickles फन्ट */
 .snickles-font {
     font-family: 'Snickles', cursive;
     font-size: 26px;
