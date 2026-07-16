@@ -23,6 +23,7 @@
 
         <div class="main-wrapper" id="contentWrapper">
             
+            <!-- हिन्दी सेक्सन -->
             <section id="hindiSection">
                 <div class="story-title-card" onclick="openStory('वियोग का सिन्दुर', 'h1')">
                     <span class="badge">कहानी १</span>
@@ -34,6 +35,7 @@
                 </div>
             </section>
 
+            <!-- नेपाली सेक्सन -->
             <section id="nepaliSection">
                 <div class="story-title-card" onclick="openStory('वैवाहिक वेश्या', 'n1')">
                     <span class="badge">कथा १</span>
@@ -84,9 +86,17 @@
             });
         }
 
+        // नयाँ अपडेटेड फंक्शन: कथाको ID अनुसार सही एचटीएमएल पानामा रिडाइरेक्ट गर्ने
         function openStory(title, id) {
             console.log("कथा खोलियो: " + title + " (ID: " + id + ")");
-            // कथाको पाना खोल्ने कोड यहाँ हाल्न सकिन्छ
+            
+            if (id.startsWith('h')) {
+                // हिन्दी कथा भएमा hindi-story.html मा ID पास गर्ने
+                window.location.href = `hindi-story.html?id=${id}`;
+            } else if (id.startsWith('n')) {
+                // नेपाली कथा भएमा nepali-story.html मा ID पास गर्ने
+                window.location.href = `nepali-story.html?id=${id}`;
+            }
         }
 
         // स्वाइपिङ कोड
