@@ -169,3 +169,16 @@ header {
     font-size: 17px; 
     color: var(--text); 
 }
+/* थप खाली स्क्रोल हुने ठाउँ पूर्ण रूपमा हटाउन */
+#storyContainer {
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.story-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed #ddd;
+    font-family: 'Mukta', sans-serif;
+    padding-bottom: 10px !important; /* फुटर मुनि धेरै खाली ठाउँ बस्न नदिन */
+}
