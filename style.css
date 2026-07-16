@@ -38,10 +38,11 @@ body {
 
 .fade-out { opacity: 0; }
 
-/* मुख्य कन्टेनर */
+/* --- नयाँ परिवर्तन: मुख्य कन्टेनरलाई अलि सानो र चिटिक्क बनाइएको --- */
 #homePage {
-    max-width: 650px;
+    max-width: 500px; /* ६५०px बाट घटाएर ५००px बनाइएको ताकि सानो स्क्रिनमा पनि पर्फेक्ट फिट होस् */
     margin: 0 auto;
+    overflow: hidden; /* यसले छेउको अर्को भाषाको कथाहरू देखिन दिँदैन */
 }
 
 /* --- नयाँ फिक्स: सिङ्गो हेडर कन्टेनरलाई मात्र स्टिकी बनाइएको --- */
@@ -90,11 +91,11 @@ header {
     border-bottom: 3px solid var(--red);
 }
 
-/* स्वाइप मिल्ने र्‍यापर लेआउट */
+/* --- नयाँ परिवर्तन: हिन्दी र नेपाली पूर्ण रूपमा अलग्याउने र्‍यापर --- */
 .main-wrapper {
     display: flex;
     width: 200%;
-    transition: transform 0.4s ease-in-out;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* अझै स्मूथ र राम्रो एनिमेसन */
     margin-top: 25px;
     touch-action: pan-y; /* टच स्क्रोललाई सधैं खुल्ला राख्न */
 }
@@ -102,17 +103,18 @@ header {
 #hindiSection, #nepaliSection {
     width: 50%;
     box-sizing: border-box;
-    padding: 0 5px;
+    padding: 0 15px; /* प्याडिङ मिलाएर अर्को ट्याबको कन्टेन्टलाई पूर्णतः लुकाइएको */
+    flex-shrink: 0;
 }
 
-/* --- पुरानो बक्स (कार्ड) डिजाइन --- */
+/* --- पुरानो बक्स (कार्ड) डिजाइन र ट्युनिङ --- */
 .story-title-card { 
     background: var(--card-bg); 
     border-left: 6px solid var(--red); 
-    padding: 20px 24px; 
-    margin-bottom: 25px; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
-    border-radius: 12px; 
+    padding: 16px 20px; /* सानो बक्स अनुसार टाइट र सुन्दर प्याडिङ */
+    margin-bottom: 20px; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04); /* अझै प्रिमियम सफ्ट छाया */
+    border-radius: 10px; /* गोलो आकर्षक कुनाहरू */
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s, background 0.4s;
     box-sizing: border-box;
@@ -123,17 +125,17 @@ header {
 }
 
 .story-title-card h3 {
-    font-size: 22px;
-    margin: 10px 0 0 0; 
+    font-size: 20px; /* सानो कन्टेनर सुहाउँदो फन्ट साइज */
+    margin: 8px 0 0 0; 
     font-weight: 900;
-    line-height: 1.6;
+    line-height: 1.5;
     color: var(--text);
 }
 
 .badge { 
     color: var(--red); 
     display: inline-block; 
-    font-size: 15px; 
+    font-size: 14px; 
     font-weight: 900; 
 }
 
