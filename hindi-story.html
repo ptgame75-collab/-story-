@@ -33,22 +33,53 @@
         }
         .bold-feeling p.highlighted { background-color: rgba(255, 235, 59, 0.6) !important; color: #000 !important; }
         
-        /* ==========================================
-           नयाँ थपिएको स्टाइल: कोट बक्स (Quote Box) को लागि
-           ========================================== */
+        /* १. कोट बक्स (Quote Box) को स्टाइल */
         .quote-box {
-            background-color: #f0ebe1;
+            background-color: #f5f3e9;
             border-left: 5px solid #5D4037;
-            padding: 15px;
-            margin: 15px 0;
+            padding: 18px;
+            margin: 25px 0;
             font-style: italic;
             border-radius: 0 8px 8px 0;
         }
         .dark-mode .quote-box {
-            background-color: #252525;
+            background-color: #222;
             border-left-color: #ffc107;
             color: #e0e0e0;
         }
+
+        /* २. लेखक र धन्यवाद खण्ड (Footer) को स्टाइल */
+        .story-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed #ddd;
+            font-family: 'Mukta', sans-serif;
+        }
+        .footer-author {
+            font-size: 22px;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .dark-mode .footer-author { color: #fff; }
+        
+        .footer-moral {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+        
+        .footer-thanks {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .dark-mode .footer-thanks { color: #bbb; }
         
         .main-title { font-size: 30px; font-weight: 800; display: block; margin-top: 10px; color: #5D4037; text-align: center; }
         .straight-line { width: 100%; max-width: 600px; height: 1px; background: #ddd; border: none; margin: 20px auto 30px auto; }
@@ -154,13 +185,25 @@
                     const p = document.createElement('p');
                     p.setAttribute('data-id', 'p_' + (index + 1));
                     
-                    // ==========================================
-                    // यहाँ मुख्य सुधार: innerText को सट्टा innerHTML राखिएको छ
-                    // ==========================================
+                    // innerHTML प्रयोग गरेर ट्यागलाई बक्स बनाउने
                     p.innerHTML = para; 
                     
                     container.appendChild(p);
                 });
+
+                // कथा सकिएपछि लेखक र सन्देशको फुटर थप्ने लजिक
+                if (story.author || story.moral) {
+                    const footerDiv = document.createElement('div');
+                    footerDiv.className = 'story-footer';
+                    
+                    footerDiv.innerHTML = `
+                        <div class="footer-author"><strong>| लेखक:-</strong> ${story.author || 'अधिराज सुनार'}</div>
+                        <span class="footer-moral" style="color: ${story.moralColor || '#333'}">${story.moral || ''}</span>
+                        <div class="footer-thanks">♡ Thanks For or Reading ♡</div>
+                    `;
+                    container.appendChild(footerDiv);
+                }
+
             } else {
                 document.getElementById('storyTitle').innerText = "कहानी नहीं मिली";
                 document.getElementById('storyContainer').innerHTML = "<p>खोषित कहानी नहीं मिल सकी।</p>";
@@ -180,7 +223,7 @@
         function toggleHighlightMode() {
             isHighlightMode = !isHighlightMode;
             document.getElementById('pencilBtn').classList.toggle('active');
-            if (isHighlightMode) showToast("बुकमार्क मोड अन। प्रेस गर्नुहोस्।");
+            if (isHighlightMode) showToast("बुकमार्क मोड ऑन। प्रेस गर्नुहोस्।");
         }
 
         function setupInteractions() {
