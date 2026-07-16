@@ -23,41 +23,45 @@
     --line: #444; 
 }
 
+/* मोबाइल एप जस्तै बनाउन बडीको स्क्रोल बन्द गरिएको */
 body { 
     background: var(--bg); 
     color: var(--text); 
     font-family: 'Georgia', serif; 
-    padding: 0 20px 20px 20px; 
     margin: 0; 
+    padding: 0;
     -webkit-user-select: none; 
     user-select: none; 
-    transition: opacity 1.2s ease, background 0.4s; 
+    transition: background 0.4s; 
     line-height: 1.8;
-    overflow-x: hidden; /* तेर्सो स्क्रोल रोक्न */
+    height: 100vh;
+    overflow: hidden; /* बडीलाई हल्लिन नदिने */
 }
 
 .fade-out { opacity: 0; }
 
-/* --- नयाँ परिवर्तन: मुख्य कन्टेनरलाई अलि सानो र चिटिक्क बनाइएको --- */
+/* मुख्य कन्टेनर - साइज अलि सानो र चिटिक्क ४५०px पारिएको */
 #homePage {
-    max-width: 500px; /* ६५०px बाट घटाएर ५००px बनाइएको ताकि सानो स्क्रिनमा पनि पर्फेक्ट फिट होस् */
+    max-width: 450px; 
     margin: 0 auto;
-    overflow: hidden; /* यसले छेउको अर्को भाषाको कथाहरू देखिन दिँदैन */
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /* हेडर माथि, कन्टेन्ट तल राख्न */
+    overflow: hidden;
 }
 
-/* --- नयाँ फिक्स: सिङ्गो हेडर कन्टेनरलाई मात्र स्टिकी बनाइएको --- */
+/* --- हेडर कन्टेनर: यो जति स्क्रोल गरे पनि हल्लिँदैन, फिक्स बस्छ --- */
 .sticky-header-container {
-    position: sticky;
-    top: 0;
     background: var(--bg);
-    z-index: 1000;
     padding-top: 20px;
     border-bottom: 2px solid var(--line);
     transition: background 0.4s;
+    flex-shrink: 0; /* यसलाई थिचिन नदिने */
+    z-index: 1000;
 }
 
 header {
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
 
 .logo-text {
@@ -91,33 +95,47 @@ header {
     border-bottom: 3px solid var(--red);
 }
 
-/* --- नयाँ परिवर्तन: हिन्दी र नेपाली पूर्ण रूपमा अलग्याउने र्‍यापर --- */
+/* --- मुख्य कन्टेन्ट एरिया: यहाँ मात्र स्क्रोल हुन्छ --- */
 .main-wrapper {
     display: flex;
     width: 200%;
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* अझै स्मूथ र राम्रो एनिमेसन */
-    margin-top: 25px;
-    touch-action: pan-y; /* टच स्क्रोललाई सधैं खुल्ला राख्न */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    flex-grow: 1;
+    height: calc(100vh - 120px); /* हेडर भन्दा तलको भाग मात्र लिने */
 }
 
+/* हिन्दी र नेपाली सेक्सन - सफासँग तल मात्र स्क्रोल हुने बनाइएको र भाषा नखप्टिने */
 #hindiSection, #nepaliSection {
     width: 50%;
     box-sizing: border-box;
-    padding: 0 15px; /* प्याडिङ मिलाएर अर्को ट्याबको कन्टेन्टलाई पूर्णतः लुकाइएको */
+    padding: 20px 20px 40px 20px; /* तल पर्याप्त ग्याप ताकि अन्तिम कार्ड नछेकियोस् */
+    overflow-y: auto; /* केवल यहाँ मात्र माथि-तल स्क्रोल चल्छ */
+    height: 100%;
+    -webkit-overflow-scrolling: touch; /* आईफोनमा स्मूथ स्क्रोलका लागि */
     flex-shrink: 0;
 }
 
-/* --- पुरानो बक्स (कार्ड) डिजाइन र ट्युनिङ --- */
+/* स्क्रोलबारलाई सफा वा लुकाउनका लागि */
+#hindiSection::-webkit-scrollbar, #nepaliSection::-webkit-scrollbar {
+    width: 4px;
+}
+#hindiSection::-webkit-scrollbar-thumb, #nepaliSection::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 2px;
+}
+
+/* --- पुरानो प्रिमियम बक्स (कार्ड) डिजाइन --- */
 .story-title-card { 
     background: var(--card-bg); 
     border-left: 6px solid var(--red); 
-    padding: 16px 20px; /* सानो बक्स अनुसार टाइट र सुन्दर प्याडिङ */
+    padding: 18px 22px; 
     margin-bottom: 20px; 
-    box-shadow: 0 8px 20px rgba(0,0,0,0.04); /* अझै प्रिमियम सफ्ट छाया */
-    border-radius: 10px; /* गोलो आकर्षक कुनाहरू */
+    box-shadow: 0 8px 22px rgba(0,0,0,0.05); 
+    border-radius: 12px; 
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s, background 0.4s;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .story-title-card:active {
@@ -125,7 +143,7 @@ header {
 }
 
 .story-title-card h3 {
-    font-size: 20px; /* सानो कन्टेनर सुहाउँदो फन्ट साइज */
+    font-size: 20px; 
     margin: 8px 0 0 0; 
     font-weight: 900;
     line-height: 1.5;
