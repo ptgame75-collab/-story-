@@ -2,7 +2,7 @@
 <html lang="ne" translate="no">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-width=1.0, user-scalable=no">
     <title>कथा पढ्नुहोस्</title>
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -128,7 +128,7 @@
         <div id="storyContainer"></div>
     </div>
 
-    <!-- सच्याइएको ठाउँ: यहाँ सही फाइल nepali-stories.js लोड गरिएको छ -->
+    <!-- १. यहाँ सही फाइल nepali-stories.js लिङ्क गरिएको सुनिश्चित गरियो -->
     <script src="nepali-stories.js"></script>
 
     <script>
@@ -154,7 +154,7 @@
             const id = urlParams.get('id');
             storyKey = id || "";
 
-            // यहाँ अब्जेक्टको नाम nepaliStories हुनुपर्छ
+            // २. यहाँ डाटा अब्जेक्टको नाम nepaliStories हुनुपर्छ
             if (id && typeof nepaliStories !== 'undefined' && nepaliStories[id]) {
                 const story = nepaliStories[id];
                 document.getElementById('storyTitle').innerText = story.title;
@@ -172,6 +172,7 @@
                     let element;
                     const blockId = 'p_' + (index + 1);
 
+                    // यदि हरफ भित्र पहिले नै quote-box को क्लास छ भने त्यसलाई डिभ बनाएर राख्ने
                     if (para.includes('class="quote-box"')) {
                         const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = para.trim();
@@ -187,7 +188,7 @@
                     container.appendChild(element);
                 });
 
-                // दुवै प्रकारका डाटा स्ट्रक्चर (story.meta वा सिधै story.author) लाई सपोर्ट गर्ने गरी मिलाइएको फुटर
+                // ३. डाटा स्ट्रक्चर जसरी लेखेको भए पनि काम गर्ने (Fallback Logic)
                 const author = (story.meta && story.meta.author) || story.author || 'अधिराज सुनार';
                 const moral = (story.meta && story.meta.moral) || story.moral || '';
                 const moralColor = (story.meta && story.meta.moralColor) || story.moralColor || '#5D4037';
@@ -206,17 +207,20 @@
 
             } else {
                 document.getElementById('storyTitle').innerText = "कथा भेटिएन";
-                document.getElementById('storyContainer').innerHTML = "<p>खोजिएको कथा फेला पार्न सकिएन।</p>";
+                document.getElementById('storyContainer').innerHTML = "<p>खोजिएको कथा फेला पार्न सकिएन। कृपया आईडी वा nepali-stories.js फाइल चेक गर्नुहोस्।</p>";
             }
 
             loadSavedBookmark();
             setupInteractions();
         });
 
+        // डबल ट्याप गर्दा तलको मेनु बाहिर आउने/लुक्ने मिलाइएको
         window.addEventListener('click', (e) => {
             if (e.target.closest('#actionContainer') || e.target.closest('.toolbar')) return;
             let now = new Date().getTime();
-            if (now - lastTapTime < 300) document.getElementById('actionContainer').classList.toggle('show');
+            if (now - lastTapTime < 300) {
+                document.getElementById('actionContainer').classList.toggle('show');
+            }
             lastTapTime = now;
         });
 
@@ -228,7 +232,9 @@
             }
         }
 
+        // ४. बुकमार्क थिच्ने इभेन्टलाई ढुक्कसँग चल्ने बनाइयो (.story-block लाई टार्गेट गरेर)
         function setupInteractions() {
+            // इभेन्टहरू दोहोरिएर नबस्नका लागि सुरुमा सफा गर्ने र नयाँ राख्ने
             document.querySelectorAll('#storyContainer .story-block').forEach(el => {
                 let timer;
                 
@@ -243,10 +249,12 @@
                     clearTimeout(timer);
                 };
 
+                // मोबाइल टच इभेन्टहरू
                 el.addEventListener('touchstart', start);
                 el.addEventListener('touchend', cancel);
                 el.addEventListener('touchmove', cancel);
 
+                // कम्प्युटर माउस इभेन्टहरू
                 el.addEventListener('mousedown', start);
                 el.addEventListener('mouseup', cancel);
                 el.addEventListener('mouseleave', cancel);
@@ -264,13 +272,17 @@
         function loadSavedBookmark() {
             const id = localStorage.getItem('bookmark_nepali_' + storyKey);
             const btns = [document.getElementById('jumpBtn'), document.getElementById('clearBtn')];
-            document.querySelectorAll('#storyContainer .story-block').forEach(el => el.classList.toggle('highlighted', el.getAttribute('data-id') === id));
+            document.querySelectorAll('#storyContainer .story-block').forEach(el => {
+                el.classList.toggle('highlighted', el.getAttribute('data-id') === id);
+            });
             btns.forEach(b => b.style.display = id ? 'block' : 'none');
         }
 
         function jumpToBookmark() {
             const id = localStorage.getItem('bookmark_nepali_' + storyKey);
-            document.querySelector(`[data-id="${id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (id) {
+                document.querySelector(`[data-id="${id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
 
         function clearBookmark() {
