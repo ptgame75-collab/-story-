@@ -30,6 +30,7 @@
         .story-block { 
             font-size: 22px; margin-bottom: 25px; transition: background-color 0.3s; cursor: pointer; padding: 8px; border-radius: 6px;
             scroll-margin-top: 140px; -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
         }
         p.story-block { font-weight: 900; text-align: justify; }
         .story-block.highlighted { background-color: rgba(255, 235, 59, 0.6) !important; color: #000 !important; }
@@ -127,7 +128,6 @@
         <div id="storyContainer"></div>
     </div>
 
-    <!-- यहाँ शुद्ध स्पेलिङको डेटा फाइल लिङ्क गरिएको छ -->
     <script src="nepali-stories.js"></script>
 
     <script>
@@ -185,13 +185,14 @@
                     container.appendChild(element);
                 });
 
-                if (story.author || story.moral) {
+                // सुधारिएको लजिक: story.meta भित्रबाट लेखक र सन्देश तान्ने
+                if (story.meta) {
                     const footerDiv = document.createElement('div');
                     footerDiv.className = 'story-footer';
                     
                     footerDiv.innerHTML = `
-                        <div class="footer-author"><strong>| लेखक:-</strong> ${story.author || 'अधिराज sunar'}</div>
-                        <span class="footer-moral" style="color: ${story.moralColor || '#333'}">${story.moral || ''}</span>
+                        <div class="footer-author"><strong>| लेखक:-</strong> ${story.meta.author || 'अधिराज सुनार'}</div>
+                        <span class="footer-moral" style="color: ${story.meta.moralColor || '#5D4037'}">${story.meta.moral || ''}</span>
                         <div class="footer-thanks">♡ Thanks For Reading ♡</div>
                     `;
                     container.appendChild(footerDiv);
@@ -216,17 +217,36 @@
         function toggleHighlightMode() {
             isHighlightMode = !isHighlightMode;
             document.getElementById('pencilBtn').classList.toggle('active');
-            if (isHighlightMode) showToast("बुकमार्क मोड अन। प्रेस गर्नुहोस्।");
+            if (isHighlightMode) {
+                showToast("बुकमार्क मोड अन! हरफमा १ सेकेन्ड थिचिराख्नुहोस्।");
+            }
         }
 
         function setupInteractions() {
             document.querySelectorAll('#storyContainer .story-block').forEach(el => {
                 let timer;
-                const start = () => { if(isHighlightMode) timer = setTimeout(() => saveBookmark(el), 1000); };
+                
+                const start = (e) => { 
+                    if (!isHighlightMode) return;
+                    // लङ प्रेस गर्दा मोबाइलमा सेलेक्ट विन्डो नखुलोस् भन्नका लागि
+                    timer = setTimeout(() => {
+                        saveBookmark(el);
+                    }, 1000); 
+                };
+
+                const cancel = () => {
+                    clearTimeout(timer);
+                };
+
+                // मोबाइल टच इभेन्टहरू
                 el.addEventListener('touchstart', start);
+                el.addEventListener('touchend', cancel);
+                el.addEventListener('touchmove', cancel);
+
+                // डेस्कटप माउस इभेन्टहरू
                 el.addEventListener('mousedown', start);
-                el.addEventListener('touchend', () => clearTimeout(timer));
-                el.addEventListener('mouseup', () => clearTimeout(timer));
+                el.addEventListener('mouseup', cancel);
+                el.addEventListener('mouseleave', cancel);
             });
         }
 
