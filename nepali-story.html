@@ -128,6 +128,7 @@
         <div id="storyContainer"></div>
     </div>
 
+    <!-- डेटा फाइल लिङ्क गरिएको ठाउँ -->
     <script src="nepali-stories.js"></script>
 
     <script>
@@ -185,7 +186,6 @@
                     container.appendChild(element);
                 });
 
-                // सुधारिएको लजिक: story.meta भित्रबाट लेखक र सन्देश तान्ने
                 if (story.meta) {
                     const footerDiv = document.createElement('div');
                     footerDiv.className = 'story-footer';
@@ -228,7 +228,6 @@
                 
                 const start = (e) => { 
                     if (!isHighlightMode) return;
-                    // लङ प्रेस गर्दा मोबाइलमा सेलेक्ट विन्डो नखुलोस् भन्नका लागि
                     timer = setTimeout(() => {
                         saveBookmark(el);
                     }, 1000); 
@@ -238,12 +237,10 @@
                     clearTimeout(timer);
                 };
 
-                // मोबाइल टच इभेन्टहरू
                 el.addEventListener('touchstart', start);
                 el.addEventListener('touchend', cancel);
                 el.addEventListener('touchmove', cancel);
 
-                // डेस्कटप माउस इभेन्टहरू
                 el.addEventListener('mousedown', start);
                 el.addEventListener('mouseup', cancel);
                 el.addEventListener('mouseleave', cancel);
