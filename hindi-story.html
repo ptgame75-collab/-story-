@@ -12,7 +12,7 @@
             line-height: 1.9; 
             color: #333; 
             background: #fcfbf7; 
-            padding: 75px 20px 60px 20px; 
+            padding: 75px 20px 60px 20px; /* बढी स्क्रोल हुन नदिन ६०px पारिएको */
             transition: 0.3s; 
             -webkit-user-select: none; 
             user-select: none; 
@@ -48,36 +48,49 @@
             color: #e0e0e0;
         }
 
-        /* २. लेखक र धन्यवाद खण्ड (Footer) को स्टाइल */
+        /* थप खाली स्क्रोल हुने ठाउँ पूर्ण रूपमा हटाउन */
+        #storyContainer {
+            margin-bottom: 0px !important;
+            padding-bottom: 0px !important;
+        }
+
+        /* २. लेखक र धन्यवाद खण्ड (Footer) को एकदमै मिलाइएको फाइनल स्टाइल */
         .story-footer {
-            margin-top: 40px;
+            margin-top: 30px;
             padding-top: 20px;
             border-top: 1px dashed #ddd;
             font-family: 'Mukta', sans-serif;
+            padding-bottom: 10px !important;
         }
+        
+        /* लेखकको नाम देब्रे (बायाँ) साइडमै राख्ने र सफा देखाउने */
         .footer-author {
-            font-size: 22px;
+            font-size: 21px;
             font-weight: 800;
             color: #000;
-            margin-bottom: 20px;
-            text-align: left;
+            margin-bottom: 15px;
+            text-align: left; /* देब्रे साइडमै सेट गरिएको */
         }
         .dark-mode .footer-author { color: #fff; }
         
+        /* भद्दा ठूलो अक्षरलाई हटाएर एकदमै सुन्दर र ठिक्कको साइज बनाउने */
         .footer-moral {
-            font-size: 42px;
+            font-size: 28px; /* साइज सानो पारेर प्रिमियम लुक दिइएको */
             font-weight: 800;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             display: block;
-            text-align: center;
+            text-align: center; /* यो चाहिँ टक्क बीचमा बस्छ */
+            letter-spacing: 0.5px;
         }
         
+        /* थ्याङ्क्यु नोटलाई एकदमै कसिलो र मिलाएर राख्ने */
         .footer-thanks {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
             color: #333;
             text-align: center;
-            margin-bottom: 20px;
+            margin-top: 5px;
+            display: block;
         }
         .dark-mode .footer-thanks { color: #bbb; }
         
@@ -185,13 +198,12 @@
                     const p = document.createElement('p');
                     p.setAttribute('data-id', 'p_' + (index + 1));
                     
-                    // innerHTML प्रयोग गरेर ट्यागलाई बक्स बनाउने
                     p.innerHTML = para; 
                     
                     container.appendChild(p);
                 });
 
-                // कथा सकिएपछि लेखक र सन्देशको फुटर थप्ने लजिक
+                // कथा सकिएपछि फुटर लोड गर्ने लजिक
                 if (story.author || story.moral) {
                     const footerDiv = document.createElement('div');
                     footerDiv.className = 'story-footer';
