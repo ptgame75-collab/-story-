@@ -128,7 +128,7 @@
         <div id="storyContainer"></div>
     </div>
 
-    <!-- डेटा फाइल लिङ्क गरिएको ठाउँ -->
+    <!-- सच्याइएको ठाउँ: यहाँ सही फाइल nepali-stories.js लोड गरिएको छ -->
     <script src="nepali-stories.js"></script>
 
     <script>
@@ -154,6 +154,7 @@
             const id = urlParams.get('id');
             storyKey = id || "";
 
+            // यहाँ अब्जेक्टको नाम nepaliStories हुनुपर्छ
             if (id && typeof nepaliStories !== 'undefined' && nepaliStories[id]) {
                 const story = nepaliStories[id];
                 document.getElementById('storyTitle').innerText = story.title;
@@ -186,13 +187,18 @@
                     container.appendChild(element);
                 });
 
-                if (story.meta) {
+                // दुवै प्रकारका डाटा स्ट्रक्चर (story.meta वा सिधै story.author) लाई सपोर्ट गर्ने गरी मिलाइएको फुटर
+                const author = (story.meta && story.meta.author) || story.author || 'अधिराज सुनार';
+                const moral = (story.meta && story.meta.moral) || story.moral || '';
+                const moralColor = (story.meta && story.meta.moralColor) || story.moralColor || '#5D4037';
+
+                if (author || moral) {
                     const footerDiv = document.createElement('div');
                     footerDiv.className = 'story-footer';
                     
                     footerDiv.innerHTML = `
-                        <div class="footer-author"><strong>| लेखक:-</strong> ${story.meta.author || 'अधिराज सुनार'}</div>
-                        <span class="footer-moral" style="color: ${story.meta.moralColor || '#5D4037'}">${story.meta.moral || ''}</span>
+                        <div class="footer-author"><strong>| लेखक:-</strong> ${author}</div>
+                        <span class="footer-moral" style="color: ${moralColor}">${moral}</span>
                         <div class="footer-thanks">♡ Thanks For Reading ♡</div>
                     `;
                     container.appendChild(footerDiv);
