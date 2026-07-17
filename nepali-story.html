@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>कथा पढ्नुहोस्</title>
-    <!-- नेपाली अक्षरहरू राम्रो देखियोस् भनेर विशेष फन्ट लोड गरिएको -->
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
@@ -28,7 +27,6 @@
 
         .bold-feeling { max-width: 600px; margin: 0 auto; }
         
-        /* प्रत्येक ब्लक (Paragraph वा Quote) को स्टाइल */
         .story-block { 
             font-size: 22px; margin-bottom: 25px; transition: background-color 0.3s; cursor: pointer; padding: 8px; border-radius: 6px;
             scroll-margin-top: 140px; -webkit-touch-callout: none;
@@ -36,7 +34,6 @@
         p.story-block { font-weight: 900; text-align: justify; }
         .story-block.highlighted { background-color: rgba(255, 235, 59, 0.6) !important; color: #000 !important; }
         
-        /* कोट बक्स (Quote Box) को स्टाइल */
         .quote-box {
             background-color: #f5f3e9;
             border-left: 5px solid #5D4037;
@@ -52,12 +49,8 @@
             color: #e0e0e0;
         }
 
-        #storyContainer {
-            margin-bottom: 0px !important;
-            padding-bottom: 0px !important;
-        }
+        #storyContainer { margin-bottom: 0px !important; padding-bottom: 0px !important; }
 
-        /* लेखक र धन्यवाद खण्ड (Footer) को स्टाइल */
         .story-footer {
             margin-top: 30px;
             padding-top: 20px;
@@ -66,32 +59,12 @@
             padding-bottom: 10px !important;
         }
         
-        .footer-author {
-            font-size: 21px;
-            font-weight: 800;
-            color: #000;
-            margin-bottom: 15px;
-            text-align: left;
-        }
+        .footer-author { font-size: 21px; font-weight: 800; color: #000; margin-bottom: 15px; text-align: left; }
         .dark-mode .footer-author { color: #fff; }
         
-        .footer-moral {
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 12px;
-            display: block;
-            text-align: center;
-            letter-spacing: 0.5px;
-        }
+        .footer-moral { font-size: 28px; font-weight: 800; margin-bottom: 12px; display: block; text-align: center; letter-spacing: 0.5px; }
         
-        .footer-thanks {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            text-align: center;
-            margin-top: 5px;
-            display: block;
-        }
+        .footer-thanks { font-size: 18px; font-weight: 600; color: #333; text-align: center; margin-top: 5px; display: block; }
         .dark-mode .footer-thanks { color: #bbb; }
         
         .main-title { font-size: 30px; font-weight: 800; display: block; margin-top: 10px; color: #5D4037; text-align: center; }
@@ -112,9 +85,7 @@
         .pencil-btn.active { background: #2e7d32; transform: scale(1.05); }
 
         .action-row { display: flex; width: 100%; gap: 10px; }
-        .clear-btn, .jump-btn {
-            flex: 1; border: none; padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer; display: none; font-family: 'Mukta', sans-serif;
-        }
+        .clear-btn, .jump-btn { flex: 1; border: none; padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer; display: none; font-family: 'Mukta', sans-serif; }
         .clear-btn { background: #c62828; color: white; }
         .jump-btn { background: #d84315; color: white; }
 
@@ -156,7 +127,7 @@
         <div id="storyContainer"></div>
     </div>
 
-    <!-- नेपाली कथाहरूको डेटा फाइल यहाँ लोड गरिएको छ -->
+    <!-- यहाँ शुद्ध स्पेलिङको डेटा फाइल लिङ्क गरिएको छ -->
     <script src="nepali-stories.js"></script>
 
     <script>
@@ -195,19 +166,16 @@
 
                 const container = document.getElementById('storyContainer');
                 
-                // परिमार्जित लजिक: यदि डेटामा पहिल्यै HTML ट्याग (जस्तै quote-box) छ भने त्यसलाई सुरक्षित रूपमा लोड गर्ने
                 story.paragraphs.forEach((para, index) => {
                     let element;
                     const blockId = 'p_' + (index + 1);
 
                     if (para.includes('class="quote-box"')) {
-                        // यदि डेटाभित्रै quote-box छ भने टेम्पोरेरी डिभ बनाएर ट्याग तान्ने
                         const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = para.trim();
                         element = tempDiv.firstChild;
                         element.classList.add('story-block');
                     } else {
-                        // सामान्य हरफ भए साधारण p ट्याग बनाउने
                         element = document.createElement('p');
                         element.className = 'story-block';
                         element.innerHTML = para;
@@ -217,13 +185,12 @@
                     container.appendChild(element);
                 });
 
-                // फुटर खण्ड
                 if (story.author || story.moral) {
                     const footerDiv = document.createElement('div');
                     footerDiv.className = 'story-footer';
                     
                     footerDiv.innerHTML = `
-                        <div class="footer-author"><strong>| लेखक:-</strong> ${story.author || 'अधिराज सुनार'}</div>
+                        <div class="footer-author"><strong>| लेखक:-</strong> ${story.author || 'अधिराज sunar'}</div>
                         <span class="footer-moral" style="color: ${story.moralColor || '#333'}">${story.moral || ''}</span>
                         <div class="footer-thanks">♡ Thanks For Reading ♡</div>
                     `;
@@ -253,7 +220,6 @@
         }
 
         function setupInteractions() {
-            // .story-block लाई सेलेक्ट गर्ने ताकि quote-box मा पनि बुकमार्कले काम गरोस्
             document.querySelectorAll('#storyContainer .story-block').forEach(el => {
                 let timer;
                 const start = () => { if(isHighlightMode) timer = setTimeout(() => saveBookmark(el), 1000); };
